@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 
-type ShapeType = "hero" | "about" | "skills" | "projects" | "contact";
+type SectionShape = "hero" | "about" | "skills" | "projects" | "contact";
 
 interface Point {
   x: number;
@@ -16,13 +16,15 @@ interface Particle {
   vy: number;
   targetX: number;
   targetY: number;
-  baseX: number;
-  baseY: number;
+  baseTargetX: number;
+  baseTargetY: number;
   size: number;
+  alpha: number;
   baseAlpha: number;
-  colorDark: string;
   colorLight: string;
+  colorDark: string;
   phase: number;
+  speed: number;
 }
 
 export const BackgroundCanvas: React.FC = () => {
@@ -38,15 +40,16 @@ export const BackgroundCanvas: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
     const isMobile = width < 768;
-    const particleCount = isMobile ? 85 : 210;
+    const particleCount = isMobile ? 95 : 240;
 
-    let currentShape: ShapeType = "hero";
-    let particles: Particle[] = [];
+    let currentSection: SectionShape = "hero";
+    let isTransitioning = false;
+    let transitionProgress = 1; // 0 to 1
 
     const mouse = {
       x: -1000,
       y: -1000,
-      radius: 110,
+      radius: 100,
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -62,220 +65,191 @@ export const BackgroundCanvas: React.FC = () => {
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
 
-    // Color palettes
-    const darkColors = ["#00D9C0", "#38BDF8", "#6366F1", "#818CF8", "#A855F7"];
-    const lightColors = ["#0D9488", "#0284C7", "#4F46E5", "#6366F1", "#334155"];
+    // Delicate, soft pastel cyan/teal/sky-blue palettes matching Screenshot 2
+    const lightColors = [
+      "rgba(14, 165, 233, ", // Sky 500
+      "rgba(20, 184, 166, ", // Teal 500
+      "rgba(56, 189, 248, ", // Sky 400
+      "rgba(45, 212, 191, ", // Teal 400
+      "rgba(99, 102, 241, ", // Indigo 500
+    ];
 
-    // -------------------------------------------------------------
-    // SHAPE GENERATORS (Target Coordinates)
-    // -------------------------------------------------------------
+    const darkColors = [
+      "rgba(0, 217, 192, ",  // Brand Teal
+      "rgba(56, 189, 248, ", // Cyan 400
+      "rgba(129, 140, 248, ",// Indigo 400
+      "rgba(165, 243, 252, ",// Cyan 200
+      "rgba(99, 102, 241, ", // Indigo 500
+    ];
 
-    // Helper: sample points evenly along a line segment
-    const sampleLine = (p1: Point, p2: Point, count: number): Point[] => {
+    // Helper: sample points along a curve/line with soft organic dispersion
+    const sampleLineWithDispersion = (
+      p1: Point,
+      p2: Point,
+      count: number,
+      jitter: number = 6
+    ): Point[] => {
       const pts: Point[] = [];
       for (let i = 0; i <= count; i++) {
         const t = count === 0 ? 0.5 : i / count;
         pts.push({
-          x: p1.x + (p2.x - p1.x) * t,
-          y: p1.y + (p2.y - p1.y) * t,
+          x: p1.x + (p2.x - p1.x) * t + (Math.random() - 0.5) * jitter,
+          y: p1.y + (p2.y - p1.y) * t + (Math.random() - 0.5) * jitter,
         });
       }
       return pts;
     };
 
-    // 1. Hero Shape: </ > (Code Brackets)
-    const generateHeroShape = (w: number, h: number, count: number): Point[] => {
-      const cx = w / 2;
-      const cy = h / 2;
-      const scale = Math.min(w, h) * (isMobile ? 0.38 : 0.32);
+    // -------------------------------------------------------------
+    // SECTION SHAPE GENERATORS
+    // -------------------------------------------------------------
 
+    // 1. Hero: Serpentine ambient flow spanning across the screen
+    const generateHeroFlow = (w: number, h: number, count: number): Point[] => {
       const pts: Point[] = [];
-      const perPart = Math.floor(count / 3);
-
-      // Left bracket '<'
-      const leftTip: Point = { x: cx - scale * 0.9, y: cy };
-      const leftTop: Point = { x: cx - scale * 0.45, y: cy - scale * 0.7 };
-      const leftBottom: Point = { x: cx - scale * 0.45, y: cy + scale * 0.7 };
-      pts.push(...sampleLine(leftTop, leftTip, Math.floor(perPart / 2)));
-      pts.push(...sampleLine(leftTip, leftBottom, Math.floor(perPart / 2)));
-
-      // Center slash '/'
-      const slashTop: Point = { x: cx + scale * 0.15, y: cy - scale * 0.85 };
-      const slashBottom: Point = { x: cx - scale * 0.15, y: cy + scale * 0.85 };
-      pts.push(...sampleLine(slashTop, slashBottom, perPart));
-
-      // Right bracket '>'
-      const rightTip: Point = { x: cx + scale * 0.9, y: cy };
-      const rightTop: Point = { x: cx + scale * 0.45, y: cy - scale * 0.7 };
-      const rightBottom: Point = { x: cx + scale * 0.45, y: cy + scale * 0.7 };
-      pts.push(...sampleLine(rightTop, rightTip, Math.floor(perPart / 2)));
-      pts.push(...sampleLine(rightTip, rightBottom, Math.floor(perPart / 2)));
-
-      // Pad remaining points to reach exact count
-      while (pts.length < count) {
-        pts.push({
-          x: cx + (Math.random() - 0.5) * scale * 1.5,
-          y: cy + (Math.random() - 0.5) * scale * 1.2,
-        });
+      for (let i = 0; i < count; i++) {
+        const x = (i / count) * w * 1.1 - w * 0.05;
+        const wave = Math.sin((x / w) * Math.PI * 3) * (h * 0.22);
+        const y = h * 0.48 + wave + (Math.random() - 0.5) * 90;
+        pts.push({ x, y });
       }
-      return pts.slice(0, count);
+      return pts;
     };
 
-    // 2. About Shape: Circular Monogram & Profile Core
-    const generateAboutShape = (w: number, h: number, count: number): Point[] => {
-      const cx = w / 2;
-      const cy = h / 2;
+    // 2. About: The exact Question Mark '?' from Screenshot 2!
+    // Delicate, airy question mark silhouette with soft organic point distribution
+    const generateQuestionMark = (w: number, h: number, count: number): Point[] => {
+      const cx = w * 0.5;
+      const cy = h * 0.46;
+      const scale = Math.min(w, h) * (isMobile ? 0.38 : 0.32);
+      const pts: Point[] = [];
+
+      // Top arc of question mark
+      const arcCount = Math.floor(count * 0.52);
+      const arcRadius = scale * 0.52;
+      const arcCenter: Point = { x: cx, y: cy - scale * 0.35 };
+
+      for (let i = 0; i < arcCount; i++) {
+        // Angle from -140 deg to +70 deg
+        const t = i / arcCount;
+        const theta = -Math.PI * 0.85 + t * (Math.PI * 1.4);
+        const r = arcRadius + (Math.random() - 0.5) * 14;
+        pts.push({
+          x: arcCenter.x + Math.cos(theta) * r,
+          y: arcCenter.y + Math.sin(theta) * r,
+        });
+      }
+
+      // Middle curving stem down towards center
+      const stemCount = Math.floor(count * 0.32);
+      const pStart: Point = { x: cx + arcRadius * 0.65, y: cy - scale * 0.1 };
+      const pMid: Point = { x: cx, y: cy + scale * 0.2 };
+      const pEnd: Point = { x: cx, y: cy + scale * 0.48 };
+
+      pts.push(...sampleLineWithDispersion(pStart, pMid, Math.floor(stemCount / 2), 12));
+      pts.push(...sampleLineWithDispersion(pMid, pEnd, Math.floor(stemCount / 2), 10));
+
+      // Bottom dot of question mark (separated by a gap)
+      const dotCount = count - pts.length;
+      const dotCenter: Point = { x: cx, y: cy + scale * 0.72 };
+      for (let i = 0; i < dotCount; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const r = Math.random() * 12;
+        pts.push({
+          x: dotCenter.x + Math.cos(a) * r,
+          y: dotCenter.y + Math.sin(a) * r,
+        });
+      }
+
+      return pts;
+    };
+
+    // 3. Skills: Wide planetary orbital rings / atom network
+    const generateSkillsOrbits = (w: number, h: number, count: number): Point[] => {
+      const cx = w * 0.5;
+      const cy = h * 0.48;
       const r = Math.min(w, h) * (isMobile ? 0.36 : 0.28);
       const pts: Point[] = [];
 
-      const circleCount = Math.floor(count * 0.55);
-      for (let i = 0; i < circleCount; i++) {
-        const theta = (i / circleCount) * Math.PI * 2;
-        pts.push({
-          x: cx + Math.cos(theta) * r,
-          y: cy + Math.sin(theta) * r,
-        });
+      const r1 = r;
+      const r2 = r * 0.65;
+      const count1 = Math.floor(count * 0.6);
+      const count2 = count - count1;
+
+      // Orbit 1 tilted
+      for (let i = 0; i < count1; i++) {
+        const theta = (i / count1) * Math.PI * 2;
+        const xRaw = Math.cos(theta) * r1;
+        const yRaw = Math.sin(theta) * (r1 * 0.45);
+        // rotate 30 deg
+        const x = cx + xRaw * Math.cos(0.5) - yRaw * Math.sin(0.5) + (Math.random() - 0.5) * 8;
+        const y = cy + xRaw * Math.sin(0.5) + yRaw * Math.cos(0.5) + (Math.random() - 0.5) * 8;
+        pts.push({ x, y });
       }
 
-      // Inner Monogram "A" & "M"
-      const innerCount = count - circleCount;
-      const aLeft: Point = { x: cx - r * 0.5, y: cy + r * 0.45 };
-      const aPeak: Point = { x: cx - r * 0.25, y: cy - r * 0.45 };
-      const aRight: Point = { x: cx, y: cy + r * 0.45 };
-      const aBar1: Point = { x: cx - r * 0.38, y: cy + r * 0.05 };
-      const aBar2: Point = { x: cx - r * 0.12, y: cy + r * 0.05 };
-
-      const mStart: Point = { x: cx, y: cy + r * 0.45 };
-      const mTopL: Point = { x: cx, y: cy - r * 0.45 };
-      const mMid: Point = { x: cx + r * 0.25, y: cy };
-      const mTopR: Point = { x: cx + r * 0.5, y: cy - r * 0.45 };
-      const mEnd: Point = { x: cx + r * 0.5, y: cy + r * 0.45 };
-
-      pts.push(...sampleLine(aLeft, aPeak, Math.floor(innerCount / 7)));
-      pts.push(...sampleLine(aPeak, aRight, Math.floor(innerCount / 7)));
-      pts.push(...sampleLine(aBar1, aBar2, Math.floor(innerCount / 14)));
-
-      pts.push(...sampleLine(mStart, mTopL, Math.floor(innerCount / 7)));
-      pts.push(...sampleLine(mTopL, mMid, Math.floor(innerCount / 7)));
-      pts.push(...sampleLine(mMid, mTopR, Math.floor(innerCount / 7)));
-      pts.push(...sampleLine(mTopR, mEnd, Math.floor(innerCount / 7)));
-
-      while (pts.length < count) {
-        pts.push({ x: cx, y: cy });
+      // Orbit 2 tilted opposite
+      for (let i = 0; i < count2; i++) {
+        const theta = (i / count2) * Math.PI * 2;
+        const xRaw = Math.cos(theta) * r2;
+        const yRaw = Math.sin(theta) * (r2 * 0.45);
+        // rotate -30 deg
+        const x = cx + xRaw * Math.cos(-0.5) - yRaw * Math.sin(-0.5) + (Math.random() - 0.5) * 8;
+        const y = cy + xRaw * Math.sin(-0.5) + yRaw * Math.cos(-0.5) + (Math.random() - 0.5) * 8;
+        pts.push({ x, y });
       }
-      return pts.slice(0, count);
+
+      return pts;
     };
 
-    // 3. Skills Shape: Neural Network Graph (Constellation Clusters)
-    const generateSkillsShape = (w: number, h: number, count: number): Point[] => {
-      const cx = w / 2;
-      const cy = h / 2;
-      const scale = Math.min(w, h) * (isMobile ? 0.42 : 0.34);
+    // 4. Projects: Expansive open constellation frame with soft perimeter
+    const generateProjectsConstellation = (w: number, h: number, count: number): Point[] => {
+      const cx = w * 0.5;
+      const cy = h * 0.48;
+      const bw = Math.min(w * 0.72, 540);
+      const bh = Math.min(h * 0.56, 380);
       const pts: Point[] = [];
 
-      // 6 Network Hubs
-      const hubs: Point[] = [
-        { x: cx, y: cy },
-        { x: cx - scale * 0.8, y: cy - scale * 0.5 },
-        { x: cx + scale * 0.8, y: cy - scale * 0.5 },
-        { x: cx - scale * 0.7, y: cy + scale * 0.6 },
-        { x: cx + scale * 0.7, y: cy + scale * 0.6 },
-        { x: cx, y: cy - scale * 0.75 },
+      const corners: Point[] = [
+        { x: cx - bw / 2, y: cy - bh / 2 },
+        { x: cx + bw / 2, y: cy - bh / 2 },
+        { x: cx + bw / 2, y: cy + bh / 2 },
+        { x: cx - bw / 2, y: cy + bh / 2 },
       ];
 
-      // Lines between hubs
-      const connections: [number, number][] = [
-        [0, 1], [0, 2], [0, 3], [0, 4], [0, 5],
-        [1, 5], [2, 5], [1, 3], [2, 4], [3, 4]
-      ];
-
-      const perConnection = Math.floor((count * 0.65) / connections.length);
-      for (const [a, b] of connections) {
-        pts.push(...sampleLine(hubs[a], hubs[b], perConnection));
-      }
-
-      // Clustered satellite points around hubs
-      for (const hub of hubs) {
-        for (let i = 0; i < 7; i++) {
-          const a = (i / 7) * Math.PI * 2;
-          const dist = Math.random() * 28 + 12;
-          pts.push({
-            x: hub.x + Math.cos(a) * dist,
-            y: hub.y + Math.sin(a) * dist,
-          });
-        }
+      const perSide = Math.floor(count / 4);
+      for (let i = 0; i < 4; i++) {
+        const pA = corners[i];
+        const pB = corners[(i + 1) % 4];
+        pts.push(...sampleLineWithDispersion(pA, pB, perSide, 14));
       }
 
       while (pts.length < count) {
-        const randomHub = hubs[Math.floor(Math.random() * hubs.length)];
         pts.push({
-          x: randomHub.x + (Math.random() - 0.5) * 45,
-          y: randomHub.y + (Math.random() - 0.5) * 45,
+          x: cx + (Math.random() - 0.5) * bw,
+          y: cy + (Math.random() - 0.5) * bh,
         });
       }
       return pts.slice(0, count);
     };
 
-    // 4. Projects Shape: Bento-Grid Rectangles Architecture
-    const generateProjectsShape = (w: number, h: number, count: number): Point[] => {
-      const cx = w / 2;
-      const cy = h / 2;
-      const bw = Math.min(w * 0.65, 480);
-      const bh = Math.min(h * 0.55, 360);
-      const pts: Point[] = [];
-
-      interface Rect {
-        x: number;
-        y: number;
-        w: number;
-        h: number;
-      }
-
-      const rects: Rect[] = [
-        { x: cx - bw / 2, y: cy - bh / 2, w: bw * 0.62, h: bh * 0.55 },
-        { x: cx - bw / 2 + bw * 0.66, y: cy - bh / 2, w: bw * 0.34, h: bh * 0.55 },
-        { x: cx - bw / 2, y: cy - bh / 2 + bh * 0.6, w: bw * 0.31, h: bh * 0.4 },
-        { x: cx - bw / 2 + bw * 0.34, y: cy - bh / 2 + bh * 0.6, w: bw * 0.31, h: bh * 0.4 },
-        { x: cx - bw / 2 + bw * 0.68, y: cy - bh / 2 + bh * 0.6, w: bw * 0.32, h: bh * 0.4 },
-      ];
-
-      const perRect = Math.floor(count / rects.length);
-      for (const r of rects) {
-        const p1 = { x: r.x, y: r.y };
-        const p2 = { x: r.x + r.w, y: r.y };
-        const p3 = { x: r.x + r.w, y: r.y + r.h };
-        const p4 = { x: r.x, y: r.y + r.h };
-        const sub = Math.floor(perRect / 4);
-        pts.push(...sampleLine(p1, p2, sub));
-        pts.push(...sampleLine(p2, p3, sub));
-        pts.push(...sampleLine(p3, p4, sub));
-        pts.push(...sampleLine(p4, p1, sub));
-      }
-
-      while (pts.length < count) {
-        pts.push({ x: cx, y: cy });
-      }
-      return pts.slice(0, count);
-    };
-
-    // 5. Contact Shape: Origami Paper Airplane Soaring Upwards
-    const generateContactShape = (w: number, h: number, count: number): Point[] => {
-      const cx = w / 2;
-      const cy = h / 2;
+    // 5. Contact: Soaring origami paper airplane
+    const generateContactAirplane = (w: number, h: number, count: number): Point[] => {
+      const cx = w * 0.5;
+      const cy = h * 0.46;
       const scale = Math.min(w, h) * (isMobile ? 0.38 : 0.3);
       const pts: Point[] = [];
 
-      const nose: Point = { x: cx + scale * 0.65, y: cy - scale * 0.75 };
-      const leftWing: Point = { x: cx - scale * 0.85, y: cy + scale * 0.4 };
-      const rightWing: Point = { x: cx + scale * 0.35, y: cy + scale * 0.75 };
-      const centerTail: Point = { x: cx - scale * 0.1, y: cy + scale * 0.25 };
+      const nose: Point = { x: cx + scale * 0.65, y: cy - scale * 0.7 };
+      const leftWing: Point = { x: cx - scale * 0.8, y: cy + scale * 0.35 };
+      const rightWing: Point = { x: cx + scale * 0.3, y: cy + scale * 0.68 };
+      const centerTail: Point = { x: cx - scale * 0.1, y: cy + scale * 0.2 };
 
       const per = Math.floor(count / 5);
-      pts.push(...sampleLine(nose, leftWing, per));
-      pts.push(...sampleLine(leftWing, centerTail, per));
-      pts.push(...sampleLine(centerTail, nose, per));
-      pts.push(...sampleLine(nose, rightWing, per));
-      pts.push(...sampleLine(rightWing, centerTail, per));
+      pts.push(...sampleLineWithDispersion(nose, leftWing, per, 8));
+      pts.push(...sampleLineWithDispersion(leftWing, centerTail, per, 8));
+      pts.push(...sampleLineWithDispersion(centerTail, nose, per, 8));
+      pts.push(...sampleLineWithDispersion(nose, rightWing, per, 8));
+      pts.push(...sampleLineWithDispersion(rightWing, centerTail, per, 8));
 
       while (pts.length < count) {
         pts.push({ x: cx, y: cy });
@@ -283,79 +257,82 @@ export const BackgroundCanvas: React.FC = () => {
       return pts.slice(0, count);
     };
 
-    const getShapePoints = (shape: ShapeType, w: number, h: number, count: number): Point[] => {
-      switch (shape) {
+    const getTargetPoints = (section: SectionShape, w: number, h: number, count: number): Point[] => {
+      switch (section) {
         case "hero":
-          return generateHeroShape(w, h, count);
+          return generateHeroFlow(w, h, count);
         case "about":
-          return generateAboutShape(w, h, count);
+          return generateQuestionMark(w, h, count);
         case "skills":
-          return generateSkillsShape(w, h, count);
+          return generateSkillsOrbits(w, h, count);
         case "projects":
-          return generateProjectsShape(w, h, count);
+          return generateProjectsConstellation(w, h, count);
         case "contact":
-          return generateContactShape(w, h, count);
+          return generateContactAirplane(w, h, count);
       }
     };
 
     // Initialize particles
+    let particlesList: Particle[] = [];
     const initParticles = () => {
-      const targets = getShapePoints(currentShape, width, height, particleCount);
-      particles = [];
+      const targets = getTargetPoints(currentSection, width, height, particleCount);
+      particlesList = [];
 
       for (let i = 0; i < particleCount; i++) {
         const target = targets[i] || { x: width / 2, y: height / 2 };
-        const initialX = width / 2 + (Math.random() - 0.5) * width;
-        const initialY = height / 2 + (Math.random() - 0.5) * height;
+        const initialX = Math.random() * width;
+        const initialY = Math.random() * height;
 
-        particles.push({
+        particlesList.push({
           x: initialX,
           y: initialY,
-          vx: (Math.random() - 0.5) * 2,
-          vy: (Math.random() - 0.5) * 2,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
           targetX: target.x,
           targetY: target.y,
-          baseX: target.x,
-          baseY: target.y,
-          size: Math.random() * 2.2 + 1.8,
-          baseAlpha: Math.random() * 0.4 + 0.45,
-          colorDark: darkColors[i % darkColors.length],
+          baseTargetX: target.x,
+          baseTargetY: target.y,
+          size: Math.random() * 1.4 + 1.2, // 1.2px to 2.6px (small & delicate like Screenshot 2)
+          alpha: Math.random() * 0.25 + 0.35, // 0.35 to 0.60
+          baseAlpha: Math.random() * 0.25 + 0.35,
           colorLight: lightColors[i % lightColors.length],
+          colorDark: darkColors[i % darkColors.length],
           phase: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.015 + 0.025,
         });
       }
     };
 
     initParticles();
 
-    // Morph to new shape with explosion velocity burst
-    const morphToShape = (newShape: ShapeType) => {
-      if (newShape === currentShape) return;
-      currentShape = newShape;
+    // Sinuous Snake Wave Flow & Morph
+    const transitionToSection = (newSection: SectionShape) => {
+      if (newSection === currentSection) return;
+      currentSection = newSection;
+      isTransitioning = true;
+      transitionProgress = 0;
 
-      const newTargets = getShapePoints(newShape, width, height, particleCount);
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const newTargets = getTargetPoints(newSection, width, height, particleCount);
 
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+      // Trigger serpentine river flow: disperse particles in a flowing S-curve wave across the screen
+      for (let i = 0; i < particlesList.length; i++) {
+        const p = particlesList[i];
         const nt = newTargets[i] || { x: width / 2, y: height / 2 };
-        p.baseX = nt.x;
-        p.baseY = nt.y;
+        p.baseTargetX = nt.x;
+        p.baseTargetY = nt.y;
         p.targetX = nt.x;
         p.targetY = nt.y;
 
-        if (!prefersReducedMotion) {
-          // Physical explosion velocity outward
-          const angle = Math.random() * Math.PI * 2;
-          const speed = Math.random() * (isMobile ? 8 : 15) + 6;
-          p.vx += Math.cos(angle) * speed;
-          p.vy += Math.sin(angle) * speed;
-        }
+        // Serpentine velocity wave ("ilon izi")
+        const waveAngle = Math.sin((p.y / height) * Math.PI * 2.5 + i * 0.1) * Math.PI * 0.7;
+        const waveSpeed = Math.random() * 8 + 5;
+        p.vx += Math.cos(waveAngle) * waveSpeed;
+        p.vy += (Math.random() - 0.5) * 5;
       }
     };
 
-    // Scroll & Section IntersectionObserver
-    const sectionToShapeMap: Record<string, ShapeType> = {
+    // IntersectionObserver for sections
+    const sectionMap: Record<string, SectionShape> = {
       hero: "hero",
       about: "about",
       skills: "skills",
@@ -369,49 +346,45 @@ export const BackgroundCanvas: React.FC = () => {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            const shape = sectionToShapeMap[entry.target.id];
-            if (shape) {
-              morphToShape(shape);
+            const section = sectionMap[entry.target.id];
+            if (section) {
+              transitionToSection(section);
               break;
             }
           }
         }
       },
       {
-        threshold: 0.25,
+        threshold: 0.22,
       }
     );
 
     const observeSections = () => {
-      Object.keys(sectionToShapeMap).forEach((id) => {
+      Object.keys(sectionMap).forEach((id) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });
     };
 
-    // Delay slightly to ensure DOM has rendered
     const timeoutId = setTimeout(observeSections, 300);
 
-    // Resize handler
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-      const newTargets = getShapePoints(currentShape, width, height, particleCount);
-      for (let i = 0; i < particles.length; i++) {
+      const newTargets = getTargetPoints(currentSection, width, height, particleCount);
+      for (let i = 0; i < particlesList.length; i++) {
         const nt = newTargets[i] || { x: width / 2, y: height / 2 };
-        particles[i].baseX = nt.x;
-        particles[i].baseY = nt.y;
-        particles[i].targetX = nt.x;
-        particles[i].targetY = nt.y;
+        particlesList[i].baseTargetX = nt.x;
+        particlesList[i].baseTargetY = nt.y;
+        particlesList[i].targetX = nt.x;
+        particlesList[i].targetY = nt.y;
       }
     };
 
     window.addEventListener("resize", handleResize);
 
     // Main animation loop
-    let lastTime = performance.now();
-
     const animate = (time: number) => {
       ctx.clearRect(0, 0, width, height);
 
@@ -420,10 +393,10 @@ export const BackgroundCanvas: React.FC = () => {
         (!document.documentElement.classList.contains("light") &&
           window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-      // Subtle ambient grid lines
-      ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.015)" : "rgba(0, 0, 0, 0.02)";
+      // Subtle ambient background grid lines
+      ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.012)" : "rgba(0, 0, 0, 0.018)";
       ctx.lineWidth = 1;
-      const gridSize = 72;
+      const gridSize = 80;
       for (let x = 0; x < width; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -437,81 +410,60 @@ export const BackgroundCanvas: React.FC = () => {
         ctx.stroke();
       }
 
-      // Constellation lines connection threshold
-      const connectDist = isMobile ? 38 : 55;
+      // Update and draw particles
+      for (let i = 0; i < particlesList.length; i++) {
+        const p = particlesList[i];
 
-      // Draw lines between close assembled particles
-      for (let i = 0; i < particles.length; i++) {
-        const p1 = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const d = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-          if (d < connectDist) {
-            const lineAlpha = (1 - d / connectDist) * (isDark ? 0.16 : 0.09);
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = isDark ? p1.colorDark : p1.colorLight;
-            ctx.globalAlpha = lineAlpha;
-            ctx.stroke();
-          }
-        }
-      }
+        // Sinuous serpentine wave breathing across the page ("ilon izi")
+        const snakeWaveX = Math.sin(time * 0.0015 + p.y * 0.004 + p.phase) * 12;
+        const snakeWaveY = Math.cos(time * 0.0015 + p.x * 0.004 + p.phase) * 6;
 
-      // Physics, breathing & drawing particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+        const effectiveTargetX = p.baseTargetX + snakeWaveX;
+        const effectiveTargetY = p.baseTargetY + snakeWaveY;
 
-        // Harmonic breathing
-        const breathX = Math.sin(time * 0.0018 + p.phase) * 1.6;
-        const breathY = Math.cos(time * 0.0018 + p.phase) * 1.6;
-        const curTargetX = p.baseX + breathX;
-        const curTargetY = p.baseY + breathY;
-
-        // Spring attraction to target
-        const dx = curTargetX - p.x;
-        const dy = curTargetY - p.y;
-        const spring = 0.038;
-        const friction = 0.85;
+        // Smooth spring attraction to target
+        const dx = effectiveTargetX - p.x;
+        const dy = effectiveTargetY - p.y;
+        const spring = 0.032;
+        const friction = 0.88;
 
         p.vx += dx * spring;
         p.vy += dy * spring;
 
-        // Gentle Mouse Repulsion
+        // Gentle Mouse Repulsion (doesn't destroy the shape)
         const mdx = mouse.x - p.x;
         const mdy = mouse.y - p.y;
         const mdist = Math.hypot(mdx, mdy);
         if (mdist < mouse.radius && mdist > 0) {
-          const repForce = ((mouse.radius - mdist) / mouse.radius) * 3.5;
+          const repForce = ((mouse.radius - mdist) / mouse.radius) * 2.8;
           p.vx -= (mdx / mdist) * repForce;
           p.vy -= (mdy / mdist) * repForce;
         }
 
-        // Apply velocities
+        // Apply physics
         p.vx *= friction;
         p.vy *= friction;
         p.x += p.vx;
         p.y += p.vy;
 
-        // Draw particle with glow
-        const color = isDark ? p.colorDark : p.colorLight;
+        // Draw particle with soft alpha (like Screenshot 2)
+        const colorPrefix = isDark ? p.colorDark : p.colorLight;
+        const currentAlpha = isDark ? p.baseAlpha * 1.1 : p.baseAlpha * 0.85;
+
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.globalAlpha = isDark ? p.baseAlpha : p.baseAlpha * 0.85;
+        ctx.fillStyle = `${colorPrefix}${currentAlpha})`;
         ctx.fill();
 
-        // Extra subtle core for larger dots
-        if (p.size > 2.8 && isDark) {
+        // Delicate soft halo for slightly larger particles in dark mode
+        if (isDark && p.size > 2.0) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
-          ctx.fillStyle = "#FFFFFF";
-          ctx.globalAlpha = 0.7;
+          ctx.arc(p.x, p.y, p.size * 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = `${colorPrefix}0.15)`;
           ctx.fill();
         }
       }
 
-      ctx.globalAlpha = 1;
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -530,7 +482,7 @@ export const BackgroundCanvas: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-80 transition-opacity duration-700"
+      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-85 transition-opacity duration-700"
     />
   );
 };
