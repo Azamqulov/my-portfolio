@@ -137,7 +137,7 @@ export const FEATURED_PROJECTS: Project[] = [
     category: "web",
     categoryLabel: "Web & SaaS",
     featured: true,
-    bentoSpan: "col-span-1 md:col-span-2 lg:col-span-2 row-span-2",
+    bentoSpan: "col-span-1 md:col-span-2 lg:col-span-2",
     accentColor: "from-[#00D9C0] to-[#2563EB]",
     metrics: [
       { label: "Arxitektura", value: "Multi-tenant" },

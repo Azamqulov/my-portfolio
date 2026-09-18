@@ -55,7 +55,7 @@ export const FeaturedProjects: React.FC = () => {
         </div>
 
         {/* Bento Grid with Stagger */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {FEATURED_PROJECTS.map((project, idx) => {
             const isLarge = idx === 0;
 
@@ -71,10 +71,10 @@ export const FeaturedProjects: React.FC = () => {
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 onClick={() => setSelectedProject(project)}
-                className={`group relative cursor-pointer overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121318] p-7 shadow-sm hover:shadow-2xl transition-all duration-500 hover:border-brand-teal/50 hover:-translate-y-1 ${
+                className={`group relative cursor-pointer overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121318] p-6 sm:p-7 shadow-sm hover:shadow-2xl transition-all duration-500 hover:border-brand-teal/50 hover:-translate-y-1 flex flex-col justify-between ${
                   isLarge
-                    ? "md:col-span-2 lg:col-span-2 lg:row-span-2 flex flex-col justify-between"
-                    : "flex flex-col justify-between"
+                    ? "md:col-span-2 lg:col-span-2"
+                    : "col-span-1"
                 }`}
               >
                 {/* Top strip */}

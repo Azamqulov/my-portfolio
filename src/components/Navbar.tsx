@@ -97,23 +97,23 @@ export const Navbar: React.FC = () => {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 rounded-full px-3 py-1 bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/5">
+          <nav className="hidden lg:flex items-center gap-1.5 rounded-full px-4 py-1.5 bg-slate-100/90 dark:bg-white/5 border border-slate-200/80 dark:border-white/5">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace("#", "");
               return (
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`relative px-3.5 py-1.5 text-xs font-semibold transition-colors rounded-full ${
+                  className={`relative px-4 py-2 text-sm font-bold tracking-tight transition-colors rounded-full ${
                     isActive
-                      ? "text-brand-teal dark:text-brand-teal"
-                      : "text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                      ? "text-teal-700 dark:text-brand-teal font-extrabold"
+                      : "text-slate-800 hover:text-black dark:text-slate-200 dark:hover:text-white"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="activeNavIndicator"
-                      className="absolute inset-0 rounded-full bg-brand-teal/15 dark:bg-brand-teal/20 border border-brand-teal/40"
+                      className="absolute inset-0 rounded-full bg-teal-500/15 dark:bg-brand-teal/20 border border-teal-600/30 dark:border-brand-teal/40 shadow-sm"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -190,7 +190,7 @@ export const Navbar: React.FC = () => {
                     key={item.name}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-brand-teal transition-all"
+                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-bold text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-brand-teal transition-all"
                   >
                     <Icon className="h-4 w-4 text-brand-teal" />
                     <span>{item.name}</span>
