@@ -80,8 +80,8 @@ export const BackgroundCanvas: React.FC = () => {
       ctx.clearRect(0, 0, width, height);
 
       // Draw subtle grid lines
-      const isDark = document.documentElement.classList.contains("dark") || !document.documentElement.classList.contains("light");
-      ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.018)" : "rgba(0, 0, 0, 0.02)";
+      const isDark = document.documentElement.classList.contains("dark");
+      ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.025)" : "rgba(0, 0, 0, 0.04)";
       ctx.lineWidth = 1;
 
       const gridSize = 64;

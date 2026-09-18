@@ -3,6 +3,8 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { BackgroundCanvas } from "@/components/BackgroundCanvas";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,7 +19,10 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FAFAFA" },
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0B" },
+  ],
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -69,15 +74,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uz" className="dark scroll-smooth">
+    <html lang="uz" suppressHydrationWarning className="scroll-smooth">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans bg-[#0A0A0B] text-slate-100 selection:bg-brand-teal selection:text-black antialiased relative min-h-screen`}
+        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased relative min-h-screen transition-colors duration-300`}
       >
-        <BackgroundCanvas />
-        <CursorGlow />
-        <div className="relative z-10 flex min-h-screen flex-col">
-          {children}
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <ScrollProgress />
+          <BackgroundCanvas />
+          <CursorGlow />
+          <div className="relative z-10 flex min-h-screen flex-col">
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
