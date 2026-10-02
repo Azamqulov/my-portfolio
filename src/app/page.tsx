@@ -3,8 +3,9 @@ import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
+import { Services } from "@/components/Services";
+import { Testimonials } from "@/components/Testimonials";
 import { AllProjects } from "@/components/AllProjects";
-import { Process } from "@/components/Process";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 
@@ -17,7 +18,8 @@ export default function Home() {
       <Skills />
       <FeaturedProjects />
       <AllProjects />
-      <Process />
+      <Services />
+      <Testimonials />
       <Contact />
       <Footer />
     </main>

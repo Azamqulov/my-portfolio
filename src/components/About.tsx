@@ -1,180 +1,257 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  Layers,
-  Cpu,
-  ShieldCheck,
-  Bot,
-  CheckCircle2,
-} from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { PERSONAL_INFO } from "@/data/portfolioData";
+import { TechIcon } from "@/components/TechIcon";
+import { MusurmonIcon } from "@/components/MusurmonIcon";
 
-export const About: React.FC = () => {
-  const pillars = [
-    {
-      icon: Layers,
-      title: "G'oyadan Mahsulotgacha",
-      desc: "Figma eskizdan to'liq arxitekturagacha, UI/UX, ma'lumotlar bazasi va API integratsiyasini bir tizimda birlashtiraman.",
-      gradient: "from-brand-teal to-blue-500",
-    },
-    {
-      icon: Cpu,
-      title: "Local-First & Desktop AI",
-      desc: "Tauri 2 + Rust yordamida yengil (<15MB), xavfsiz va internet talab qilmaydigan mahalliy AI tizimlarini ishlab chiqaman.",
-      gradient: "from-brand-indigo to-purple-500",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Xavfsizlik & Multi-Tenant",
-      desc: "IDOR himoyasi, rollarga asoslangan ruxsatlar (RBAC), brute-force profilaktikasi va xavfsiz JWT sessiyalari.",
-      gradient: "from-cyan-500 to-brand-teal",
-    },
-    {
-      icon: Bot,
-      title: "AI & Telegram Avtomatizatsiya",
-      desc: "Claude, Gemini va FLUX modellari yordamida biznes jarayonlarini tezlashtiruvchi Telegram bot va brauzer kengaytmalari.",
-      gradient: "from-purple-500 to-pink-500",
-    },
-  ];
+// Interactive 3D Luxury Developer Portrait Card
+const AboutPortraitCard: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+
+    // Smooth subtle 3D tilt (max 7 degrees)
+    setTilt({
+      x: (y - 0.5) * -7,
+      y: (x - 0.5) * 8,
+    });
+    setGlare({ x: x * 100, y: y * 100, opacity: 0.18 });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setGlare({ x: 50, y: 50, opacity: 0 });
+  };
 
   return (
-    <section id="about" className="py-24 px-4 relative">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-teal-600/30 dark:border-brand-teal/30 bg-teal-50 dark:bg-brand-teal/10 px-3.5 py-1 text-xs font-mono text-teal-700 dark:text-brand-teal mb-3 font-semibold"
-          >
-            <span>01 // MEN HAQIMDA</span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight"
-          >
-            Muammolarni amaliy{" "}
-            <span className="bg-gradient-to-r from-teal-600 to-indigo-600 dark:from-brand-teal dark:to-brand-indigo bg-clip-text text-transparent">
-              tizimlarga aylantiraman
+    <div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full max-w-[380px] sm:max-w-[420px] [perspective:1000px] select-none"
+    >
+      {/* Soft Ambient Radial Bloom behind Card */}
+      <div className="absolute -inset-4 bg-gradient-to-tr from-sky-500/20 via-blue-600/15 to-indigo-500/20 rounded-[36px] blur-3xl -z-10 dark:opacity-80 opacity-40 transition-opacity" />
+
+      {/* Main 3D Tilt Card Frame */}
+      <motion.div
+        style={{
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: "transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+        className="relative rounded-[30px] p-2.5 sm:p-3 border border-slate-200/90 dark:border-sky-500/25 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-2xl shadow-2xl dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] group cursor-pointer overflow-hidden"
+      >
+        {/* Dynamic Specular Sheen Glare */}
+        <div
+          style={{
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,${glare.opacity}) 0%, transparent 60%)`,
+            transition: "opacity 0.3s ease",
+          }}
+          className="absolute inset-0 z-30 pointer-events-none"
+        />
+
+        {/* Photo Container */}
+        <div className="relative w-full aspect-[3/4] rounded-[22px] overflow-hidden bg-slate-900 shadow-inner">
+          <Image
+            src="/images/musurmon-portrait.jpg"
+            alt="Azamqulov Musurmon — Web Developer & Frontend Developer"
+            fill
+            priority
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 420px"
+          />
+
+          {/* Cinematic lighting gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-black/30 pointer-events-none" />
+
+          {/* Top Live Status Pill */}
+          <div className="absolute top-3.5 left-3.5 flex items-center gap-2 rounded-full px-3 py-1.5 backdrop-blur-xl bg-black/60 border border-white/20 text-white shadow-lg">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-          </motion.h2>
-        </div>
+            <span className="text-[11px] font-mono font-medium">Toshkent • Ochiq</span>
+          </div>
 
-        {/* Grid: Bio Summary & Meta */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Left Bio Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 flex flex-col justify-between rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121318] p-8 sm:p-10 shadow-lg dark:shadow-2xl"
-          >
-            <div className="space-y-5">
-              <div className="flex items-center gap-3">
-                <span className="flex h-3 w-3 rounded-full bg-brand-teal animate-pulse" />
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">
-                  {PERSONAL_INFO.name}{" "}
-                  <span className="text-sm font-normal text-slate-500 dark:text-slate-400 font-mono">
-                    ({PERSONAL_INFO.nickname})
-                  </span>
-                </h3>
+          {/* Top Right Verified Pill */}
+          <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5 rounded-full px-2.5 py-1.5 backdrop-blur-xl bg-sky-500/20 border border-sky-400/40 text-sky-200 shadow-lg">
+            <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
+            <span className="text-[10px] font-mono font-bold tracking-wider uppercase">Pro Dev</span>
+          </div>
+
+          {/* Bottom Luxury Identity Card */}
+          <div className="absolute bottom-3 left-3 right-3 p-3 sm:p-3.5 rounded-2xl backdrop-blur-2xl bg-black/70 dark:bg-[#070D18]/85 border border-white/15 dark:border-sky-500/25 shadow-2xl flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-sky-500/20 via-blue-500/20 to-indigo-500/30 border border-white/20 flex items-center justify-center p-1.5 shadow-inner shrink-0">
+                <MusurmonIcon size={22} color="gradient" />
               </div>
-
-              <p className="text-slate-700 dark:text-slate-200 leading-relaxed text-base sm:text-lg">
-                {PERSONAL_INFO.bio}
-              </p>
-
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm sm:text-base border-l-2 border-brand-teal/70 pl-4 italic">
-                &ldquo;{PERSONAL_INFO.philosophy}&rdquo;
-              </p>
-
-              <div className="pt-2">
-                <h4 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 font-semibold">
-                  Asosiy Qiziqishlarim:
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "SaaS Boshqaruv Tizimlari",
-                    "Local-First AI Desktop",
-                    "EdTech & LMS Platformalar",
-                    "Telegram Bot Avtomatizatsiyalari",
-                    "Chrome Extension Ekotizimi",
-                  ].map((interest) => (
-                    <span
-                      key={interest}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-3 py-1 text-xs font-medium text-slate-800 dark:text-slate-200"
-                    >
-                      <CheckCircle2 className="h-3 w-3 text-brand-teal" />
-                      <span>{interest}</span>
-                    </span>
-                  ))}
+              <div>
+                <div className="text-sm font-bold text-white tracking-tight leading-tight">
+                  Azamqulov Musurmon
+                </div>
+                <div className="text-[11px] font-mono text-sky-400 font-medium">
+                  Full-Stack Developer
                 </div>
               </div>
             </div>
 
-            {/* Quick Meta Strip */}
-            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 grid grid-cols-3 gap-3 text-center">
-              <div>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono block">Tajriba</span>
-                <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                  2+ Yil
-                </span>
-              </div>
-              <div>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono block">Hudud</span>
-                <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                  O&apos;zbekiston
-                </span>
-              </div>
-              <div>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono block">Rejim</span>
-                <span className="text-sm font-bold text-teal-700 dark:text-brand-teal">
-                  Masofaviy / Full-time
-                </span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right 4 Pillars Cards */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            {pillars.map((pillar, idx) => {
-              const Icon = pillar.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="group rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121318] p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:border-brand-teal/50 hover:bg-slate-50 dark:hover:bg-[#161820]"
-                >
-                  <div className="flex items-start gap-3.5">
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr ${pillar.gradient} text-white shadow-md`}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-teal transition-colors">
-                        {pillar.title}
-                      </h4>
-                      <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {pillar.desc}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+            <a
+              href="#contact"
+              className="h-8 w-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95 shrink-0"
+              title="Bog'lanish"
+              aria-label="Aloqaga o'tish"
+            >
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
           </div>
+        </div>
+      </motion.div>
+
+      {/* Floating 3D Micro-Pill 1: Full-Stack & AI */}
+      <motion.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+        whileHover={{ scale: 1.08 }}
+        className="hidden sm:flex absolute -top-3 -right-3 z-30 items-center gap-2 rounded-xl px-3.5 py-2 backdrop-blur-xl bg-white/95 dark:bg-[#0D1424]/95 border border-slate-200/90 dark:border-slate-800 text-xs font-mono font-bold text-slate-800 dark:text-slate-200 shadow-xl cursor-pointer"
+      >
+        <Sparkles className="h-3.5 w-3.5 text-sky-500" />
+        <span>Full-Stack & AI</span>
+      </motion.div>
+
+      {/* Floating 3D Micro-Pill 2: Clean Code */}
+      <motion.div
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        whileHover={{ scale: 1.08 }}
+        className="hidden sm:flex absolute -bottom-3 -left-3 z-30 items-center gap-2 rounded-xl px-3.5 py-2 backdrop-blur-xl bg-white/95 dark:bg-[#0D1424]/95 border border-slate-200/90 dark:border-slate-800 text-xs font-mono font-bold text-slate-800 dark:text-slate-200 shadow-xl cursor-pointer"
+      >
+        <Zap className="h-3.5 w-3.5 text-blue-500" />
+        <span>Clean Code</span>
+      </motion.div>
+    </div>
+  );
+};
+
+export const About: React.FC = () => {
+  const techBadges = [
+    { name: "React", iconId: "react" },
+    { name: "Next.js", iconId: "next.js" },
+    { name: "Node.js", iconId: "node.js" },
+    { name: "MongoDB", iconId: "mongodb" },
+    { name: "TypeScript", iconId: "typescript" },
+  ];
+
+  return (
+    <section
+      id="about"
+      aria-labelledby="about-heading"
+      className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+    >
+      {/* Ambient background glow */}
+      <div className="pointer-events-none absolute top-1/2 right-1/4 -translate-y-1/2 w-[480px] h-[480px] bg-gradient-to-bl from-blue-500/10 via-sky-500/15 to-transparent rounded-full blur-[120px] -z-10 dark:opacity-70 opacity-30" />
+
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column: Heading, Bio, Tech Stack with Official SVGs, CTA */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            {/* Tag */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-4"
+            >
+              <span>— MEN HAQIMDA</span>
+            </motion.div>
+
+            {/* Heading */}
+            <motion.h2
+              id="about-heading"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15]"
+            >
+              Muammolarni amaliy <br />
+              <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent">
+                tizimlarga aylantiraman
+              </span>
+            </motion.h2>
+
+            {/* Paragraph */}
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
+            >
+              {PERSONAL_INFO.aboutFull}
+            </motion.p>
+
+            {/* Tech Badges Row with Smooth Fade */}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              {techBadges.map((tech, idx) => (
+                <motion.div
+                  key={tech.name}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.25 + idx * 0.05,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center gap-2.5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white/95 dark:bg-[#0D1424]/95 px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-200 shadow-sm backdrop-blur-md hover:border-sky-500/50 hover:shadow-md transition-all cursor-pointer"
+                >
+                  <TechIcon name={tech.iconId} size={18} className="shrink-0" />
+                  <span className="font-mono tracking-tight">{tech.name}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8"
+            >
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40 active:scale-95"
+                aria-label="Bog'lanish uchun"
+              >
+                <span>To&apos;liq profilni ko&apos;rish</span>
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right Column: 3D Interactive Portrait Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 relative flex items-center justify-center pt-6 lg:pt-0"
+          >
+            <AboutPortraitCard />
+          </motion.div>
         </div>
       </div>
     </section>

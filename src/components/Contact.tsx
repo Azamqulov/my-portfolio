@@ -5,311 +5,307 @@ import { motion } from "framer-motion";
 import {
   Send,
   Mail,
-  MessageSquare,
-  Github,
-  Copy,
-  Check,
+  Phone,
   MapPin,
-  ArrowUpRight,
+  Check,
+  ArrowRight,
+  Bot,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { PERSONAL_INFO } from "@/data/portfolioData";
+import { Aos } from "@/components/Aos";
 
 export const Contact: React.FC = () => {
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [formState, setFormState] = useState({
     name: "",
-    emailOrTelegram: "",
+    email: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2000);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formState.name || !formState.emailOrTelegram || !formState.message) return;
+    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
+      setErrorMessage("Iltimos, barcha maydonlarni to'liq to'ldiring.");
+      return;
+    }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ["#00D9C0", "#6366F1", "#38BDF8"],
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
       });
-    }, 600);
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitted(true);
+        confetti({
+          particleCount: 90,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#38BDF8", "#3B82F6", "#818CF8"],
+        });
+        setFormState({ name: "", email: "", message: "" });
+      } else {
+        setErrorMessage(
+          data.error ||
+            "Xabarni Telegramga yuborishda xatolik yuz berdi. Iltimos qaytadan urinib ko'ring yoki bot orqali yozing."
+        );
+      }
+    } catch {
+      setErrorMessage(
+        "Tarmoq bilan bog'lanishda xatolik yuz berdi. Iltimos internet aloqasini tekshiring."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const contactCards = [
-    {
-      key: "telegram",
-      label: "Telegram",
-      value: PERSONAL_INFO.contacts.telegram,
-      copyValue: "@Musurmon_dev",
-      url: PERSONAL_INFO.contacts.telegramUrl,
-      icon: MessageSquare,
-      desc: "Eng tez javob berish kanali (15-30 daqiqa)",
-      badge: "Tezkor",
-    },
-    {
-      key: "email",
-      label: "Email",
-      value: PERSONAL_INFO.contacts.email,
-      copyValue: PERSONAL_INFO.contacts.email,
-      url: PERSONAL_INFO.contacts.emailUrl,
-      icon: Mail,
-      desc: "Rasmiy takliflar va loyiha hujjatlari uchun",
-      badge: "Rasmiy",
-    },
-    {
-      key: "github",
-      label: "GitHub",
-      value: `github.com/${PERSONAL_INFO.contacts.github}`,
-      copyValue: PERSONAL_INFO.contacts.githubUrl,
-      url: PERSONAL_INFO.contacts.githubUrl,
-      icon: Github,
-      desc: "Ochiq kodli repozitoriyalar va commitlar tarixi",
-      badge: "Kod",
-    },
-  ];
-
   return (
-    <section id="contact" className="py-24 px-4 relative">
-      <div className="max-w-6xl mx-auto">
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+    >
+      {/* Background radial glow */}
+      <div className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-gradient-to-t from-sky-500/10 via-blue-600/10 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
+
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-teal-600/30 dark:border-brand-teal/30 bg-teal-50 dark:bg-brand-teal/10 px-3.5 py-1 text-xs font-mono text-teal-700 dark:text-brand-teal mb-3 font-semibold"
-          >
-            <span>06 // ALOQA & HAMKORLIK</span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight"
-          >
-            Birgalikda yangi{" "}
-            <span className="bg-gradient-to-r from-teal-600 to-indigo-600 dark:from-brand-teal dark:to-brand-indigo bg-clip-text text-transparent">
-              mahsulot yaratamiz
-            </span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-4 max-w-xl text-slate-600 dark:text-slate-300 text-sm sm:text-base"
-          >
-            Sizda yangi biznes loyiha g&apos;oyasi bormi yoki mavjud tizimingizni
-            AI va zamonaviy texnologiyalar bilan kuchaytirmoqchimisiz? Keling,
-            suhbatlashamiz.
-          </motion.p>
+          <Aos animation="fade-up" delay={0.05}>
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
+              <span>• BOG&apos;LANISH</span>
+            </div>
+          </Aos>
+          <Aos animation="fade-up" delay={0.12}>
+            <h2
+              id="contact-heading"
+              className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
+            >
+              Loyihangizni birga amalga oshiramiz
+            </h2>
+          </Aos>
+          <Aos animation="fade-up" delay={0.18}>
+            <p className="mt-4 max-w-xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal">
+              Menga xabar yuboring — xabaringiz to&apos;g&apos;ridan-to&apos;g&apos;ri Telegramga yetib boradi. Sizning g&apos;oyangiz — mening ustuvor vazifam!
+            </p>
+          </Aos>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Direct Contact Channels */}
-          <div className="lg:col-span-5 space-y-4">
-            {contactCards.map((card, idx) => {
-              const Icon = card.icon;
-              const isCopied = copiedKey === card.key;
-              return (
-                <motion.div
-                  key={card.key}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121318] p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:border-brand-teal/50"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50 dark:bg-brand-teal/15 text-teal-600 dark:text-brand-teal border border-teal-500/20 dark:border-brand-teal/30">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                            {card.label}
-                          </h4>
-                          <span className="text-[10px] font-mono font-semibold text-teal-700 dark:text-brand-teal bg-teal-50 dark:bg-brand-teal/10 px-2 py-0.5 rounded">
-                            {card.badge}
-                          </span>
-                        </div>
-                        <span className="text-xs text-slate-700 dark:text-slate-300 font-mono font-semibold">
-                          {card.value}
-                        </span>
-                      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column: Direct Details */}
+          <Aos
+            animation="fade-right"
+            delay={0.15}
+            className="lg:col-span-5 flex flex-col space-y-5"
+          >
+            {/* Email Card */}
+            <a
+              href={`mailto:${PERSONAL_INFO.contacts.email}`}
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-sky-500/40 transition-all"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-500 border border-sky-500/20 group-hover:scale-110 transition-transform">
+                <Mail className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-xs text-slate-400 block font-medium">Email</span>
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+                  {PERSONAL_INFO.contacts.email}
+                </span>
+              </div>
+            </a>
+
+            {/* Phone Card */}
+            <a
+              href="tel:+998901234567"
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20 group-hover:scale-110 transition-transform">
+                <Phone className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-xs text-slate-400 block font-medium">Telefon</span>
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-400 transition-colors">
+                  {PERSONAL_INFO.phone}
+                </span>
+              </div>
+            </a>
+
+            {/* Telegram Bot Card (Email va Telefon raqam tagidan) */}
+            <a
+              href="https://t.me/azamqulovService_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-sky-500/30 dark:border-sky-500/25 bg-sky-500/5 dark:bg-sky-500/10 backdrop-blur-md shadow-sm hover:shadow-md hover:border-sky-500/50 hover:bg-sky-500/10 transition-all"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-500/20 to-blue-600/20 text-sky-500 dark:text-sky-400 border border-sky-500/30 group-hover:scale-110 transition-transform shadow-inner">
+                <Bot className="h-6 w-6" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-sky-600 dark:text-sky-400 font-mono font-bold uppercase tracking-wider block">
+                    Telegram Bot
+                  </span>
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                </div>
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors font-mono">
+                  @azamqulovService_bot
+                </span>
+              </div>
+            </a>
+
+            {/* Location Card */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
+                <MapPin className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-xs text-slate-400 block font-medium">Manzil</span>
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
+                  {PERSONAL_INFO.location}
+                </span>
+              </div>
+            </div>
+          </Aos>
+
+          {/* Right Column: Form with Fun Doodle */}
+          <Aos
+            animation="fade-left"
+            delay={0.15}
+            className="lg:col-span-7 relative"
+          >
+            {/* Playful Hand-Drawn Doodle */}
+            <div className="hidden xl:block absolute -top-10 -right-16 text-indigo-400 dark:text-indigo-400/90 font-serif italic text-lg select-none transform rotate-6 pointer-events-none">
+              <div className="flex flex-col items-center">
+                <span>Keling, birga</span>
+                <span>ishlaymiz! ↗</span>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0B101D]/95 p-6 sm:p-8 backdrop-blur-md shadow-xl dark:shadow-2xl">
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center text-center p-8 rounded-xl border border-sky-500/30 bg-sky-500/10 space-y-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-500 text-white shadow-lg">
+                    <Check className="h-6 w-6 stroke-[3]" />
+                  </div>
+                  <h4 className="text-lg font-bold text-slate-900 dark:text-white">
+                    Xabaringiz Telegramga Yuborildi!
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm">
+                    Rahmat, {formState.name}! Xabaringiz Telegram guruhiga yetkazildi, tez orada siz bilan bog&apos;lanaman.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormState({ name: "", email: "", message: "" });
+                      setErrorMessage(null);
+                    }}
+                    className="mt-2 text-xs font-semibold text-sky-500 underline"
+                  >
+                    Yangi xabar yuborish
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Error Banner */}
+                  {errorMessage && (
+                    <div className="flex items-center gap-2 p-3.5 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-medium">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      <span>{errorMessage}</span>
                     </div>
+                  )}
 
-                    {/* Copy and Open Buttons */}
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => handleCopy(card.copyValue, card.key)}
-                        aria-label="Nusxalash"
-                        title="Nusxalash"
-                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition-colors"
-                      >
-                        {isCopied ? (
-                          <Check className="h-3.5 w-3.5 text-emerald-600" />
-                        ) : (
-                          <Copy className="h-3.5 w-3.5" />
-                        )}
-                      </button>
-
-                      <a
-                        href={card.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${card.label} havolasi`}
-                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:text-brand-teal hover:border-brand-teal/40 transition-colors"
-                      >
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      </a>
+                  {/* Row 1: Name and Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <input
+                        id="contact-name"
+                        name="name"
+                        type="text"
+                        required
+                        aria-label="Ismingiz"
+                        placeholder="Ismingiz"
+                        value={formState.name}
+                        onChange={(e) =>
+                          setFormState({ ...formState, name: e.target.value })
+                        }
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#080B12]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        id="contact-email"
+                        name="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        aria-label="Email manzilingiz"
+                        placeholder="Email manzilingiz"
+                        value={formState.email}
+                        onChange={(e) =>
+                          setFormState({ ...formState, email: e.target.value })
+                        }
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#080B12]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors"
+                      />
                     </div>
                   </div>
-                  <p className="mt-3 text-[11px] text-slate-500 dark:text-slate-400">
-                    {card.desc}
-                  </p>
-                </motion.div>
-              );
-            })}
 
-            {/* Location & Status note */}
-            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100/70 dark:bg-white/[0.03] p-4 text-xs text-slate-700 dark:text-slate-300 flex items-center gap-3">
-              <MapPin className="h-4 w-4 text-teal-600 dark:text-brand-teal shrink-0" />
-              <span>
-                Joylashuv: <strong>O&apos;zbekiston (Toshkent / Remote)</strong>.
-                Dunyoning istalgan nuqtasidan loyihalarni qabul qilaman.
-              </span>
+                  {/* Row 2: Message */}
+                  <div>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      required
+                      rows={4}
+                      aria-label="Xabar matni"
+                      placeholder="Loyiha haqida xabaringiz..."
+                      value={formState.message}
+                      onChange={(e) =>
+                        setFormState({ ...formState, message: e.target.value })
+                      }
+                      className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#080B12]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors resize-none"
+                    />
+                  </div>
+
+                  {/* Row 3: Submit Button */}
+                  <div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.01] hover:shadow-blue-500/40 active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <span>Telegramga yuborilmoqda...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Xabar yuborish</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
-          </div>
-
-          {/* Right Direct Message Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121318] p-7 sm:p-9 shadow-lg dark:shadow-2xl"
-          >
-            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-              Tezkor Xabar Yuborish
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6">
-              Xabaringiz to&apos;g&apos;ridan-to&apos;g&apos;ri Telegram profilimga
-              yo&apos;naltiriladi yoki nusxa qilib olinadi.
-            </p>
-
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center text-center p-8 rounded-2xl border border-teal-500/30 bg-teal-50 dark:bg-brand-teal/10 space-y-4"
-              >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-teal text-[#0A0A0B]">
-                  <Check className="h-7 w-7 stroke-[3]" />
-                </div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white">Xabaringiz Qabul Qilindi!</h4>
-                <p className="text-xs text-slate-700 dark:text-slate-300 max-w-sm leading-relaxed">
-                  Rahmat, {formState.name}! Tez orada siz bilan bog&apos;lanaman.
-                  Agar shoshilinch bo&apos;lsa, Telegram orqali to&apos;g&apos;ridan-to&apos;g&apos;ri yozishingiz mumkin.
-                </p>
-                <a
-                  href={`https://t.me/Musurmon_dev?text=${encodeURIComponent(
-                    `Salom Musurmon, mening ismim ${formState.name}. Xabar: ${formState.message}`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-teal to-brand-indigo px-5 py-2.5 text-xs font-bold text-white shadow-md"
-                >
-                  <MessageSquare className="h-4 w-4" />
-                  <span>Telegram orqali ochish</span>
-                </a>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Ismingiz *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Masalan: Sardor Aliyev"
-                    value={formState.name}
-                    onChange={(e) =>
-                      setFormState({ ...formState, name: e.target.value })
-                    }
-                    className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-teal focus:outline-none focus:ring-1 focus:ring-brand-teal"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Telegram user yoki Email manzilingiz *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="@username yoki pochta@domain.uz"
-                    value={formState.emailOrTelegram}
-                    onChange={(e) =>
-                      setFormState({
-                        ...formState,
-                        emailOrTelegram: e.target.value,
-                      })
-                    }
-                    className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-teal focus:outline-none focus:ring-1 focus:ring-brand-teal"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Loyiha haqida qisqacha ma&apos;lumot *
-                  </label>
-                  <textarea
-                    required
-                    rows={4}
-                    placeholder="Loyiha maqsadi, muddat va asosiy talablar haqida yozing..."
-                    value={formState.message}
-                    onChange={(e) =>
-                      setFormState({ ...formState, message: e.target.value })
-                    }
-                    className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-teal focus:outline-none focus:ring-1 focus:ring-brand-teal resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-teal to-brand-indigo py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-teal/20 transition-all hover:scale-[1.01] hover:shadow-brand-indigo/30 active:scale-[0.99] disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    <span>Yuborilmoqda...</span>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4" />
-                      <span>Xabarni Yuborish</span>
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </motion.div>
+          </Aos>
         </div>
       </div>
     </section>

@@ -1,0 +1,196 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="180" y1="50" x2="1050" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#EEF4FF"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="240" y1="120" x2="900" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18243A"/>
+      <stop offset="1" stop-color="#071224"/>
+    </linearGradient>
+    <linearGradient id="screenEdge" x1="220" y1="100" x2="910" y2="540" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DCE8FF"/>
+      <stop offset="1" stop-color="#8EAFFF"/>
+    </linearGradient>
+    <linearGradient id="platform" x1="120" y1="500" x2="1060" y2="610" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111D31"/>
+      <stop offset="1" stop-color="#263B5B"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="350" y1="580" x2="780" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#19B8FF"/>
+      <stop offset="1" stop-color="#5A4BFF"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#10B7FF"/>
+      <stop offset="1" stop-color="#4D54F7"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="25" stdDeviation="28" flood-color="#5875A5" flood-opacity=".22"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <filter id="tinyShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#35527D" flood-opacity=".22"/>
+    </filter>
+    <clipPath id="screenClip">
+      <rect x="247" y="145" width="645" height="335" rx="18"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" rx="34" fill="url(#bg)"/>
+  <circle cx="655" cy="170" r="190" fill="#DDE9FF" opacity=".75"/>
+  <circle cx="655" cy="170" r="150" fill="#C9DAFF" opacity=".34"/>
+  <ellipse cx="610" cy="620" rx="430" ry="45" fill="#7B9DDA" opacity=".16" filter="url(#soft)"/>
+
+  <!-- subtle orbit / UI lines -->
+  <path d="M120 250C170 105 390 55 560 110" stroke="#B9D7FF" stroke-width="2" opacity=".6"/>
+  <path d="M820 90C1030 105 1110 240 1060 410" stroke="#C6D9FF" stroke-width="2" opacity=".55"/>
+  <circle cx="110" cy="250" r="7" fill="#38C6FF"/>
+  <circle cx="1060" cy="410" r="7" fill="#5D63FF"/>
+
+  <!-- blue glow under platform -->
+  <ellipse cx="600" cy="603" rx="420" ry="38" fill="url(#glow)" opacity=".28" filter="url(#soft)"/>
+
+  <!-- Monitor -->
+  <g transform="rotate(-4 565 315)" filter="url(#shadow)">
+    <rect x="225" y="112" width="700" height="405" rx="28" fill="url(#screenEdge)"/>
+    <rect x="238" y="126" width="674" height="378" rx="22" fill="#0B1425"/>
+    <rect x="247" y="145" width="645" height="335" rx="18" fill="url(#screen)"/>
+
+    <!-- window bar -->
+    <g clip-path="url(#screenClip)">
+      <rect x="247" y="145" width="645" height="42" fill="#111C30"/>
+      <circle cx="271" cy="166" r="6" fill="#FF6B7A"/>
+      <circle cx="290" cy="166" r="6" fill="#FFD35A"/>
+      <circle cx="309" cy="166" r="6" fill="#48D99A"/>
+      <text x="338" y="171" fill="#8EA0BE" font-family="Inter,Arial,sans-serif" font-size="15">project / src</text>
+
+      <!-- file tree -->
+      <rect x="247" y="187" width="155" height="293" fill="#0D192B"/>
+      <text x="267" y="218" fill="#AFC0DA" font-family="monospace" font-size="15">▾ src</text>
+      <text x="283" y="246" fill="#7890B3" font-family="monospace" font-size="14">▾ components</text>
+      <text x="300" y="273" fill="#6E84A5" font-family="monospace" font-size="14">Button.tsx</text>
+      <text x="300" y="298" fill="#6E84A5" font-family="monospace" font-size="14">Hero.tsx</text>
+      <text x="283" y="326" fill="#7890B3" font-family="monospace" font-size="14">▾ pages</text>
+      <text x="300" y="353" fill="#6E84A5" font-family="monospace" font-size="14">Home.tsx</text>
+      <text x="283" y="381" fill="#7890B3" font-family="monospace" font-size="14">api</text>
+      <text x="283" y="409" fill="#7890B3" font-family="monospace" font-size="14">hooks</text>
+      <text x="283" y="437" fill="#7890B3" font-family="monospace" font-size="14">utils</text>
+
+      <!-- code -->
+      <text x="430" y="218" fill="#7C8DA9" font-family="monospace" font-size="14">01</text>
+      <text x="430" y="244" fill="#7C8DA9" font-family="monospace" font-size="14">02</text>
+      <text x="430" y="270" fill="#7C8DA9" font-family="monospace" font-size="14">03</text>
+      <text x="430" y="296" fill="#7C8DA9" font-family="monospace" font-size="14">04</text>
+      <text x="430" y="322" fill="#7C8DA9" font-family="monospace" font-size="14">05</text>
+      <text x="430" y="348" fill="#7C8DA9" font-family="monospace" font-size="14">06</text>
+      <text x="430" y="374" fill="#7C8DA9" font-family="monospace" font-size="14">07</text>
+      <text x="430" y="400" fill="#7C8DA9" font-family="monospace" font-size="14">08</text>
+
+      <text x="468" y="218" fill="#C792EA" font-family="monospace" font-size="15">export default</text>
+      <text x="592" y="218" fill="#82AAFF" font-family="monospace" font-size="15">function</text>
+      <text x="668" y="218" fill="#D6DEEB" font-family="monospace" font-size="15">Home() {</text>
+      <text x="468" y="244" fill="#89DDFF" font-family="monospace" font-size="15">return</text>
+      <text x="530" y="244" fill="#D6DEEB" font-family="monospace" font-size="15">(</text>
+      <text x="550" y="244" fill="#F07178" font-family="monospace" font-size="15">&lt;main</text>
+      <text x="600" y="244" fill="#C792EA" font-family="monospace" font-size="15">className</text>
+      <text x="680" y="244" fill="#C3E88D" font-family="monospace" font-size="15">="hero"</text>
+      <text x="755" y="244" fill="#F07178" font-family="monospace" font-size="15">&gt;</text>
+      <text x="490" y="270" fill="#F07178" font-family="monospace" font-size="15">&lt;h1&gt;</text>
+      <text x="548" y="270" fill="#C3E88D" font-family="monospace" font-size="15">Better Web</text>
+      <text x="650" y="270" fill="#F07178" font-family="monospace" font-size="15">&lt;/h1&gt;</text>
+      <text x="490" y="296" fill="#F07178" font-family="monospace" font-size="15">&lt;p&gt;</text>
+      <text x="532" y="296" fill="#C3E88D" font-family="monospace" font-size="15">Code • Design • Speed</text>
+      <text x="725" y="296" fill="#F07178" font-family="monospace" font-size="15">&lt;/p&gt;</text>
+      <text x="490" y="322" fill="#F07178" font-family="monospace" font-size="15">&lt;Button</text>
+      <text x="575" y="322" fill="#C792EA" font-family="monospace" font-size="15">primary</text>
+      <text x="650" y="322" fill="#D6DEEB" font-family="monospace" font-size="15">/&gt;</text>
+      <text x="468" y="348" fill="#F07178" font-family="monospace" font-size="15">&lt;/main&gt;</text>
+      <text x="468" y="374" fill="#D6DEEB" font-family="monospace" font-size="15">}</text>
+
+      <!-- bottom terminal -->
+      <rect x="465" y="405" width="380" height="68" rx="10" fill="#08111F" stroke="#243754"/>
+      <text x="485" y="430" fill="#5EE7A4" font-family="monospace" font-size="14">✓ npm run dev</text>
+      <text x="485" y="454" fill="#9FB1CC" font-family="monospace" font-size="13">Local: http://localhost:3000</text>
+    </g>
+  </g>
+
+  <!-- Platform -->
+  <g filter="url(#tinyShadow)">
+    <path d="M95 510L1005 510L1080 570L1050 608L155 608L105 568Z" fill="url(#platform)"/>
+    <path d="M155 608H1050L1028 625H178Z" fill="#0C1627"/>
+    <path d="M145 568H1037" stroke="#9DB8E9" stroke-opacity=".35" stroke-width="2"/>
+    <path d="M190 608H1015" stroke="url(#glow)" stroke-width="9" stroke-linecap="round" opacity=".75"/>
+  </g>
+
+  <!-- Books -->
+  <g filter="url(#tinyShadow)">
+    <rect x="170" y="510" width="250" height="30" rx="5" fill="#172943"/>
+    <rect x="182" y="478" width="240" height="31" rx="5" fill="#253C5D"/>
+    <rect x="193" y="447" width="230" height="30" rx="5" fill="#334D70"/>
+    <text x="205" y="468" fill="#E8F0FF" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700">Node.js</text>
+    <text x="205" y="499" fill="#E8F0FF" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700">TypeScript</text>
+    <text x="205" y="531" fill="#E8F0FF" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700">Next.js</text>
+  </g>
+
+  <!-- Plant -->
+  <g filter="url(#tinyShadow)">
+    <path d="M105 505C106 459 122 419 154 397C170 431 163 472 141 505Z" fill="#4CC58B"/>
+    <path d="M120 504C95 464 94 433 106 409C132 432 143 469 139 504Z" fill="#62D49A"/>
+    <path d="M132 504C142 452 169 426 199 417C202 455 179 488 145 508Z" fill="#36B879"/>
+    <path d="M103 505H185L173 548H116Z" fill="#F0F4FA"/>
+    <path d="M112 510H178" stroke="#C9D6E8" stroke-width="3"/>
+  </g>
+
+  <!-- Mug -->
+  <g filter="url(#tinyShadow)">
+    <path d="M720 480H820V548C820 562 808 572 794 572H746C732 572 720 562 720 548Z" fill="#1B2940"/>
+    <path d="M820 495C852 493 865 508 857 529C851 545 836 551 820 548" stroke="#1B2940" stroke-width="13" fill="none"/>
+    <text x="745" y="530" fill="#9EC8FF" font-family="monospace" font-size="25">&lt;/&gt;</text>
+  </g>
+
+  <!-- Lamp -->
+  <g filter="url(#tinyShadow)">
+    <path d="M890 500L1010 275" stroke="#172238" stroke-width="12" stroke-linecap="round"/>
+    <path d="M1010 275L1052 314" stroke="#172238" stroke-width="12" stroke-linecap="round"/>
+    <path d="M1048 300L1085 320L1068 350L1030 329Z" fill="#1A263B"/>
+    <path d="M1050 333L1068 350" stroke="#F8D78A" stroke-width="12" stroke-linecap="round"/>
+    <path d="M868 572H1048" stroke="#172238" stroke-width="13" stroke-linecap="round"/>
+  </g>
+
+  <!-- React badge -->
+  <g filter="url(#tinyShadow)">
+    <rect x="875" y="78" width="190" height="72" rx="24" fill="white"/>
+    <circle cx="914" cy="114" r="22" fill="#E9F7FF"/>
+    <path d="M898 114C898 99 930 99 930 114C930 129 898 129 898 114Z" stroke="#19B7FF" stroke-width="3"/>
+    <path d="M904 101C918 93 927 126 915 132C902 138 895 108 904 101Z" stroke="#19B7FF" stroke-width="3"/>
+    <circle cx="914" cy="114" r="4" fill="#19B7FF"/>
+    <text x="946" y="121" fill="#273650" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700">React</text>
+  </g>
+
+  <!-- TypeScript badge -->
+  <g filter="url(#tinyShadow)">
+    <rect x="1018" y="180" width="145" height="68" rx="20" fill="white"/>
+    <rect x="1033" y="195" width="38" height="38" rx="7" fill="#3178C6"/>
+    <text x="1040" y="222" fill="white" font-family="Arial,sans-serif" font-size="20" font-weight="700">TS</text>
+    <text x="1084" y="219" fill="#273650" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700">TypeScript</text>
+  </g>
+
+  <!-- Floating performance card -->
+  <g filter="url(#tinyShadow)">
+    <rect x="890" y="360" width="180" height="125" rx="22" fill="#263B5D"/>
+    <text x="915" y="393" fill="#9DB7DB" font-family="Inter,Arial,sans-serif" font-size="14">PROJECT QUALITY</text>
+    <text x="915" y="425" fill="white" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700">✓ Fast</text>
+    <text x="915" y="452" fill="white" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700">✓ Scalable</text>
+    <text x="915" y="479" fill="white" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700">✓ Modern</text>
+  </g>
+
+  <!-- code floating icon -->
+  <g filter="url(#tinyShadow)">
+    <rect x="48" y="290" width="72" height="72" rx="20" fill="#202F50"/>
+    <path d="M68 326L82 312L68 298" stroke="#8CDFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M100 298L86 326L100 354" stroke="#8A91FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

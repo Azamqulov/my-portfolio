@@ -8,29 +8,28 @@ import {
   Moon,
   Menu,
   X,
-  Sparkles,
+  Download,
   Send,
-  Code2,
+  Home,
   FolderGit2,
-  Cpu,
+  Briefcase,
   User,
-  Workflow,
+  MessageSquare,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
 interface NavItem {
   name: string;
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
+  id: string;
 }
 
 const navItems: NavItem[] = [
-  { name: "Asosiy", href: "#hero", icon: Sparkles },
-  { name: "Haqimda", href: "#about", icon: User },
-  { name: "Ko'nikmalar", href: "#skills", icon: Cpu },
-  { name: "Loyihalar", href: "#featured-projects", icon: FolderGit2 },
-  { name: "Barchasi", href: "#all-projects", icon: Code2 },
-  { name: "Jarayon", href: "#process", icon: Workflow },
+  { name: "Bosh sahifa", href: "#hero", id: "hero" },
+  { name: "Loyihalar", href: "#projects", id: "projects" },
+  { name: "Xizmatlar", href: "#services", id: "services" },
+  { name: "Men haqimda", href: "#about", id: "about" },
+  { name: "Bog'lanish", href: "#contact", id: "contact" },
 ];
 
 export const Navbar: React.FC = () => {
@@ -45,23 +44,19 @@ export const Navbar: React.FC = () => {
     setMounted(true);
 
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 20);
 
-      const sections = [
-        "hero",
-        "about",
-        "skills",
-        "featured-projects",
-        "all-projects",
-        "process",
-        "contact",
-      ];
-      for (const section of sections) {
-        const el = document.getElementById(section);
+      const sectionIds = ["hero", "about", "skills", "projects", "services", "testimonials", "contact"];
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 220 && rect.bottom >= 220) {
-            setActiveSection(section);
+          if (rect.top <= 250 && rect.bottom >= 250) {
+            if (id === "services") setActiveSection("services");
+            else if (id === "projects") setActiveSection("projects");
+            else if (id === "about") setActiveSection("about");
+            else if (id === "contact") setActiveSection("contact");
+            else if (id === "hero") setActiveSection("hero");
             break;
           }
         }
@@ -86,34 +81,38 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <motion.div
-          initial={{ y: -50, opacity: 0 }}
+          initial={{ y: -40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex w-full max-w-6xl items-center justify-between rounded-full border border-slate-200/90 dark:border-white/10 bg-white/90 dark:bg-[#0A0A0B]/85 px-4 py-2.5 sm:px-6 shadow-xl shadow-slate-200/40 dark:shadow-black/60 backdrop-blur-xl transition-all"
+          className="flex w-full max-w-7xl items-center justify-between rounded-full border border-slate-200/90 dark:border-slate-800/80 bg-white/90 dark:bg-[#080B12]/85 px-4 py-2.5 sm:px-6 shadow-xl shadow-slate-200/40 dark:shadow-black/60 backdrop-blur-xl transition-all"
         >
           {/* Logo */}
-          <a href="#hero" className="focus:outline-none">
+          <a
+            href="#hero"
+            aria-label="Azamqulov Musurmon — Bosh sahifaga qaytish"
+            className="focus:outline-none"
+          >
             <Logo size={36} />
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1.5 rounded-full px-4 py-1.5 bg-slate-100/90 dark:bg-white/5 border border-slate-200/80 dark:border-white/5">
+          {/* Center Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1 rounded-full px-3 py-1 bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/70 dark:border-slate-800/60">
             {navItems.map((item) => {
-              const isActive = activeSection === item.href.replace("#", "");
+              const isActive = activeSection === item.id;
               return (
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`relative px-4 py-2 text-sm font-bold tracking-tight transition-colors rounded-full ${
+                  className={`relative px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors rounded-full ${
                     isActive
-                      ? "text-teal-700 dark:text-brand-teal font-extrabold"
-                      : "text-slate-800 hover:text-black dark:text-slate-200 dark:hover:text-white"
+                      ? "text-sky-600 dark:text-sky-400 font-bold"
+                      : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="activeNavIndicator"
-                      className="absolute inset-0 rounded-full bg-teal-500/15 dark:bg-brand-teal/20 border border-teal-600/30 dark:border-brand-teal/40 shadow-sm"
+                      className="absolute inset-0 rounded-full bg-sky-500/10 dark:bg-sky-500/15 border border-sky-500/25 shadow-sm"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -123,14 +122,26 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Actions */}
+          {/* Right Actions: CV Download + Theme Toggle + Mobile Menu */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Prominent Theme Toggle */}
+            {/* CV Yuklab olish Button */}
+            <a
+              href="/Musurmon-Azamqulov-Resume.pdf"
+              download="Musurmon Azamqulov - Professional Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>CV Yuklab olish</span>
+            </a>
+
+            {/* Theme Toggle (Dark/Light) */}
             <button
               onClick={toggleTheme}
               aria-label="Rejimni almashtirish"
               title={isDark ? "Light rejimga o'tish" : "Dark rejimga o'tish"}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 dark:border-white/15 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-800 dark:text-slate-100 transition-all shadow-sm hover:scale-105"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-all shadow-sm hover:scale-105"
             >
               <AnimatePresence mode="wait" initial={false}>
                 {mounted && (
@@ -139,32 +150,23 @@ export const Navbar: React.FC = () => {
                     initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
                     animate={{ rotate: 0, opacity: 1, scale: 1 }}
                     exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
-                    transition={{ duration: 0.25 }}
+                    transition={{ duration: 0.2 }}
                   >
                     {isDark ? (
-                      <Sun className="h-5 w-5 text-amber-400" />
+                      <Sun className="h-4 w-4 text-amber-400" />
                     ) : (
-                      <Moon className="h-5 w-5 text-indigo-600" />
+                      <Moon className="h-4 w-4 text-indigo-600" />
                     )}
                   </motion.div>
                 )}
               </AnimatePresence>
             </button>
 
-            {/* Quick Contact CTA */}
-            <a
-              href="#contact"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand-teal to-brand-indigo px-4 py-2 text-xs font-bold text-white shadow-md shadow-brand-teal/20 hover:scale-105 active:scale-95 transition-all"
-            >
-              <Send className="h-3.5 w-3.5" />
-              <span>Bog&apos;lanish</span>
-            </a>
-
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Menyu"
-              className="flex lg:hidden h-10 w-10 items-center justify-center rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white"
+              className="flex md:hidden h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -180,31 +182,30 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-4 top-20 z-50 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0E0F14]/95 p-5 shadow-2xl backdrop-blur-2xl lg:hidden text-slate-900 dark:text-slate-100"
+            className="fixed inset-x-4 top-20 z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0B101D]/95 p-5 shadow-2xl backdrop-blur-2xl md:hidden text-slate-900 dark:text-slate-100"
           >
             <div className="flex flex-col gap-2">
               {navItems.map((item) => {
-                const Icon = item.icon;
                 return (
                   <a
                     key={item.name}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-bold text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-brand-teal transition-all"
+                    className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-500 transition-all"
                   >
-                    <Icon className="h-4 w-4 text-brand-teal" />
                     <span>{item.name}</span>
                   </a>
                 );
               })}
-              <hr className="my-2 border-slate-200 dark:border-white/10" />
+              <hr className="my-2 border-slate-200 dark:border-slate-800" />
               <a
-                href="#contact"
+                href="/Musurmon-Azamqulov-Resume.pdf"
+                download="Musurmon Azamqulov - Professional Resume.pdf"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-teal to-brand-indigo py-3 text-sm font-bold text-white shadow-lg"
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 py-3 text-sm font-bold text-white shadow-lg"
               >
-                <Send className="h-4 w-4" />
-                <span>Bog&apos;lanish</span>
+                <Download className="h-4 w-4" />
+                <span>CV Yuklab olish</span>
               </a>
             </div>
           </motion.div>

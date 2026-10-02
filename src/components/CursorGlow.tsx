@@ -46,7 +46,7 @@ export const CursorGlow: React.FC = () => {
           translateX: "-50%",
           translateY: "-50%",
         }}
-        className="w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-brand-teal/15 via-brand-indigo/15 to-transparent blur-[90px] opacity-75 dark:opacity-60"
+        className="w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-sky-500/12 via-blue-600/10 to-indigo-500/10 blur-[100px] opacity-70 dark:opacity-50"
       />
     </div>
   );

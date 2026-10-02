@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { MusurmonIcon } from "@/components/MusurmonIcon";
 
 interface LogoProps {
   className?: string;
@@ -10,17 +11,25 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps> = ({
   className = "",
+  size = 36,
+  showText = true,
 }) => {
   return (
-    <div className={`group flex items-center ${className}`}>
-      <div className="flex flex-col text-left">
-        <span className="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-slate-900 dark:text-white group-hover:text-brand-teal transition-colors">
-          Azamqulov Musurmon
-        </span>
-        <span className="text-[11px] font-mono font-semibold text-teal-600 dark:text-brand-teal tracking-wide">
-          Full-Stack & AI Builder
-        </span>
-      </div>
+    <div className={`group flex items-center gap-3 ${className}`}>
+      <MusurmonIcon
+        size={size}
+        className="group-hover:scale-105 group-hover:-rotate-3 transition-all duration-300 drop-shadow-[0_2px_10px_rgba(56,189,248,0.35)]"
+      />
+      {showText && (
+        <div className="flex flex-col text-left">
+          <span className="font-black text-base sm:text-lg leading-tight tracking-tight text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+            Azamqulov
+          </span>
+          <span className="text-[10px] sm:text-[11px] font-mono font-medium text-slate-500 dark:text-slate-400 tracking-wide">
+            Frontend & Backend Developer
+          </span>
+        </div>
+      )}
     </div>
   );
 };

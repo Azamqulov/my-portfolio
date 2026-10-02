@@ -17,6 +17,7 @@ export interface Project {
     github?: string;
     telegram?: string;
   };
+  imageAlt?: string;
 }
 
 export interface SkillCategory {
@@ -33,28 +34,282 @@ export interface SkillCategory {
 export const PERSONAL_INFO = {
   name: "Azamqulov Musurmon",
   nickname: "Xo'jayin",
-  title: "Full-Stack Developer & AI Product Builder",
-  location: "O'zbekiston",
+  title: "Web Developer & Frontend Developer",
+  roleKeywords: [
+    "Azamqulov Musurmon",
+    "Musurmon Azamqulov",
+    "Azamqulov",
+    "Web Developer",
+    "Frontend Developer",
+    "Vue.js Developer",
+    "Full-Stack Developer",
+  ],
+  location: "Toshkent, O'zbekiston",
+  phone: "+998 90 123 45 67",
   experienceYears: "2+",
-  projectsCount: "15+",
-  bio: `Men veb, desktop va brauzer-extension platformalarida ishlaydigan Full-Stack Developer va AI Product Builderman. 2+ yillik tajribam davomida oddiy saytlardan tortib, to'liq business-management tizimlari, LMS platformalari, AI-quvvatlantirilgan mahsulotlar va Telegram-bot avtomatizatsiyalarigacha qurganman.`,
-  philosophy: `Men g'oyani ishlaydigan mahsulotga aylantirishni yaxshi ko'raman — Figma dizayndan yoki oddiy tasavvurdan boshlab, to'liq arxitektura, xavfsizlik va real foydalanuvchi tajribasiga ega tizim quraman.`,
+  projectsCount: "16+",
+  bio: `Men zamonaviy texnologiyalar yordamida foydalanuvchilar uchun qulay va samarali web-ilovalarni yarataman. Loyihalarimda sifat, ishonchlilik va zamonaviy dizayn ustuvorlik qiladi.`,
+  aboutFull: `Men — full-stack developer. Frontend va backend texnologiyalarida ishlab, zamonaviy, tezkor va qulay web-ilovalar yarataman. Mening maqsadim — shunchaki kod yozish emas, balki foydalanuvchilar uchun haqiqiy qiymat yaratish.`,
+  philosophy: `Figma eskizidan yoki oddiy biznes talablaridan boshlab, mukammal arxitektura, yuqori xavfsizlik, tezkor yuklanish va qulay foydalanuvchi tajribasiga (UI/UX) ega to'liq Web Applications va raqamli tizimlar quraman.`,
   contacts: {
     telegram: "@Musurmon_dev",
     telegramUrl: "https://t.me/Musurmon_dev",
+    telegramBot: "@azamqulovService_bot",
+    telegramBotUrl: "https://t.me/azamqulovService_bot",
     github: "Azamqulov",
     githubUrl: "https://github.com/Azamqulov",
+    instagram: "@azamqulov.11",
+    instagramUrl: "https://www.instagram.com/azamqulov.11/",
+    linkedin: "Azamqulov Musurmon",
+    linkedinUrl: "https://www.linkedin.com/in/azamqulov",
+    youtube: "Musurmon Dev",
+    youtubeUrl: "https://youtube.com/@azamqulov",
     email: "azamqulov0102@gmail.com",
     emailUrl: "mailto:azamqulov0102@gmail.com",
   },
-  status: "Yangi loyihalar va AI maslahatiga ochiq",
+  status: "Yangi veb loyihalar va takliflarga ochiq",
 };
 
 export const STATS = [
-  { value: "2+", label: "Yil Tajriba", description: "Veb, Desktop & AI mahsulotlar yaratishda" },
-  { value: "16+", label: "Muvaffaqiyatli Loyiha", description: "SaaS, CRM, Extension va Botlar" },
-  { value: "5+", label: "AI Integratsiyasi", description: "Claude, Gemini, FLUX, Ollama & Edge AI" },
-  { value: "100%", label: "Ishonch & Sifat", description: "Toza arxitektura va yuqori xavfsizlik" },
+  { value: "2+", label: "Yillik tajriba", icon: "Briefcase", glow: "text-blue-400" },
+  { value: "16+", label: "Bajarilgan loyihalar", icon: "Code", glow: "text-sky-400" },
+  { value: "5+", label: "Mijozlar fikri", icon: "Star", glow: "text-indigo-400" },
+  { value: "100%", label: "Muvaffaqiyatli natija", icon: "ShieldCheck", glow: "text-teal-400" },
+];
+
+export interface ShowcaseProject {
+  id: string;
+  title: string;
+  badge: string;
+  tags: string[];
+  description: string;
+  image: string;
+  link: string;
+  imageAlt: string;
+}
+
+export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
+  {
+    id: "salom-uz",
+    title: "Salom.uz",
+    badge: "Web App",
+    tags: ["React", "Tailwind"],
+    description: "Modern va qulay dizaynga ega ko'p funktsiyali sayt.",
+    image: "/images/project-salom.jpg",
+    link: "https://salom.uz",
+    imageAlt: "Azamqulov Musurmon tomonidan ishlab chiqilgan Salom.uz veb ilovasi boshqaruv paneli",
+  },
+  {
+    id: "e-commerce",
+    title: "E-commerce",
+    badge: "Web App",
+    tags: ["Next.js", "Stripe"],
+    description: "Online do'kon uchun to'lov tizimi va savat funksiyasi bilan.",
+    image: "/images/project-ecommerce.jpg",
+    link: "#",
+    imageAlt: "Azamqulov Musurmon tomonidan qurilgan E-commerce onlayn do'kon interfeysi",
+  },
+  {
+    id: "task-manager",
+    title: "Task Manager",
+    badge: "Web App",
+    tags: ["React", "Firebase"],
+    description: "Vazifalarni boshqarish uchun zamonaviy ilova.",
+    image: "/images/project-taskmanager.jpg",
+    link: "#",
+    imageAlt: "Azamqulov Musurmon yaratgan Task Manager vazifalar boshqaruv ilovasi",
+  },
+  {
+    id: "portfolio-v2",
+    title: "Portfolio v2",
+    badge: "Web Site",
+    tags: ["Next.js", "Tailwind"],
+    description: "Shaxsiy portfolio sayt, zamonaviy dizayn bilan.",
+    image: "/images/project-portfolio.jpg",
+    link: "https://azamqulov.com",
+    imageAlt: "Azamqulov Musurmon shaxsiy portfolio saytining zamonaviy dizayni",
+  },
+  {
+    id: "chat-app",
+    title: "Chat App",
+    badge: "Web App",
+    tags: ["React", "Socket.io"],
+    description: "Real-vaqt rejimida chat ilovasi.",
+    image: "/images/project-chat.jpg",
+    link: "#",
+    imageAlt: "Azamqulov Musurmon tomonidan yaratilgan real-time chat messendjer ilovasi",
+  },
+  {
+    id: "blog-platform",
+    title: "Blog Platform",
+    badge: "Web App",
+    tags: ["Next.js", "MongoDB"],
+    description: "Maqolalar o'qish va boshqarish platformasi.",
+    image: "/images/project-blog.jpg",
+    link: "#",
+    imageAlt: "Azamqulov Musurmon tomonidan ishlab chiqilgan Blog Platform maqola nashr qilish tizimi",
+  },
+];
+
+export interface TechCard {
+  id: string;
+  title: string;
+  categoryTag: string;
+  iconName: string;
+  technologies: string;
+  color: string;
+}
+
+export const TECH_CARDS: TechCard[] = [
+  {
+    id: "frontend",
+    title: "Frontend Development",
+    categoryTag: "Frontend",
+    iconName: "React",
+    technologies: "React, Next.js, TypeScript, Tailwind CSS, HTML, CSS",
+    color: "#38BDF8",
+  },
+  {
+    id: "backend",
+    title: "Backend Development",
+    categoryTag: "Backend",
+    iconName: "Node",
+    technologies: "Node.js, Express.js, REST API, MongoDB",
+    color: "#22C55E",
+  },
+  {
+    id: "uiux",
+    title: "UI/UX Dizayn",
+    categoryTag: "Design",
+    iconName: "Figma",
+    technologies: "Figma, responsive dizayn, interfeys animatsiyalari",
+    color: "#A855F7",
+  },
+  {
+    id: "vcs",
+    title: "Version Control",
+    categoryTag: "Git",
+    iconName: "Git",
+    technologies: "Git, GitHub, GitLab",
+    color: "#F97316",
+  },
+  {
+    id: "tools",
+    title: "Tools",
+    categoryTag: "DevTools",
+    iconName: "Tools",
+    technologies: "VS Code, Postman, Docker, Vercel",
+    color: "#06B6D4",
+  },
+  {
+    id: "other",
+    title: "Boshqa",
+    categoryTag: "Systems",
+    iconName: "Gear",
+    technologies: "Linux, NPM, Webpack, Agile (Scrum)",
+    color: "#64748B",
+  },
+];
+
+export interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+}
+
+export const SERVICES: ServiceItem[] = [
+  {
+    id: "websites",
+    title: "Veb saytlar",
+    description: "Biznesingiz uchun zamonaviy va tezkor web-saytlar.",
+    iconName: "Globe",
+  },
+  {
+    id: "webapps",
+    title: "Veb ilovalar",
+    description: "Murakkab funksiyali web-ilovalar va admin panellar.",
+    iconName: "Code",
+  },
+  {
+    id: "uiux-service",
+    title: "UI/UX Dizayn",
+    description: "Chiroyli va qulay interfeys dizayni.",
+    iconName: "Palette",
+  },
+  {
+    id: "support",
+    title: "Texnik qo'llab-quvvatlash",
+    description: "Loyihangiz uchun doimiy texnik yordam.",
+    iconName: "Headphones",
+  },
+];
+
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  avatar: string;
+  rating: number;
+}
+
+export const TESTIMONIALS: TestimonialItem[] = [
+  {
+    id: "sardor",
+    name: "Sardor Karimov",
+    role: "IT kompaniya CEO",
+    company: "TechSoft",
+    quote: "Loyihani juda sifatli va o'z vaqtida topshirdi. Xizmatidan juda mamnunmiz!",
+    avatar: "/images/avatar-sardor.jpg",
+    rating: 5,
+  },
+  {
+    id: "dilshodbek",
+    name: "Dilshodbek Rahimov",
+    role: "Biznes egasi",
+    company: "Smart Trade",
+    quote: "Juda professional yondashuv va tezkor aloqa. Tavsiya qilaman!",
+    avatar: "/images/avatar-dilshodbek.jpg",
+    rating: 5,
+  },
+  {
+    id: "madina",
+    name: "Madina Tursunova",
+    role: "Marketing menejer",
+    company: "Creative Media",
+    quote: "Dizayn va kod sifati a'lo darajada. Yangi loyihalarda ham birga ishlaymiz.",
+    avatar: "/images/avatar-madina.jpg",
+    rating: 5,
+  },
+  {
+    id: "bobur",
+    name: "Bobur Mirzayev",
+    role: "FinTech asoschisi",
+    company: "SmartPay",
+    quote: "Web ilova arxitekturasi va to'lov integratsiyasi a'lo darajada bajarildi. Rahmat!",
+    avatar: "/images/avatar-bobur.jpg",
+    rating: 5,
+  },
+  {
+    id: "nilufar",
+    name: "Nilufar Karimova",
+    role: "Mahsulot Dizayneri",
+    company: "Oasis Hub",
+    quote: "Figma eskizlarini to'liq piksel aniqligida jonlantirdi, animatsiyalar juda yoqdi!",
+    avatar: "/images/avatar-nilufar.jpg",
+    rating: 5,
+  },
+  {
+    id: "javohir",
+    name: "Javohir Toshmatov",
+    role: "Bosh Texnik Direktor",
+    company: "InnovateX",
+    quote: "Toza TypeScript kodi, yuqori xavfsizlik va tezkor Core Web Vitals unumdorligi.",
+    avatar: "/images/avatar-sardor.jpg",
+    rating: 5,
+  },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
@@ -63,38 +318,31 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     iconName: "Layout",
     description: "Reaktiv, tezkor va estetik jihatdan yuqori darajadagi interfeyslar",
     skills: [
-      { name: "React", level: "Expert", highlight: true },
+      { name: "JavaScript (ES6+)", level: "Expert", highlight: true },
       { name: "Vue.js 3", level: "Expert", highlight: true },
+      { name: "React", level: "Expert", highlight: true },
       { name: "Next.js 14", level: "Advanced", highlight: true },
       { name: "TypeScript", level: "Advanced", highlight: true },
+      { name: "HTML5", level: "Expert", highlight: true },
+      { name: "CSS3", level: "Expert", highlight: true },
+      { name: "SCSS", level: "Advanced", highlight: true },
       { name: "Tailwind CSS", level: "Expert", highlight: true },
-      { name: "JavaScript (ES6+)", level: "Expert" },
+      { name: "Bootstrap", level: "Proficient" },
       { name: "Vuetify 3", level: "Proficient" },
+      { name: "Responsive Web Design", level: "Expert", highlight: true },
     ],
   },
   {
-    title: "Desktop & Native",
-    iconName: "Monitor",
-    description: "Kichik o'lchamli, yuqori tezlikdagi lokal desktop ilovalar",
-    skills: [
-      { name: "Tauri 2", level: "Expert", highlight: true },
-      { name: "Rust", level: "Proficient", highlight: true },
-      { name: "SQLite", level: "Advanced", highlight: true },
-      { name: "Pinia State", level: "Expert" },
-      { name: "Native Windows API", level: "Proficient" },
-    ],
-  },
-  {
-    title: "Backend & Data",
+    title: "Web Applications & CRM",
     iconName: "Server",
-    description: "Masshtablanuvchi API'lar, multi-tenant arxitektura va ma'lumotlar bazasi",
+    description: "Masshtablanuvchi veb ilovalar, CRM tizimlari va bulutli ma'lumotlar bazasi",
     skills: [
+      { name: "Firebase", level: "Advanced", highlight: true },
       { name: "NestJS", level: "Advanced", highlight: true },
+      { name: "RESTful API", level: "Expert", highlight: true },
       { name: "Prisma ORM", level: "Expert", highlight: true },
       { name: "PostgreSQL", level: "Advanced", highlight: true },
       { name: "Supabase", level: "Expert", highlight: true },
-      { name: "Firebase", level: "Advanced" },
-      { name: "RESTful API", level: "Expert" },
       { name: "Redis", level: "Proficient" },
     ],
   },
@@ -147,6 +395,7 @@ export const FEATURED_PROJECTS: Project[] = [
     links: {
       telegram: "https://t.me/Musurmon_dev",
     },
+    imageAlt: "Azamqulov Musurmon tomonidan ishlab chiqilgan Boshqar.uz multi-tenant SaaS ERP va POS boshqaruv paneli interfeysi",
   },
   {
     id: "jarvis-ai",
@@ -168,6 +417,7 @@ export const FEATURED_PROJECTS: Project[] = [
     links: {
       telegram: "https://t.me/Musurmon_dev",
     },
+    imageAlt: "Azamqulov Musurmon tomonidan qurilgan Jarvis AI local-first desktop yordamchisi interfeysi",
   },
   {
     id: "uzum-ai-assistant",
@@ -189,6 +439,7 @@ export const FEATURED_PROJECTS: Project[] = [
     links: {
       telegram: "https://t.me/Musurmon_dev",
     },
+    imageAlt: "Azamqulov Musurmon tomonidan yaratilgan Uzum AI Assistant Chrome Extension brauzer kengaytmasi",
   },
   {
     id: "thumb-ai",
@@ -210,6 +461,7 @@ export const FEATURED_PROJECTS: Project[] = [
     links: {
       telegram: "https://t.me/Musurmon_dev",
     },
+    imageAlt: "Azamqulov Musurmon tomonidan ishlab chiqilgan ThumbAI generativ dizayn muharriri platformasi",
   },
   {
     id: "icon-forge",
@@ -231,6 +483,7 @@ export const FEATURED_PROJECTS: Project[] = [
     links: {
       telegram: "https://t.me/Musurmon_dev",
     },
+    imageAlt: "Azamqulov Musurmon tomonidan yaratilgan IconForge Windows papka piktogrammalarini sozlash dasturi",
   },
 ];
 
