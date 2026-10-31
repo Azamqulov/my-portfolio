@@ -16,8 +16,10 @@ import {
 import confetti from "canvas-confetti";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { Aos } from "@/components/Aos";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Contact: React.FC = () => {
+  const { t } = useLanguage();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -25,12 +27,13 @@ export const Contact: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedName, setSubmittedName] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
-      setErrorMessage("Iltimos, barcha maydonlarni to'liq to'ldiring.");
+      setErrorMessage(t.contact.form.validationError);
       return;
     }
 
@@ -49,6 +52,7 @@ export const Contact: React.FC = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
+        setSubmittedName(formState.name);
         setSubmitted(true);
         confetti({
           particleCount: 90,
@@ -58,15 +62,10 @@ export const Contact: React.FC = () => {
         });
         setFormState({ name: "", email: "", message: "" });
       } else {
-        setErrorMessage(
-          data.error ||
-            "Xabarni Telegramga yuborishda xatolik yuz berdi. Iltimos qaytadan urinib ko'ring yoki bot orqali yozing."
-        );
+        setErrorMessage(data.error || t.contact.form.telegramError);
       }
     } catch {
-      setErrorMessage(
-        "Tarmoq bilan bog'lanishda xatolik yuz berdi. Iltimos internet aloqasini tekshiring."
-      );
+      setErrorMessage(t.contact.form.networkError);
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +85,7 @@ export const Contact: React.FC = () => {
         <div className="flex flex-col items-center text-center mb-16">
           <Aos animation="fade-up" delay={0.05}>
             <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-              <span>• BOG&apos;LANISH</span>
+              <span>{t.contact.tag}</span>
             </div>
           </Aos>
           <Aos animation="fade-up" delay={0.12}>
@@ -94,12 +93,12 @@ export const Contact: React.FC = () => {
               id="contact-heading"
               className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
             >
-              Loyihangizni birga amalga oshiramiz
+              {t.contact.heading}
             </h2>
           </Aos>
           <Aos animation="fade-up" delay={0.18}>
             <p className="mt-4 max-w-xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal">
-              Menga xabar yuboring — xabaringiz to&apos;g&apos;ridan-to&apos;g&apos;ri Telegramga yetib boradi. Sizning g&apos;oyangiz — mening ustuvor vazifam!
+              {t.contact.subtitle}
             </p>
           </Aos>
         </div>
@@ -120,30 +119,34 @@ export const Contact: React.FC = () => {
                 <Mail className="h-6 w-6" />
               </div>
               <div>
-                <span className="text-xs text-slate-400 block font-medium">Email</span>
+                <span className="text-xs text-slate-400 block font-medium">
+                  {t.contact.emailLabel}
+                </span>
                 <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
                   {PERSONAL_INFO.contacts.email}
                 </span>
               </div>
             </a>
 
-            {/* Phone Card */}
+            {/* Phone Card (+998 77 040 46 24) */}
             <a
-              href="tel:+998901234567"
+              href={`tel:${PERSONAL_INFO.phone.replace(/\s+/g, "")}`}
               className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all"
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20 group-hover:scale-110 transition-transform">
                 <Phone className="h-6 w-6" />
               </div>
               <div>
-                <span className="text-xs text-slate-400 block font-medium">Telefon</span>
+                <span className="text-xs text-slate-400 block font-medium">
+                  {t.contact.phoneLabel}
+                </span>
                 <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-400 transition-colors">
                   {PERSONAL_INFO.phone}
                 </span>
               </div>
             </a>
 
-            {/* Telegram Bot Card (Email va Telefon raqam tagidan) */}
+            {/* Telegram Bot Card */}
             <a
               href="https://t.me/azamqulovService_bot"
               target="_blank"
@@ -156,7 +159,7 @@ export const Contact: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-sky-600 dark:text-sky-400 font-mono font-bold uppercase tracking-wider block">
-                    Telegram Bot
+                    {t.contact.telegramBotLabel}
                   </span>
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -175,9 +178,11 @@ export const Contact: React.FC = () => {
                 <MapPin className="h-6 w-6" />
               </div>
               <div>
-                <span className="text-xs text-slate-400 block font-medium">Manzil</span>
+                <span className="text-xs text-slate-400 block font-medium">
+                  {t.contact.locationLabel}
+                </span>
                 <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                  {PERSONAL_INFO.location}
+                  {t.contact.locationValue}
                 </span>
               </div>
             </div>
@@ -192,8 +197,8 @@ export const Contact: React.FC = () => {
             {/* Playful Hand-Drawn Doodle */}
             <div className="hidden xl:block absolute -top-10 -right-16 text-indigo-400 dark:text-indigo-400/90 font-serif italic text-lg select-none transform rotate-6 pointer-events-none">
               <div className="flex flex-col items-center">
-                <span>Keling, birga</span>
-                <span>ishlaymiz! ↗</span>
+                <span>{t.contact.doodleText1}</span>
+                <span>{t.contact.doodleText2}</span>
               </div>
             </div>
 
@@ -204,20 +209,21 @@ export const Contact: React.FC = () => {
                     <Check className="h-6 w-6 stroke-[3]" />
                   </div>
                   <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                    Xabaringiz Telegramga Yuborildi!
+                    {t.contact.form.successTitle}
                   </h4>
                   <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm">
-                    Rahmat, {formState.name}! Xabaringiz Telegram guruhiga yetkazildi, tez orada siz bilan bog&apos;lanaman.
+                    {t.contact.form.successDesc.replace("{name}", submittedName)}
                   </p>
                   <button
                     onClick={() => {
                       setSubmitted(false);
+                      setSubmittedName("");
                       setFormState({ name: "", email: "", message: "" });
                       setErrorMessage(null);
                     }}
                     className="mt-2 text-xs font-semibold text-sky-500 underline"
                   >
-                    Yangi xabar yuborish
+                    {t.contact.form.sendAnother}
                   </button>
                 </div>
               ) : (
@@ -238,8 +244,8 @@ export const Contact: React.FC = () => {
                         name="name"
                         type="text"
                         required
-                        aria-label="Ismingiz"
-                        placeholder="Ismingiz"
+                        aria-label={t.contact.form.nameLabel}
+                        placeholder={t.contact.form.namePlaceholder}
                         value={formState.name}
                         onChange={(e) =>
                           setFormState({ ...formState, name: e.target.value })
@@ -254,8 +260,8 @@ export const Contact: React.FC = () => {
                         type="email"
                         required
                         autoComplete="email"
-                        aria-label="Email manzilingiz"
-                        placeholder="Email manzilingiz"
+                        aria-label={t.contact.form.emailLabel}
+                        placeholder={t.contact.form.emailPlaceholder}
                         value={formState.email}
                         onChange={(e) =>
                           setFormState({ ...formState, email: e.target.value })
@@ -272,8 +278,8 @@ export const Contact: React.FC = () => {
                       name="message"
                       required
                       rows={4}
-                      aria-label="Xabar matni"
-                      placeholder="Loyiha haqida xabaringiz..."
+                      aria-label={t.contact.form.messageLabel}
+                      placeholder={t.contact.form.messagePlaceholder}
                       value={formState.message}
                       onChange={(e) =>
                         setFormState({ ...formState, message: e.target.value })
@@ -292,11 +298,11 @@ export const Contact: React.FC = () => {
                       {isSubmitting ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          <span>Telegramga yuborilmoqda...</span>
+                          <span>{t.contact.form.submittingBtn}</span>
                         </>
                       ) : (
                         <>
-                          <span>Xabar yuborish</span>
+                          <span>{t.contact.form.submitBtn}</span>
                           <ArrowRight className="h-4 w-4" />
                         </>
                       )}

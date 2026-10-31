@@ -5,6 +5,7 @@ import { CursorGlow } from "@/components/CursorGlow";
 import { BackgroundCanvas } from "@/components/BackgroundCanvas";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { JsonLd } from "@/components/JsonLd";
 
 const inter = Inter({
@@ -149,16 +150,18 @@ export default function RootLayout({
         <JsonLd />
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange={false}
         >
-          <ScrollProgress />
-          <BackgroundCanvas />
-          <CursorGlow />
-          <div className="relative z-10 flex min-h-screen flex-col">
-            {children}
-          </div>
+          <LanguageProvider>
+            <ScrollProgress />
+            <BackgroundCanvas />
+            <CursorGlow />
+            <div className="relative z-10 flex min-h-screen flex-col">
+              {children}
+            </div>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

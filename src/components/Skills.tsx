@@ -12,8 +12,11 @@ import {
 } from "lucide-react";
 import { TECH_CARDS } from "@/data/portfolioData";
 import { Aos, AosContainer, AosItem } from "@/components/Aos";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Skills: React.FC = () => {
+  const { t } = useLanguage();
+
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case "React":
@@ -46,7 +49,7 @@ export const Skills: React.FC = () => {
         <div className="flex flex-col items-center text-center mb-16">
           <Aos animation="fade-up" delay={0.05}>
             <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-              <span>• TEXNOLOGIYALAR VA VOSITALAR</span>
+              <span>{t.skills.tag}</span>
             </div>
           </Aos>
           <Aos animation="fade-up" delay={0.12}>
@@ -54,12 +57,12 @@ export const Skills: React.FC = () => {
               id="skills-heading"
               className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
             >
-              Zamonaviy texnologiyalar bilan ishlayman
+              {t.skills.heading}
             </h2>
           </Aos>
           <Aos animation="fade-up" delay={0.18}>
             <p className="mt-4 max-w-xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal">
-              Har bir loyihada toza arxitektura, yuqori xavfsizlik va tezkor yuklanishni ta&apos;minlaydigan zamonaviy stek.
+              {t.skills.subtitle}
             </p>
           </Aos>
         </div>
@@ -72,6 +75,12 @@ export const Skills: React.FC = () => {
         >
           {TECH_CARDS.map((card) => {
             const Icon = getIcon(card.iconName);
+            const translatedCard =
+              (t.skills.cards as Record<string, { title: string; tech: string }>)[
+                card.id
+              ];
+            const title = translatedCard?.title || card.title;
+            const tech = translatedCard?.tech || card.technologies;
 
             return (
               <AosItem key={card.id} animation="fade-up" distance={30}>
@@ -100,23 +109,21 @@ export const Skills: React.FC = () => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
-                      {card.title}
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+                      {title}
                     </h3>
 
-                    {/* Subtitle / Techs */}
-                    <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
-                      {card.technologies}
+                    {/* Technologies list */}
+                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-mono leading-relaxed">
+                      {tech}
                     </p>
                   </div>
 
-                  {/* Bottom Accent Bar */}
+                  {/* Bottom category tag */}
                   <div className="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-400 dark:text-slate-500">
-                    <span className="group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors font-medium">
-                      Ishlab chiqarishga tayyor
-                    </span>
+                    <span className="uppercase tracking-wider">{card.categoryTag}</span>
                     <span
-                      className="h-1.5 w-1.5 rounded-full transition-transform group-hover:scale-125"
+                      className="h-1.5 w-1.5 rounded-full"
                       style={{ backgroundColor: card.color }}
                     />
                   </div>

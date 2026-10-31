@@ -7,18 +7,20 @@ import {
   Linkedin,
   Youtube,
   Instagram,
-  Heart,
 } from "lucide-react";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { Logo } from "@/components/Logo";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   const navLinks = [
-    { name: "Bosh sahifa", href: "#hero" },
-    { name: "Loyihalar", href: "#projects" },
-    { name: "Xizmatlar", href: "#services" },
-    { name: "Men haqimda", href: "#about" },
-    { name: "Bog'lanish", href: "#contact" },
+    { name: t.nav.home, href: "#hero" },
+    { name: t.nav.projects, href: "#projects" },
+    { name: t.nav.services, href: "#services" },
+    { name: t.nav.about, href: "#about" },
+    { name: t.nav.contact, href: "#contact" },
   ];
 
   return (
@@ -35,7 +37,7 @@ export const Footer: React.FC = () => {
           <nav className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
             {navLinks.map((item) => (
               <a
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
               >
@@ -95,12 +97,8 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Strip */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400 font-normal">
-          <p>© 2026 Azamqulov Musurmon. Barcha huquqlar himoyalangan.</p>
-          <div className="flex items-center gap-1.5">
-            <span>Yaratilgan: Katta mehr bilan</span>
-            <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500" />
-          </div>
+        <div className="flex items-center justify-center text-xs text-slate-500 dark:text-slate-400 font-normal">
+          <p>{t.footer.copyright}</p>
         </div>
       </div>
     </footer>

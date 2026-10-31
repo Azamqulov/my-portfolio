@@ -9,28 +9,17 @@ import {
   Menu,
   X,
   Download,
-  Send,
-  Home,
-  FolderGit2,
-  Briefcase,
-  User,
-  MessageSquare,
+  Languages,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { useLanguage } from "@/context/LanguageContext";
+import { LanguageSelect } from "@/components/LanguageSelect";
 
 interface NavItem {
   name: string;
   href: string;
   id: string;
 }
-
-const navItems: NavItem[] = [
-  { name: "Bosh sahifa", href: "#hero", id: "hero" },
-  { name: "Loyihalar", href: "#projects", id: "projects" },
-  { name: "Xizmatlar", href: "#services", id: "services" },
-  { name: "Men haqimda", href: "#about", id: "about" },
-  { name: "Bog'lanish", href: "#contact", id: "contact" },
-];
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,6 +28,15 @@ export const Navbar: React.FC = () => {
   const [mounted, setMounted] = useState(false);
 
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { t } = useLanguage();
+
+  const navItems: NavItem[] = [
+    { name: t.nav.home, href: "#hero", id: "hero" },
+    { name: t.nav.projects, href: "#projects", id: "projects" },
+    { name: t.nav.services, href: "#services", id: "services" },
+    { name: t.nav.about, href: "#about", id: "about" },
+    { name: t.nav.contact, href: "#contact", id: "contact" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -46,7 +44,15 @@ export const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sectionIds = ["hero", "about", "skills", "projects", "services", "testimonials", "contact"];
+      const sectionIds = [
+        "hero",
+        "about",
+        "skills",
+        "projects",
+        "services",
+        "testimonials",
+        "contact",
+      ];
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -89,7 +95,7 @@ export const Navbar: React.FC = () => {
           {/* Logo */}
           <a
             href="#hero"
-            aria-label="Azamqulov Musurmon — Bosh sahifaga qaytish"
+            aria-label="Azamqulov Musurmon"
             className="focus:outline-none"
           >
             <Logo size={36} />
@@ -101,7 +107,7 @@ export const Navbar: React.FC = () => {
               const isActive = activeSection === item.id;
               return (
                 <a
-                  key={item.name}
+                  key={item.id}
                   href={item.href}
                   className={`relative px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors rounded-full ${
                     isActive
@@ -122,25 +128,30 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Actions: CV Download + Theme Toggle + Mobile Menu */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* CV Yuklab olish Button */}
+          {/* Right Actions: Language Select Dropdown + CV Download + Theme Toggle + Mobile Menu */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Desktop Language Select Dropdown with SVG Flags */}
+            <div className="hidden sm:block">
+              <LanguageSelect />
+            </div>
+
+            {/* CV Download Button */}
             <a
               href="/Musurmon-Azamqulov-Resume.pdf"
               download="Musurmon Azamqulov - Professional Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all"
+              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all"
             >
               <Download className="h-3.5 w-3.5" />
-              <span>CV Yuklab olish</span>
+              <span>{t.nav.downloadCv}</span>
             </a>
 
             {/* Theme Toggle (Dark/Light) */}
             <button
               onClick={toggleTheme}
-              aria-label="Rejimni almashtirish"
-              title={isDark ? "Light rejimga o'tish" : "Dark rejimga o'tish"}
+              aria-label={isDark ? t.nav.switchThemeLight : t.nav.switchThemeDark}
+              title={isDark ? t.nav.switchThemeLight : t.nav.switchThemeDark}
               className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-all shadow-sm hover:scale-105"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -165,7 +176,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Menyu"
+              aria-label={t.nav.menu}
               className="flex md:hidden h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -185,18 +196,26 @@ export const Navbar: React.FC = () => {
             className="fixed inset-x-4 top-20 z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0B101D]/95 p-5 shadow-2xl backdrop-blur-2xl md:hidden text-slate-900 dark:text-slate-100"
           >
             <div className="flex flex-col gap-2">
-              {navItems.map((item) => {
-                return (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-500 transition-all"
-                  >
-                    <span>{item.name}</span>
-                  </a>
-                );
-              })}
+              {navItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-500 transition-all"
+                >
+                  <span>{item.name}</span>
+                </a>
+              ))}
+
+              {/* Language Selector in Mobile Drawer */}
+              <div className="pt-2">
+                <div className="text-[11px] font-mono font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1 flex items-center gap-1.5">
+                  <Languages className="h-3.5 w-3.5" />
+                  <span>Til / Язык / Language</span>
+                </div>
+                <LanguageSelect isMobileDrawer />
+              </div>
+
               <hr className="my-2 border-slate-200 dark:border-slate-800" />
               <a
                 href="/Musurmon-Azamqulov-Resume.pdf"
@@ -205,7 +224,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 py-3 text-sm font-bold text-white shadow-lg"
               >
                 <Download className="h-4 w-4" />
-                <span>CV Yuklab olish</span>
+                <span>{t.nav.downloadCv}</span>
               </a>
             </div>
           </motion.div>

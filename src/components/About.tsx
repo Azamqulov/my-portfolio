@@ -4,15 +4,16 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Sparkles, Zap } from "lucide-react";
-import { PERSONAL_INFO } from "@/data/portfolioData";
 import { TechIcon } from "@/components/TechIcon";
 import { MusurmonIcon } from "@/components/MusurmonIcon";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Interactive 3D Luxury Developer Portrait Card
 const AboutPortraitCard: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+  const { t } = useLanguage();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -80,13 +81,17 @@ const AboutPortraitCard: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="text-[11px] font-mono font-medium">Toshkent • Ochiq</span>
+            <span className="text-[11px] font-mono font-medium">
+              {t.about.locationPill}
+            </span>
           </div>
 
           {/* Top Right Verified Pill */}
           <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5 rounded-full px-2.5 py-1.5 backdrop-blur-xl bg-sky-500/20 border border-sky-400/40 text-sky-200 shadow-lg">
             <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
-            <span className="text-[10px] font-mono font-bold tracking-wider uppercase">Pro Dev</span>
+            <span className="text-[10px] font-mono font-bold tracking-wider uppercase">
+              {t.about.proDevPill}
+            </span>
           </div>
 
           {/* Bottom Luxury Identity Card */}
@@ -100,7 +105,7 @@ const AboutPortraitCard: React.FC = () => {
                   Azamqulov Musurmon
                 </div>
                 <div className="text-[11px] font-mono text-sky-400 font-medium">
-                  Full-Stack Developer
+                  {t.about.subTitle}
                 </div>
               </div>
             </div>
@@ -108,8 +113,8 @@ const AboutPortraitCard: React.FC = () => {
             <a
               href="#contact"
               className="h-8 w-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95 shrink-0"
-              title="Bog'lanish"
-              aria-label="Aloqaga o'tish"
+              title={t.about.connectTitle}
+              aria-label={t.about.connectTitle}
             >
               <ArrowRight className="h-3.5 w-3.5" />
             </a>
@@ -117,7 +122,7 @@ const AboutPortraitCard: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Floating 3D Micro-Pill 1: Full-Stack & AI */}
+      {/* Floating 3D Micro-Pill 1 */}
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
@@ -125,10 +130,10 @@ const AboutPortraitCard: React.FC = () => {
         className="hidden sm:flex absolute -top-3 -right-3 z-30 items-center gap-2 rounded-xl px-3.5 py-2 backdrop-blur-xl bg-white/95 dark:bg-[#0D1424]/95 border border-slate-200/90 dark:border-slate-800 text-xs font-mono font-bold text-slate-800 dark:text-slate-200 shadow-xl cursor-pointer"
       >
         <Sparkles className="h-3.5 w-3.5 text-sky-500" />
-        <span>Full-Stack & AI</span>
+        <span>{t.about.pill1}</span>
       </motion.div>
 
-      {/* Floating 3D Micro-Pill 2: Clean Code */}
+      {/* Floating 3D Micro-Pill 2 */}
       <motion.div
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
@@ -136,13 +141,15 @@ const AboutPortraitCard: React.FC = () => {
         className="hidden sm:flex absolute -bottom-3 -left-3 z-30 items-center gap-2 rounded-xl px-3.5 py-2 backdrop-blur-xl bg-white/95 dark:bg-[#0D1424]/95 border border-slate-200/90 dark:border-slate-800 text-xs font-mono font-bold text-slate-800 dark:text-slate-200 shadow-xl cursor-pointer"
       >
         <Zap className="h-3.5 w-3.5 text-blue-500" />
-        <span>Clean Code</span>
+        <span>{t.about.pill2}</span>
       </motion.div>
     </div>
   );
 };
 
 export const About: React.FC = () => {
+  const { t } = useLanguage();
+
   const techBadges = [
     { name: "React", iconId: "react" },
     { name: "Next.js", iconId: "next.js" },
@@ -162,7 +169,7 @@ export const About: React.FC = () => {
 
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Column: Heading, Bio, Tech Stack with Official SVGs, CTA */}
+          {/* Left Column */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Tag */}
             <motion.div
@@ -172,7 +179,7 @@ export const About: React.FC = () => {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-4"
             >
-              <span>— MEN HAQIMDA</span>
+              <span>{t.about.tag}</span>
             </motion.div>
 
             {/* Heading */}
@@ -184,9 +191,9 @@ export const About: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15]"
             >
-              Muammolarni amaliy <br />
+              {t.about.heading1} <br />
               <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent">
-                tizimlarga aylantiraman
+                {t.about.heading2}
               </span>
             </motion.h2>
 
@@ -198,10 +205,10 @@ export const About: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
             >
-              {PERSONAL_INFO.aboutFull}
+              {t.about.paragraph}
             </motion.p>
 
-            {/* Tech Badges Row with Smooth Fade */}
+            {/* Tech Badges Row */}
             <div className="mt-8 flex flex-wrap items-center gap-3">
               {techBadges.map((tech, idx) => (
                 <motion.div
@@ -234,9 +241,9 @@ export const About: React.FC = () => {
               <a
                 href="#contact"
                 className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40 active:scale-95"
-                aria-label="Bog'lanish uchun"
+                aria-label={t.about.cta}
               >
-                <span>To&apos;liq profilni ko&apos;rish</span>
+                <span>{t.about.cta}</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </motion.div>

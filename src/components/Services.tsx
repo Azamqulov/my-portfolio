@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { Globe, Code2, Palette, Headphones } from "lucide-react";
 import { SERVICES } from "@/data/portfolioData";
 import { Aos, AosContainer, AosItem } from "@/components/Aos";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Services: React.FC = () => {
+  const { t } = useLanguage();
+
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case "Globe":
@@ -35,7 +38,7 @@ export const Services: React.FC = () => {
         <div className="flex flex-col items-center text-center mb-16">
           <Aos animation="fade-up" delay={0.05}>
             <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-              <span>• XIZMATLAR & IMKONIYATLAR</span>
+              <span>{t.services.tag}</span>
             </div>
           </Aos>
           <Aos animation="fade-up" delay={0.12}>
@@ -43,12 +46,12 @@ export const Services: React.FC = () => {
               id="services-heading"
               className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
             >
-              Nimalar bilan yordam bera olaman?
+              {t.services.heading}
             </h2>
           </Aos>
           <Aos animation="fade-up" delay={0.18}>
             <p className="mt-4 max-w-2xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal">
-              Sizning g&apos;oyangizni sifatli, xavfsiz va zamonaviy web-ilovaga aylantirishga yordam beraman.
+              {t.services.subtitle}
             </p>
           </Aos>
         </div>
@@ -61,6 +64,14 @@ export const Services: React.FC = () => {
         >
           {SERVICES.map((service) => {
             const Icon = getIcon(service.iconName);
+            const translated = (
+              t.services.items as Record<
+                string,
+                { title: string; description: string }
+              >
+            )[service.id];
+            const title = translated?.title || service.title;
+            const description = translated?.description || service.description;
 
             return (
               <AosItem key={service.id} animation="fade-up" distance={28}>
@@ -80,19 +91,19 @@ export const Services: React.FC = () => {
 
                     {/* Title */}
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
-                      {service.title}
+                      {title}
                     </h3>
 
                     {/* Description */}
                     <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {service.description}
+                      {description}
                     </p>
                   </div>
 
                   {/* Bottom Accent */}
                   <div className="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-400 dark:text-slate-500">
                     <span className="group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors">
-                      Kafolatlangan xizmat
+                      {t.services.guarantee}
                     </span>
                     <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
                   </div>

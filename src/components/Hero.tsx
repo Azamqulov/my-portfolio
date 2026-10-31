@@ -11,6 +11,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { DeveloperWorkspace } from "@/components/DeveloperWorkspace";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface CountUpProps {
   target: string;
@@ -55,40 +56,42 @@ const AnimatedStatValue: React.FC<CountUpProps> = ({ target }) => {
 };
 
 // Animated Rotating Role Ticker for Hero
-const ROLES = [
-  "Frontend & Backend Developer",
-  "React & Next.js Mutaxassisi",
-  "TypeScript & Clean Architecture",
-  "High-Performance Web Ilovalar",
-];
-
-const HeroRoleRotator: React.FC = () => {
+const HeroRoleRotator: React.FC<{ roles: string[] }> = ({ roles }) => {
   const [roleIndex, setRoleIndex] = useState(0);
 
   useEffect(() => {
+    setRoleIndex(0);
+  }, [roles]);
+
+  useEffect(() => {
+    if (!roles || roles.length === 0) return;
     const timer = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
     }, 3200);
     return () => clearInterval(timer);
-  }, []);
+  }, [roles]);
+
+  const currentRole = roles[roleIndex] || roles[0] || "";
 
   return (
-    <div className="relative h-5 overflow-hidden flex items-center min-w-[190px] sm:min-w-[220px]">
+    <div className="relative h-5 overflow-hidden flex items-center min-w-[210px] sm:min-w-[260px]">
       <motion.span
-        key={roleIndex}
+        key={currentRole}
         initial={{ y: 16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -16, opacity: 0 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="text-xs font-bold tracking-wide text-sky-600 dark:text-sky-300 font-mono absolute whitespace-nowrap"
       >
-        {ROLES[roleIndex]}
+        {currentRole}
       </motion.span>
     </div>
   );
 };
 
 export const Hero: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section
       id="hero"
@@ -115,7 +118,7 @@ export const Hero: React.FC = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              <HeroRoleRotator />
+              <HeroRoleRotator roles={t.hero.roles} />
             </motion.div>
 
             {/* Main Hero Headline */}
@@ -126,15 +129,15 @@ export const Hero: React.FC = () => {
               className="space-y-1.5"
             >
               <div className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-slate-200">
-                Salom, men
+                {t.hero.greeting}
               </div>
               <h1
                 id="hero-title"
                 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] text-slate-900 dark:text-white"
               >
-                Azamqulov <br />
+                {t.hero.nameFirst} <br />
                 <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent drop-shadow-sm">
-                  Musurmon
+                  {t.hero.nameSecond}
                 </span>
               </h1>
             </motion.div>
@@ -146,9 +149,7 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 max-w-xl text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
             >
-              Men zamonaviy texnologiyalar yordamida foydalanuvchilar uchun qulay va
-              samarali web-ilovalarni yarataman. Loyihalarimda sifat, ishonchlilik va
-              zamonaviy dizayn ustuvorlik qiladi.
+              {t.hero.bio}
             </motion.p>
 
             {/* Action Buttons with Animated Shimmer */}
@@ -161,27 +162,27 @@ export const Hero: React.FC = () => {
               <a
                 href="#projects"
                 className="group relative overflow-hidden inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40 active:scale-95"
-                aria-label="Loyihalarimni ko'rish"
+                aria-label={t.hero.viewProjects}
               >
                 {/* Shimmer overlay */}
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-                <span className="relative z-10">Loyihalarimni ko&apos;rish</span>
+                <span className="relative z-10">{t.hero.viewProjects}</span>
                 <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
 
               <a
                 href="#about"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 px-6 py-3.5 text-sm font-bold text-slate-800 dark:text-slate-200 shadow-sm backdrop-blur-md transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-sky-500/50 active:scale-95"
-                aria-label="Men haqimda"
+                aria-label={t.hero.aboutMe}
               >
                 <User className="h-4 w-4 text-sky-500" />
-                <span>Men haqimda</span>
+                <span>{t.hero.aboutMe}</span>
               </a>
 
               {/* Status Indicator */}
               <div className="hidden sm:inline-flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400 pl-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-                <span>Toshkent • Yangi loyihalarga tayyor</span>
+                <span>{t.hero.status}</span>
               </div>
             </motion.div>
           </div>
@@ -200,7 +201,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="mt-16 sm:mt-20 w-full grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
         >
-          {/* Card 1: 2+ Yillik tajriba */}
+          {/* Card 1: 2+ Experience */}
           <div className="group relative flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 p-4 sm:p-5 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 hover:border-sky-500/40 hover:-translate-y-0.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-500/20">
               <Briefcase className="h-6 w-6" />
@@ -210,12 +211,12 @@ export const Hero: React.FC = () => {
                 <AnimatedStatValue target="2+" />
               </div>
               <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
-                Yillik tajriba
+                {t.hero.stats.experience}
               </div>
             </div>
           </div>
 
-          {/* Card 2: 16+ Bajarilgan loyihalar */}
+          {/* Card 2: 16+ Projects */}
           <div className="group relative flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 p-4 sm:p-5 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-500/40 hover:-translate-y-0.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/20">
               <Code2 className="h-6 w-6" />
@@ -225,12 +226,12 @@ export const Hero: React.FC = () => {
                 <AnimatedStatValue target="16+" />
               </div>
               <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
-                Bajarilgan loyihalar
+                {t.hero.stats.projects}
               </div>
             </div>
           </div>
 
-          {/* Card 3: 5+ Mijozlar fikri */}
+          {/* Card 3: 5+ Client Reviews */}
           <div className="group relative flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 p-4 sm:p-5 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 hover:border-indigo-500/40 hover:-translate-y-0.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 border border-indigo-500/20">
               <Star className="h-6 w-6" />
@@ -240,12 +241,12 @@ export const Hero: React.FC = () => {
                 <AnimatedStatValue target="5+" />
               </div>
               <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
-                Mijozlar fikri
+                {t.hero.stats.reviews}
               </div>
             </div>
           </div>
 
-          {/* Card 4: 100% Muvaffaqiyatli natija */}
+          {/* Card 4: 100% Success */}
           <div className="group relative flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 p-4 sm:p-5 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 hover:border-teal-500/40 hover:-translate-y-0.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-500/10 text-teal-500 dark:text-teal-400 border border-teal-500/20">
               <ShieldCheck className="h-6 w-6" />
@@ -255,7 +256,7 @@ export const Hero: React.FC = () => {
                 <AnimatedStatValue target="100%" />
               </div>
               <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
-                Muvaffaqiyatli natija
+                {t.hero.stats.success}
               </div>
             </div>
           </div>

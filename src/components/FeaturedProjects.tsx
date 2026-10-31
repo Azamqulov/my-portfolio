@@ -5,16 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
   ArrowRight,
-  ExternalLink,
   X,
   Send,
-  Sparkles,
 } from "lucide-react";
 import { SHOWCASE_PROJECTS, ShowcaseProject } from "@/data/portfolioData";
 import { Aos, AosContainer, AosItem } from "@/components/Aos";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const FeaturedProjects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ShowcaseProject | null>(null);
+  const { t } = useLanguage();
 
   // Close modal on Escape key for a11y
   useEffect(() => {
@@ -33,6 +33,20 @@ export const FeaturedProjects: React.FC = () => {
     };
   }, [selectedProject]);
 
+  const getTranslatedProject = (project: ShowcaseProject) => {
+    const translation = (
+      t.featuredProjects.projects as Record<
+        string,
+        { title: string; badge: string; description: string }
+      >
+    )[project.id];
+    return {
+      title: translation?.title || project.title,
+      badge: translation?.badge || project.badge,
+      description: translation?.description || project.description,
+    };
+  };
+
   return (
     <section
       id="projects"
@@ -48,7 +62,7 @@ export const FeaturedProjects: React.FC = () => {
           <div className="flex flex-col items-start text-left">
             <Aos animation="fade-up" delay={0.05}>
               <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-                <span>• FLAPMAN LOYIHALAR</span>
+                <span>{t.featuredProjects.tag}</span>
               </div>
             </Aos>
             <Aos animation="fade-up" delay={0.12}>
@@ -56,7 +70,7 @@ export const FeaturedProjects: React.FC = () => {
                 id="featured-projects-heading"
                 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
               >
-                Bajarilgan loyihalar
+                {t.featuredProjects.heading}
               </h2>
             </Aos>
           </div>
@@ -66,7 +80,7 @@ export const FeaturedProjects: React.FC = () => {
               href="#all-projects"
               className="inline-flex items-center gap-2 text-sm font-bold text-sky-500 hover:text-sky-400 transition-colors group"
             >
-              <span>Barcha loyihalar arxivi</span>
+              <span>{t.featuredProjects.archiveLink}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
           </Aos>
@@ -79,6 +93,8 @@ export const FeaturedProjects: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {SHOWCASE_PROJECTS.map((project) => {
+            const translated = getTranslatedProject(project);
+
             return (
               <AosItem key={project.id} animation="fade-up" distance={32}>
                 <motion.article
@@ -101,7 +117,7 @@ export const FeaturedProjects: React.FC = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                         <span className="text-xs font-semibold text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                          Batafsil ko&apos;rish ↗
+                          {t.featuredProjects.viewDetailsMockup}
                         </span>
                       </div>
                     </div>
@@ -112,10 +128,10 @@ export const FeaturedProjects: React.FC = () => {
                         onClick={() => setSelectedProject(project)}
                         className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors cursor-pointer"
                       >
-                        {project.title}
+                        {translated.title}
                       </h3>
                       <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-sky-500 dark:text-sky-300 font-mono">
-                        {project.badge}
+                        {translated.badge}
                       </span>
                     </div>
 
@@ -133,7 +149,7 @@ export const FeaturedProjects: React.FC = () => {
 
                     {/* Description */}
                     <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2">
-                      {project.description}
+                      {translated.description}
                     </p>
                   </div>
 
@@ -143,11 +159,11 @@ export const FeaturedProjects: React.FC = () => {
                       onClick={() => setSelectedProject(project)}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-500 dark:text-sky-400 group-hover:text-sky-300 transition-colors"
                     >
-                      <span>Loyihani ko&apos;rish</span>
+                      <span>{t.featuredProjects.viewProjectBtn}</span>
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </button>
                     <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                      Live Preview
+                      {t.featuredProjects.livePreview}
                     </span>
                   </div>
                 </motion.article>
@@ -157,7 +173,7 @@ export const FeaturedProjects: React.FC = () => {
         </AosContainer>
       </div>
 
-      {/* Project Details Modal with smooth AnimatePresence */}
+      {/* Project Details Modal */}
       <AnimatePresence>
         {selectedProject && (
           <div
@@ -175,7 +191,7 @@ export const FeaturedProjects: React.FC = () => {
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
-                aria-label="Yopish"
+                aria-label={t.featuredProjects.modalCloseBtn}
                 className="absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
               >
                 <X className="h-5 w-5" />
@@ -183,15 +199,15 @@ export const FeaturedProjects: React.FC = () => {
 
               <div className="flex items-center gap-2 mb-3">
                 <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs font-mono text-sky-500 dark:text-sky-300 font-semibold">
-                  {selectedProject.badge}
+                  {getTranslatedProject(selectedProject).badge}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                  Bajarilgan loyiha
+                  {t.featuredProjects.modalBadge}
                 </span>
               </div>
 
               <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-                {selectedProject.title}
+                {getTranslatedProject(selectedProject).title}
               </h3>
 
               {/* Visual Mockup in Modal */}
@@ -206,17 +222,17 @@ export const FeaturedProjects: React.FC = () => {
 
               <div className="my-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 space-y-3">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
-                  Loyiha Haqida & Funksionallik:
+                  {t.featuredProjects.modalAboutTitle}
                 </h4>
                 <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.description}
+                  {getTranslatedProject(selectedProject).description}
                 </p>
               </div>
 
               {/* Tech Stack */}
               <div className="space-y-2">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
-                  Ishlatilgan Texnologiyalar:
+                  {t.featuredProjects.modalTechTitle}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.tags.map((tag) => (
@@ -239,14 +255,14 @@ export const FeaturedProjects: React.FC = () => {
                   className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 transition-all"
                 >
                   <Send className="h-3.5 w-3.5" />
-                  <span>Ushbu loyiha bo&apos;yicha suhbat</span>
+                  <span>{t.featuredProjects.modalDiscussBtn}</span>
                 </a>
 
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 px-5 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white transition-colors"
                 >
-                  Yopish
+                  {t.featuredProjects.modalCloseBtn}
                 </button>
               </div>
             </motion.div>

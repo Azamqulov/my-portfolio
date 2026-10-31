@@ -45,7 +45,7 @@ export const PERSONAL_INFO = {
     "Full-Stack Developer",
   ],
   location: "Toshkent, O'zbekiston",
-  phone: "+998 90 123 45 67",
+  phone: "+998 77 040 46 24",
   experienceYears: "2+",
   projectsCount: "16+",
   bio: `Men zamonaviy texnologiyalar yordamida foydalanuvchilar uchun qulay va samarali web-ilovalarni yarataman. Loyihalarimda sifat, ishonchlilik va zamonaviy dizayn ustuvorlik qiladi.`,
