@@ -40,7 +40,7 @@ export const BackgroundCanvas: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
     const isMobile = width < 768;
-    const particleCount = isMobile ? 95 : 240;
+    const particleCount = isMobile ? 32 : 72;
 
     let currentSection: SectionShape = "hero";
     let isTransitioning = false;
@@ -49,37 +49,40 @@ export const BackgroundCanvas: React.FC = () => {
     const mouse = {
       x: -1000,
       y: -1000,
-      radius: 100,
+      radius: 90,
     };
 
+    let mouseActive = false;
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      mouseActive = true;
     };
 
     const handleMouseLeave = () => {
       mouse.x = -1000;
       mouse.y = -1000;
+      mouseActive = false;
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave, { passive: true });
 
-    // Delicate, soft pastel cyan/teal/sky-blue palettes matching Screenshot 2
+    // Organic, botanical leaf green & dark forest palettes matching potted plant image
     const lightColors = [
-      "rgba(14, 165, 233, ", // Sky 500
-      "rgba(20, 184, 166, ", // Teal 500
-      "rgba(56, 189, 248, ", // Sky 400
-      "rgba(45, 212, 191, ", // Teal 400
-      "rgba(99, 102, 241, ", // Indigo 500
+      "rgba(27, 67, 50, ",  // Deep Forest (#1B4332)
+      "rgba(45, 106, 79, ", // Pine Green (#2D6A4F)
+      "rgba(64, 145, 108, ",// Leaf Green (#40916C)
+      "rgba(82, 183, 136, ",// Sage Green (#52B788)
+      "rgba(16, 185, 129, ",// Emerald Accent (#10B981)
     ];
 
     const darkColors = [
-      "rgba(0, 217, 192, ",  // Brand Teal
-      "rgba(56, 189, 248, ", // Cyan 400
-      "rgba(129, 140, 248, ",// Indigo 400
-      "rgba(165, 243, 252, ",// Cyan 200
-      "rgba(99, 102, 241, ", // Indigo 500
+      "rgba(16, 185, 129, ", // Emerald Green (#10B981)
+      "rgba(82, 183, 136, ", // Mint Leaf (#52B788)
+      "rgba(116, 198, 157, ",// Light Sage (#74C69D)
+      "rgba(45, 106, 79, ",  // Deep Pine (#2D6A4F)
+      "rgba(167, 215, 197, ",// Pale Foliage (#A7D7C5)
     ];
 
     // Helper: sample points along a curve/line with soft organic dispersion
@@ -382,36 +385,38 @@ export const BackgroundCanvas: React.FC = () => {
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
-    // Main animation loop
+    // Efficiently cache dark mode status instead of querying DOM 60x/sec
+    let isDark = document.documentElement.classList.contains("dark");
+    const darkObserver = new MutationObserver(() => {
+      isDark = document.documentElement.classList.contains("dark");
+    });
+    darkObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    // Pause canvas loop when tab is hidden to save 100% CPU/GPU
+    let isTabVisible = !document.hidden;
+    const handleVisibilityChange = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Main lightweight animation loop (runs in < 0.2ms per frame)
     const animate = (time: number) => {
+      if (!isTabVisible) return;
+
       ctx.clearRect(0, 0, width, height);
 
-      const isDark =
-        document.documentElement.classList.contains("dark") ||
-        (!document.documentElement.classList.contains("light") &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-      // Subtle ambient background grid lines
-      ctx.strokeStyle = isDark ? "rgba(255, 255, 255, 0.012)" : "rgba(0, 0, 0, 0.018)";
-      ctx.lineWidth = 1;
-      const gridSize = 80;
-      for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
-      }
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-
       // Update and draw particles
-      for (let i = 0; i < particlesList.length; i++) {
+      const len = particlesList.length;
+      for (let i = 0; i < len; i++) {
         const p = particlesList[i];
 
         // Sinuous serpentine wave breathing across the page ("ilon izi")
@@ -430,14 +435,18 @@ export const BackgroundCanvas: React.FC = () => {
         p.vx += dx * spring;
         p.vy += dy * spring;
 
-        // Gentle Mouse Repulsion (doesn't destroy the shape)
-        const mdx = mouse.x - p.x;
-        const mdy = mouse.y - p.y;
-        const mdist = Math.hypot(mdx, mdy);
-        if (mdist < mouse.radius && mdist > 0) {
-          const repForce = ((mouse.radius - mdist) / mouse.radius) * 2.8;
-          p.vx -= (mdx / mdist) * repForce;
-          p.vy -= (mdy / mdist) * repForce;
+        // Mouse Repulsion only when cursor is actively inside window
+        if (mouseActive && mouse.x > -500) {
+          const mdx = mouse.x - p.x;
+          const mdy = mouse.y - p.y;
+          const mdistSq = mdx * mdx + mdy * mdy;
+          const radiusSq = mouse.radius * mouse.radius;
+          if (mdistSq < radiusSq && mdistSq > 0) {
+            const mdist = Math.sqrt(mdistSq);
+            const repForce = ((mouse.radius - mdist) / mouse.radius) * 2.5;
+            p.vx -= (mdx / mdist) * repForce;
+            p.vy -= (mdy / mdist) * repForce;
+          }
         }
 
         // Apply physics
@@ -446,7 +455,7 @@ export const BackgroundCanvas: React.FC = () => {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Draw particle with soft alpha (like Screenshot 2)
+        // Draw particle with soft alpha
         const colorPrefix = isDark ? p.colorDark : p.colorLight;
         const currentAlpha = isDark ? p.baseAlpha * 1.1 : p.baseAlpha * 0.85;
 
@@ -454,14 +463,6 @@ export const BackgroundCanvas: React.FC = () => {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `${colorPrefix}${currentAlpha})`;
         ctx.fill();
-
-        // Delicate soft halo for slightly larger particles in dark mode
-        if (isDark && p.size > 2.0) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 1.8, 0, Math.PI * 2);
-          ctx.fillStyle = `${colorPrefix}0.15)`;
-          ctx.fill();
-        }
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -474,6 +475,8 @@ export const BackgroundCanvas: React.FC = () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      darkObserver.disconnect();
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };

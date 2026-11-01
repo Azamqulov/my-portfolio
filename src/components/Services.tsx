@@ -31,26 +31,30 @@ export const Services: React.FC = () => {
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* Background ambient radial bloom */}
-      <div className="pointer-events-none absolute top-1/2 left-1/3 -translate-y-1/2 w-[520px] h-[520px] bg-gradient-to-tr from-sky-500/10 via-blue-600/5 to-transparent rounded-full blur-[130px] -z-10 dark:opacity-70 opacity-30" />
+      <div className="pointer-events-none absolute top-1/2 left-1/3 -translate-y-1/2 w-[520px] h-[520px] bg-gradient-to-tr from-emerald-600/10 via-green-900/10 to-transparent rounded-full blur-[130px] -z-10 dark:opacity-70 opacity-30" />
 
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        {/* Section Header: Mobile Centered, Desktop Left-Aligned */}
+        <div className="flex flex-col items-center sm:items-start text-center sm:text-left mb-16">
           <Aos animation="fade-up" delay={0.05}>
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-              <span>{t.services.tag}</span>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">(04)</span>
+              <span className="h-[1px] w-12 bg-emerald-500/40" />
+              <span className="text-xs uppercase tracking-widest font-mono text-slate-500 dark:text-slate-400 font-semibold">
+                {t.services.tag}
+              </span>
             </div>
           </Aos>
           <Aos animation="fade-up" delay={0.12}>
             <h2
               id="services-heading"
-              className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
+              className="text-3xl sm:text-5xl font-black font-heading text-slate-900 dark:text-white tracking-tight"
             >
               {t.services.heading}
             </h2>
           </Aos>
           <Aos animation="fade-up" delay={0.18}>
-            <p className="mt-4 max-w-2xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal">
+            <p className="mt-4 max-w-2xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal mx-auto sm:mx-0">
               {t.services.subtitle}
             </p>
           </Aos>
@@ -78,19 +82,19 @@ export const Services: React.FC = () => {
                 <motion.div
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="group relative flex flex-col justify-between h-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0B101D]/95 p-6 sm:p-7 backdrop-blur-xl shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-sky-500/50 overflow-hidden"
+                  className="group relative flex flex-col justify-between h-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0A1410]/95 p-6 sm:p-7 backdrop-blur-xl shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-emerald-500/50 overflow-hidden"
                 >
                   {/* Subtle inner hover ambient bloom */}
-                  <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-sky-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-emerald-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
                   <div>
                     {/* Icon */}
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-500/20 mb-5 group-hover:scale-110 group-hover:bg-sky-500/20 transition-all duration-300 shadow-sm">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-5 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all duration-300 shadow-sm">
                       <Icon className="h-6 w-6" />
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                       {title}
                     </h3>
 
@@ -102,10 +106,10 @@ export const Services: React.FC = () => {
 
                   {/* Bottom Accent */}
                   <div className="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-400 dark:text-slate-500">
-                    <span className="group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors">
+                    <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                       {t.services.guarantee}
                     </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                   </div>
                 </motion.div>
               </AosItem>

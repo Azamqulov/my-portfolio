@@ -1,11 +1,13 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { Ticker } from "@/components/Ticker";
 import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
-import { FeaturedProjects } from "@/components/FeaturedProjects";
+import { Projects } from "@/components/Projects";
 import { Services } from "@/components/Services";
+import { Process } from "@/components/Process";
+import { Benefits } from "@/components/Benefits";
 import { Testimonials } from "@/components/Testimonials";
-import { AllProjects } from "@/components/AllProjects";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 
@@ -14,11 +16,13 @@ export default function Home() {
     <main className="flex-1 flex flex-col">
       <Navbar />
       <Hero />
+      <Ticker />
       <About />
       <Skills />
-      <FeaturedProjects />
-      <AllProjects />
+      <Projects />
       <Services />
+      <Process />
+      <Benefits />
       <Testimonials />
       <Contact />
       <Footer />

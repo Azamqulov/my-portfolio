@@ -71,10 +71,10 @@ export const PERSONAL_INFO = {
 };
 
 export const STATS = [
-  { value: "2+", label: "Yillik tajriba", icon: "Briefcase", glow: "text-blue-400" },
-  { value: "16+", label: "Bajarilgan loyihalar", icon: "Code", glow: "text-sky-400" },
-  { value: "5+", label: "Mijozlar fikri", icon: "Star", glow: "text-indigo-400" },
-  { value: "100%", label: "Muvaffaqiyatli natija", icon: "ShieldCheck", glow: "text-teal-400" },
+  { value: "2+", label: "Yillik tajriba", icon: "Briefcase", glow: "text-emerald-500" },
+  { value: "56+", label: "Bajarilgan loyihalar", icon: "Code", glow: "text-green-500" },
+  { value: "4.9+", label: "Mijozlar fikri", icon: "Star", glow: "text-teal-500" },
+  { value: "100%", label: "Muvaffaqiyatli natija", icon: "ShieldCheck", glow: "text-emerald-400" },
 ];
 
 export interface ShowcaseProject {
@@ -167,7 +167,7 @@ export const TECH_CARDS: TechCard[] = [
     categoryTag: "Frontend",
     iconName: "React",
     technologies: "React, Next.js, TypeScript, Tailwind CSS, HTML, CSS",
-    color: "#38BDF8",
+    color: "#10B981",
   },
   {
     id: "backend",
@@ -175,7 +175,7 @@ export const TECH_CARDS: TechCard[] = [
     categoryTag: "Backend",
     iconName: "Node",
     technologies: "Node.js, Express.js, REST API, MongoDB",
-    color: "#22C55E",
+    color: "#2D6A4F",
   },
   {
     id: "uiux",
@@ -183,7 +183,7 @@ export const TECH_CARDS: TechCard[] = [
     categoryTag: "Design",
     iconName: "Figma",
     technologies: "Figma, responsive dizayn, interfeys animatsiyalari",
-    color: "#A855F7",
+    color: "#40916C",
   },
   {
     id: "vcs",
@@ -191,7 +191,7 @@ export const TECH_CARDS: TechCard[] = [
     categoryTag: "Git",
     iconName: "Git",
     technologies: "Git, GitHub, GitLab",
-    color: "#F97316",
+    color: "#D97706",
   },
   {
     id: "tools",
@@ -199,7 +199,7 @@ export const TECH_CARDS: TechCard[] = [
     categoryTag: "DevTools",
     iconName: "Tools",
     technologies: "VS Code, Postman, Docker, Vercel",
-    color: "#06B6D4",
+    color: "#52B788",
   },
   {
     id: "other",
@@ -207,7 +207,7 @@ export const TECH_CARDS: TechCard[] = [
     categoryTag: "Systems",
     iconName: "Gear",
     technologies: "Linux, NPM, Webpack, Agile (Scrum)",
-    color: "#64748B",
+    color: "#74C69D",
   },
 ];
 
@@ -386,7 +386,7 @@ export const FEATURED_PROJECTS: Project[] = [
     categoryLabel: "Web & SaaS",
     featured: true,
     bentoSpan: "col-span-1 md:col-span-2 lg:col-span-2",
-    accentColor: "from-[#00D9C0] to-[#2563EB]",
+    accentColor: "from-[#10B981] to-[#1B4332]",
     metrics: [
       { label: "Arxitektura", value: "Multi-tenant" },
       { label: "Platformalar", value: "Web + Desktop + Bot" },
@@ -409,7 +409,7 @@ export const FEATURED_PROJECTS: Project[] = [
     categoryLabel: "Desktop & Native",
     featured: true,
     bentoSpan: "col-span-1 md:col-span-1 lg:col-span-1 row-span-1",
-    accentColor: "from-[#6366F1] to-[#A855F7]",
+    accentColor: "from-[#2D6A4F] to-[#52B788]",
     metrics: [
       { label: "Latency", value: "<15ms native" },
       { label: "Maxfiylik", value: "100% Offline" },
@@ -431,7 +431,7 @@ export const FEATURED_PROJECTS: Project[] = [
     categoryLabel: "AI & DevTools",
     featured: true,
     bentoSpan: "col-span-1 md:col-span-1 lg:col-span-1 row-span-1",
-    accentColor: "from-[#00D9C0] to-[#06B6D4]",
+    accentColor: "from-[#40916C] to-[#1B4332]",
     metrics: [
       { label: "Model", value: "Gemini 2.0 Flash" },
       { label: "Platforma", value: "Chrome Extension" },
@@ -453,7 +453,7 @@ export const FEATURED_PROJECTS: Project[] = [
     categoryLabel: "AI & DevTools",
     featured: true,
     bentoSpan: "col-span-1 md:col-span-1 lg:col-span-1 row-span-1",
-    accentColor: "from-[#EC4899] to-[#8B5CF6]",
+    accentColor: "from-[#10B981] to-[#2D6A4F]",
     metrics: [
       { label: "Generativ AI", value: "FLUX Model" },
       { label: "Canvas", value: "Konva Editor" },
@@ -475,7 +475,7 @@ export const FEATURED_PROJECTS: Project[] = [
     categoryLabel: "Desktop & Native",
     featured: true,
     bentoSpan: "col-span-1 md:col-span-1 lg:col-span-1 row-span-1",
-    accentColor: "from-[#F59E0B] to-[#EF4444]",
+    accentColor: "from-[#D97706] to-[#1B4332]",
     metrics: [
       { label: "Ekran o'lchami", value: "16px - 256px" },
       { label: "Dvigatel", value: "Native Rust" },
@@ -499,7 +499,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "ai",
     categoryLabel: "AI & DevTools",
     featured: false,
-    accentColor: "from-[#38BDF8] to-[#6366F1]",
+    accentColor: "from-[#52B788] to-[#1B4332]",
   },
   {
     id: "vinetka",
@@ -511,7 +511,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "web",
     categoryLabel: "Web & SaaS",
     featured: false,
-    accentColor: "from-[#10B981] to-[#00D9C0]",
+    accentColor: "from-[#10B981] to-[#2D6A4F]",
   },
   {
     id: "milliy-sertifikat-bot",
@@ -523,7 +523,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "bot",
     categoryLabel: "Telegram Botlar",
     featured: false,
-    accentColor: "from-[#6366F1] to-[#EC4899]",
+    accentColor: "from-[#40916C] to-[#14382A]",
   },
   {
     id: "vakansiya-elon-boti",
@@ -535,7 +535,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "bot",
     categoryLabel: "Telegram Botlar",
     featured: false,
-    accentColor: "from-[#F97316] to-[#EAB308]",
+    accentColor: "from-[#D97706] to-[#2D6A4F]",
   },
   {
     id: "smart-academy",
@@ -547,7 +547,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "edtech",
     categoryLabel: "EdTech & LMS",
     featured: false,
-    accentColor: "from-[#00D9C0] to-[#3B82F6]",
+    accentColor: "from-[#52B788] to-[#10B981]",
   },
   {
     id: "dizayn-ai",
@@ -559,7 +559,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "ai",
     categoryLabel: "AI & DevTools",
     featured: false,
-    accentColor: "from-[#8B5CF6] to-[#D946EF]",
+    accentColor: "from-[#40916C] to-[#52B788]",
   },
   {
     id: "codelearn",
@@ -571,7 +571,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "edtech",
     categoryLabel: "EdTech & LMS",
     featured: false,
-    accentColor: "from-[#14B8A6] to-[#6366F1]",
+    accentColor: "from-[#10B981] to-[#1B4332]",
   },
   {
     id: "edulocal",
@@ -583,7 +583,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "edtech",
     categoryLabel: "EdTech & LMS",
     featured: false,
-    accentColor: "from-[#3B82F6] to-[#1D4ED8]",
+    accentColor: "from-[#2D6A4F] to-[#74C69D]",
   },
   {
     id: "it-center-crm",
@@ -607,7 +607,7 @@ export const ALL_PROJECTS: Project[] = [
     category: "web",
     categoryLabel: "Web & SaaS",
     featured: false,
-    accentColor: "from-[#E11D48] to-[#FB7185]",
+    accentColor: "from-[#2D6A4F] to-[#1B4332]",
   },
   {
     id: "telegram-payment-bot",

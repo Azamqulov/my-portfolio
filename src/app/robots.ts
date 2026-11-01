@@ -8,8 +8,15 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/"],
       },
+      {
+        userAgent: "Googlebot-Image",
+        allow: ["/", "/images/", "/musurmon.jpg", "/*.jpg", "/*.png", "/*.webp", "/*.svg"],
+      },
     ],
-    sitemap: "https://azamqulov.com/sitemap.xml",
+    sitemap: [
+      "https://azamqulov.com/sitemap.xml",
+      "https://azamqulov.com/image-sitemap.xml",
+    ],
     host: "https://azamqulov.com",
   };
 }

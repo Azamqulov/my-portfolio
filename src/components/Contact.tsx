@@ -58,7 +58,7 @@ export const Contact: React.FC = () => {
           particleCount: 90,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ["#38BDF8", "#3B82F6", "#818CF8"],
+          colors: ["#10B981", "#2D6A4F", "#52B788", "#74C69D"],
         });
         setFormState({ name: "", email: "", message: "" });
       } else {
@@ -78,14 +78,18 @@ export const Contact: React.FC = () => {
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* Background radial glow */}
-      <div className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-gradient-to-t from-sky-500/10 via-blue-600/10 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
+      <div className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-gradient-to-t from-emerald-600/10 via-green-900/10 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
 
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
           <Aos animation="fade-up" delay={0.05}>
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-              <span>{t.contact.tag}</span>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">(08)</span>
+              <span className="h-[1px] w-12 bg-emerald-500/40" />
+              <span className="text-xs uppercase tracking-widest font-mono text-slate-500 dark:text-slate-400 font-semibold">
+                {t.contact.tag}
+              </span>
             </div>
           </Aos>
           <Aos animation="fade-up" delay={0.12}>
@@ -113,16 +117,16 @@ export const Contact: React.FC = () => {
             {/* Email Card */}
             <a
               href={`mailto:${PERSONAL_INFO.contacts.email}`}
-              className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-sky-500/40 transition-all"
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0A1410]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-emerald-500/40 transition-all"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-500 border border-sky-500/20 group-hover:scale-110 transition-transform">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-110 transition-transform">
                 <Mail className="h-6 w-6" />
               </div>
               <div>
                 <span className="text-xs text-slate-400 block font-medium">
                   {t.contact.emailLabel}
                 </span>
-                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                   {PERSONAL_INFO.contacts.email}
                 </span>
               </div>
@@ -131,16 +135,16 @@ export const Contact: React.FC = () => {
             {/* Phone Card (+998 77 040 46 24) */}
             <a
               href={`tel:${PERSONAL_INFO.phone.replace(/\s+/g, "")}`}
-              className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-blue-500/40 transition-all"
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0A1410]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-emerald-500/40 transition-all"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20 group-hover:scale-110 transition-transform">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-110 transition-transform">
                 <Phone className="h-6 w-6" />
               </div>
               <div>
                 <span className="text-xs text-slate-400 block font-medium">
                   {t.contact.phoneLabel}
                 </span>
-                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-400 transition-colors">
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                   {PERSONAL_INFO.phone}
                 </span>
               </div>
@@ -151,14 +155,14 @@ export const Contact: React.FC = () => {
               href="https://t.me/azamqulovService_bot"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 p-4 rounded-2xl border border-sky-500/30 dark:border-sky-500/25 bg-sky-500/5 dark:bg-sky-500/10 backdrop-blur-md shadow-sm hover:shadow-md hover:border-sky-500/50 hover:bg-sky-500/10 transition-all"
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-emerald-500/30 dark:border-emerald-500/25 bg-emerald-500/5 dark:bg-emerald-500/10 backdrop-blur-md shadow-sm hover:shadow-md hover:border-emerald-500/50 hover:bg-emerald-500/15 transition-all"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-500/20 to-blue-600/20 text-sky-500 dark:text-sky-400 border border-sky-500/30 group-hover:scale-110 transition-transform shadow-inner">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-600/20 to-teal-700/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 group-hover:scale-110 transition-transform shadow-inner">
                 <Bot className="h-6 w-6" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-sky-600 dark:text-sky-400 font-mono font-bold uppercase tracking-wider block">
+                  <span className="text-xs text-emerald-600 dark:text-emerald-400 font-mono font-bold uppercase tracking-wider block">
                     {t.contact.telegramBotLabel}
                   </span>
                   <span className="relative flex h-2 w-2">
@@ -166,15 +170,15 @@ export const Contact: React.FC = () => {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
                 </div>
-                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors font-mono">
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors font-mono">
                   @azamqulovService_bot
                 </span>
               </div>
             </a>
 
             {/* Location Card */}
-            <div className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0B101D]/90 backdrop-blur-md shadow-sm">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
+            <div className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0A1410]/90 backdrop-blur-md shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 <MapPin className="h-6 w-6" />
               </div>
               <div>
@@ -195,17 +199,17 @@ export const Contact: React.FC = () => {
             className="lg:col-span-7 relative"
           >
             {/* Playful Hand-Drawn Doodle */}
-            <div className="hidden xl:block absolute -top-10 -right-16 text-indigo-400 dark:text-indigo-400/90 font-serif italic text-lg select-none transform rotate-6 pointer-events-none">
+            <div className="hidden xl:block absolute -top-10 -right-16 text-emerald-600/80 dark:text-emerald-400/90 font-serif italic text-lg select-none transform rotate-6 pointer-events-none">
               <div className="flex flex-col items-center">
                 <span>{t.contact.doodleText1}</span>
                 <span>{t.contact.doodleText2}</span>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0B101D]/95 p-6 sm:p-8 backdrop-blur-md shadow-xl dark:shadow-2xl">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0A1410]/95 p-6 sm:p-8 backdrop-blur-md shadow-xl dark:shadow-2xl">
               {submitted ? (
-                <div className="flex flex-col items-center justify-center text-center p-8 rounded-xl border border-sky-500/30 bg-sky-500/10 space-y-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-500 text-white shadow-lg">
+                <div className="flex flex-col items-center justify-center text-center p-8 rounded-xl border border-emerald-500/30 bg-emerald-500/10 space-y-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg">
                     <Check className="h-6 w-6 stroke-[3]" />
                   </div>
                   <h4 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -221,7 +225,7 @@ export const Contact: React.FC = () => {
                       setFormState({ name: "", email: "", message: "" });
                       setErrorMessage(null);
                     }}
-                    className="mt-2 text-xs font-semibold text-sky-500 underline"
+                    className="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 underline"
                   >
                     {t.contact.form.sendAnother}
                   </button>
@@ -250,7 +254,7 @@ export const Contact: React.FC = () => {
                         onChange={(e) =>
                           setFormState({ ...formState, name: e.target.value })
                         }
-                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#080B12]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors"
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#060B08]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"
                       />
                     </div>
                     <div>
@@ -266,7 +270,7 @@ export const Contact: React.FC = () => {
                         onChange={(e) =>
                           setFormState({ ...formState, email: e.target.value })
                         }
-                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#080B12]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors"
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#060B08]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"
                       />
                     </div>
                   </div>
@@ -284,7 +288,7 @@ export const Contact: React.FC = () => {
                       onChange={(e) =>
                         setFormState({ ...formState, message: e.target.value })
                       }
-                      className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#080B12]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors resize-none"
+                      className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#060B08]/80 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors resize-none"
                     />
                   </div>
 
@@ -293,7 +297,7 @@ export const Contact: React.FC = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.01] hover:shadow-blue-500/40 active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                      className="btn-primary-glow hover-sheen w-full inline-flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-white transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                     >
                       {isSubmitting ? (
                         <>
@@ -303,7 +307,7 @@ export const Contact: React.FC = () => {
                       ) : (
                         <>
                           <span>{t.contact.form.submitBtn}</span>
-                          <ArrowRight className="h-4 w-4" />
+                          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                         </>
                       )}
                     </button>

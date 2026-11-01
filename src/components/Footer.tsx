@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="relative border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#070A12]/95 pt-12 pb-8 px-4 sm:px-6 lg:px-8 backdrop-blur-xl">
+    <footer className="relative border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#060B08]/95 pt-12 pb-8 px-4 sm:px-6 lg:px-8 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         {/* Main Footer Row */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-200/70 dark:border-slate-800/60">
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
               <a
                 key={item.href}
                 href={item.href}
-                className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
+                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
                 {item.name}
               </a>
@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Telegram"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 transition-all shadow-sm"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 transition-all shadow-sm"
             >
               <Send className="h-4 w-4" />
             </a>
@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 transition-all shadow-sm"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 transition-all shadow-sm"
             >
               <Github className="h-4 w-4" />
             </a>
@@ -71,7 +71,7 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 transition-all shadow-sm"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 transition-all shadow-sm"
             >
               <Linkedin className="h-4 w-4" />
             </a>
@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 transition-all shadow-sm"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 transition-all shadow-sm"
             >
               <Youtube className="h-4 w-4" />
             </a>
@@ -89,7 +89,7 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 transition-all shadow-sm"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 transition-all shadow-sm"
             >
               <Instagram className="h-4 w-4" />
             </a>

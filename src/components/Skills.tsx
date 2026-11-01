@@ -42,14 +42,18 @@ export const Skills: React.FC = () => {
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* Background soft ambient radial */}
-      <div className="pointer-events-none absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-sky-500/10 via-blue-600/5 to-transparent rounded-full blur-[130px] -z-10 dark:opacity-70 opacity-30" />
+      <div className="pointer-events-none absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-emerald-600/10 via-forest/5 to-transparent rounded-full blur-[130px] -z-10 dark:opacity-70 opacity-30" />
 
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        {/* Section Header: Mobile Centered, Desktop Left-Aligned */}
+        <div className="flex flex-col items-center sm:items-start text-center sm:text-left mb-16">
           <Aos animation="fade-up" delay={0.05}>
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-              <span>{t.skills.tag}</span>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-mono text-xs font-bold text-emerald-500">•</span>
+              <span className="h-[1px] w-12 bg-emerald-500/40" />
+              <span className="text-xs uppercase tracking-widest font-mono text-slate-500 dark:text-slate-400 font-semibold">
+                {t.skills.tag}
+              </span>
             </div>
           </Aos>
           <Aos animation="fade-up" delay={0.12}>
@@ -61,7 +65,7 @@ export const Skills: React.FC = () => {
             </h2>
           </Aos>
           <Aos animation="fade-up" delay={0.18}>
-            <p className="mt-4 max-w-xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal">
+            <p className="mt-4 max-w-xl text-slate-600 dark:text-slate-400 text-sm sm:text-base font-normal mx-auto sm:mx-0">
               {t.skills.subtitle}
             </p>
           </Aos>
@@ -87,7 +91,7 @@ export const Skills: React.FC = () => {
                 <motion.div
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="group relative flex flex-col justify-between h-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0B101D]/95 p-6 sm:p-7 backdrop-blur-xl shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-sky-500/50 overflow-hidden"
+                  className="group relative flex flex-col justify-between h-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0A1410]/95 p-6 sm:p-7 backdrop-blur-xl shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-emerald-500/50 overflow-hidden"
                 >
                   {/* Subtle inner hover ambient bloom */}
                   <div
@@ -109,7 +113,7 @@ export const Skills: React.FC = () => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
                       {title}
                     </h3>
 

@@ -25,7 +25,7 @@ const CODE_TABS: CodeTab[] = [
     id: "hero",
     filename: "Hero.tsx",
     badge: "UI",
-    color: "#38BDF8",
+    color: "#10B981",
     code: `export function Developer() {
   const stack = ["Next.js 14", "React", "TypeScript"];
   return <FullStackEngineer ready={true} stack={stack} />;
@@ -35,7 +35,7 @@ const CODE_TABS: CodeTab[] = [
     id: "api",
     filename: "api.ts",
     badge: "API",
-    color: "#60A5FA",
+    color: "#52B788",
     code: `export async function GET() {
   const projects = await db.projects.findMany();
   return Response.json({ status: 200, count: 16 });
@@ -45,7 +45,7 @@ const CODE_TABS: CodeTab[] = [
     id: "architecture",
     filename: "config.ts",
     badge: "Config",
-    color: "#34D399",
+    color: "#2D6A4F",
     code: `export const SystemConfig = {
   speed: "100/100 Lighthouse",
   render: "Zero-Latency Edge SSR",
@@ -147,7 +147,7 @@ export const DeveloperWorkspace: React.FC = () => {
       className="relative w-full max-w-[580px] xl:max-w-[620px] [perspective:1000px] select-none"
     >
       {/* Soft natural ambient glow (matches site theme) */}
-      <div className="absolute -inset-3 bg-gradient-to-tr from-sky-500/10 via-blue-600/10 to-indigo-500/10 rounded-3xl blur-2xl -z-10 dark:opacity-70 opacity-30 pointer-events-none" />
+      <div className="absolute -inset-3 bg-gradient-to-tr from-emerald-500/10 via-forest/10 to-teal-500/10 rounded-3xl blur-2xl -z-10 dark:opacity-70 opacity-30 pointer-events-none" />
 
       {/* Main Glassmorphic Studio Window */}
       <motion.div
@@ -155,10 +155,10 @@ export const DeveloperWorkspace: React.FC = () => {
           transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
-        className="relative w-full rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0B101D]/95 backdrop-blur-2xl shadow-xl dark:shadow-[0_20px_50px_rgba(0,0,0,0.7)] overflow-hidden flex flex-col"
+        className="relative w-full rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0A1410]/95 backdrop-blur-2xl shadow-xl dark:shadow-[0_20px_50px_rgba(0,0,0,0.7)] overflow-hidden flex flex-col"
       >
-        {/* Top Window Bar (Linear / macOS style) */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50/80 dark:bg-[#0E1526]/80 backdrop-blur-md">
+        {/* Top Window Bar */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50/80 dark:bg-[#0E1B15]/80 backdrop-blur-md">
           {/* Traffic Lights & Git Branch */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
@@ -168,7 +168,7 @@ export const DeveloperWorkspace: React.FC = () => {
             </div>
 
             <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/40 dark:border-slate-700/50 text-[10px] font-mono text-slate-600 dark:text-slate-400">
-              <GitBranch className="h-3 w-3 text-sky-500" />
+              <GitBranch className="h-3 w-3 text-emerald-500" />
               <span>main</span>
               <span className="text-slate-400 dark:text-slate-600">•</span>
               <span className="text-emerald-600 dark:text-emerald-400 font-semibold">prod-ready</span>
@@ -197,7 +197,7 @@ export const DeveloperWorkspace: React.FC = () => {
         </div>
 
         {/* Clickable Animated Tabs Row */}
-        <div className="flex items-center px-2 pt-2 bg-slate-100/60 dark:bg-[#090D18]/60 border-b border-slate-200/80 dark:border-slate-800/80 overflow-x-auto no-scrollbar">
+        <div className="flex items-center px-2 pt-2 bg-slate-100/60 dark:bg-[#070D0A]/60 border-b border-slate-200/80 dark:border-slate-800/80 overflow-x-auto no-scrollbar">
           {CODE_TABS.map((tab, idx) => {
             const isActive = idx === activeTabIdx;
             return (
@@ -207,7 +207,7 @@ export const DeveloperWorkspace: React.FC = () => {
                 onClick={() => handleTabClick(idx)}
                 className={`group relative flex items-center gap-2 px-3.5 py-2 rounded-t-xl text-xs font-mono whitespace-nowrap shrink-0 transition-all duration-200 border-t border-x ${
                   isActive
-                    ? "bg-white dark:bg-[#0B101D] text-slate-900 dark:text-sky-300 font-semibold border-slate-200/90 dark:border-slate-800/90 shadow-sm"
+                    ? "bg-white dark:bg-[#0A1410] text-slate-900 dark:text-emerald-300 font-semibold border-slate-200/90 dark:border-slate-800/90 shadow-sm"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border-transparent hover:bg-white/40 dark:hover:bg-slate-800/40"
                 }`}
               >
@@ -227,7 +227,7 @@ export const DeveloperWorkspace: React.FC = () => {
                 {isActive && (
                   <motion.div
                     layoutId="activeTabUnderline"
-                    className="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-sky-500"
+                    className="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-emerald-500"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -237,7 +237,7 @@ export const DeveloperWorkspace: React.FC = () => {
         </div>
 
         {/* Active Code Content Window with Typewriter Effect */}
-        <div className="relative p-4 font-mono text-[12px] sm:text-[13px] leading-relaxed overflow-x-auto min-h-[140px] sm:min-h-[150px] bg-white dark:bg-[#0B101D] flex items-center">
+        <div className="relative p-4 font-mono text-[12px] sm:text-[13px] leading-relaxed overflow-x-auto min-h-[140px] sm:min-h-[150px] bg-white dark:bg-[#0A1410] flex items-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab.id}
@@ -263,7 +263,7 @@ export const DeveloperWorkspace: React.FC = () => {
                 ))}
               </div>
 
-              {/* Typed Lines with Colorful Syntax Highlighting */}
+              {/* Typed Lines with Colorful Botanical Syntax Highlighting */}
               <div className="pl-3.5 text-slate-800 dark:text-slate-200 overflow-x-auto font-mono whitespace-pre leading-relaxed flex-1">
                 {displayedLines.map((line, i) => {
                   const parts = line.split(
@@ -289,14 +289,14 @@ export const DeveloperWorkspace: React.FC = () => {
                           )
                         ) {
                           return (
-                            <span key={pIdx} className="text-purple-600 dark:text-purple-400 font-semibold">
+                            <span key={pIdx} className="text-emerald-700 dark:text-emerald-300 font-semibold">
                               {part}
                             </span>
                           );
                         }
                         if (part.startsWith("<") || /^[A-Z][a-zA-Z0-9]*$/.test(part)) {
                           return (
-                            <span key={pIdx} className="text-sky-600 dark:text-sky-300 font-medium">
+                            <span key={pIdx} className="text-teal-700 dark:text-teal-300 font-medium">
                               {part}
                             </span>
                           );
@@ -313,7 +313,7 @@ export const DeveloperWorkspace: React.FC = () => {
 
                       {/* Blinking Typewriter Cursor on active line */}
                       {isCurrentTypingLine && (
-                        <span className="inline-block w-1.5 h-3.5 bg-sky-500 rounded-sm animate-pulse ml-0.5 align-middle" />
+                        <span className="inline-block w-1.5 h-3.5 bg-emerald-500 rounded-sm animate-pulse ml-0.5 align-middle" />
                       )}
                     </div>
                   );
@@ -324,7 +324,7 @@ export const DeveloperWorkspace: React.FC = () => {
         </div>
 
         {/* Bottom Interactive Engineering Status Bar */}
-        <div className="flex flex-wrap items-center justify-between px-4 py-2 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/90 dark:bg-[#0E1526]/90 text-xs font-mono">
+        <div className="flex flex-wrap items-center justify-between px-4 py-2 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/90 dark:bg-[#0E1B15]/90 text-xs font-mono">
           {/* Status Message */}
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
@@ -337,7 +337,7 @@ export const DeveloperWorkspace: React.FC = () => {
                 {testResult}
               </span>
             ) : isRunningTest ? (
-              <span className="text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
                 <Cpu className="h-3 w-3 animate-spin" /> Testlar tekshirilmoqda...
               </span>
             ) : (
@@ -352,7 +352,7 @@ export const DeveloperWorkspace: React.FC = () => {
             onClick={handleRunTests}
             type="button"
             disabled={isRunningTest}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-sky-500/10 dark:bg-sky-500/15 text-sky-600 dark:text-sky-400 hover:bg-sky-500/20 transition-all border border-sky-500/20 active:scale-95"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 transition-all border border-emerald-500/20 active:scale-95"
             title="Avtomatik testlarni ishga tushirish"
           >
             <Play className={`h-3 w-3 ${isRunningTest ? "animate-spin" : ""}`} />
@@ -366,9 +366,9 @@ export const DeveloperWorkspace: React.FC = () => {
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
         whileHover={{ scale: 1.05 }}
-        className="hidden sm:flex absolute -top-3.5 -right-2.5 z-30 items-center gap-1.5 rounded-xl px-3 py-1.5 backdrop-blur-xl bg-white/95 dark:bg-[#0D1424]/95 border border-slate-200/90 dark:border-slate-800/90 shadow-md shadow-sky-500/5 cursor-pointer text-slate-800 dark:text-slate-200"
+        className="hidden sm:flex absolute -top-3.5 -right-2.5 z-30 items-center gap-1.5 rounded-xl px-3 py-1.5 backdrop-blur-xl bg-white/95 dark:bg-[#0A1410]/95 border border-slate-200/90 dark:border-slate-800/90 shadow-md shadow-emerald-500/5 cursor-pointer text-slate-800 dark:text-slate-200"
       >
-        <Zap className="h-3.5 w-3.5 text-sky-500" />
+        <Zap className="h-3.5 w-3.5 text-emerald-500" />
         <span className="text-[11px] font-mono font-bold tracking-tight">100/100 Lighthouse</span>
       </motion.div>
     </div>

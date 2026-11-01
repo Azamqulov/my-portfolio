@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Unbounded, Onest, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CursorGlow } from "@/components/CursorGlow";
 import { BackgroundCanvas } from "@/components/BackgroundCanvas";
@@ -8,22 +8,28 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { JsonLd } from "@/components/JsonLd";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-heading",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const onest = Onest({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-mono",
   display: "swap",
 });
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F8FAFC" },
-    { media: "(prefers-color-scheme: dark)", color: "#080B12" },
+    { media: "(prefers-color-scheme: light)", color: "#F6F8F6" },
+    { media: "(prefers-color-scheme: dark)", color: "#060B08" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -83,7 +89,11 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    type: "website",
+    type: "profile",
+    firstName: "Musurmon",
+    lastName: "Azamqulov",
+    username: "Musurmon_dev",
+    gender: "male",
     locale: "uz_UZ",
     alternateLocale: ["en_US", "ru_RU"],
     url: "https://azamqulov.com",
@@ -92,6 +102,13 @@ export const metadata: Metadata = {
       "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js va biznes tizimlari.",
     siteName: "Azamqulov Musurmon Portfolio",
     images: [
+      {
+        url: "https://azamqulov.com/images/musurmon-portrait.jpg",
+        width: 800,
+        height: 1067,
+        alt: "Azamqulov Musurmon (Musurmon Azamqulov) — Web Developer rasmiy fotosurati va portreti",
+        type: "image/jpeg",
+      },
       {
         url: "https://azamqulov.com/og-image.png",
         width: 1200,
@@ -106,7 +123,10 @@ export const metadata: Metadata = {
     title: "Azamqulov Musurmon — Web Developer & Frontend Dasturchi | Portfolio",
     description:
       "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js va biznes tizimlari.",
-    images: ["https://azamqulov.com/og-image.png"],
+    images: [
+      "https://azamqulov.com/images/musurmon-portrait.jpg",
+      "https://azamqulov.com/og-image.png",
+    ],
     site: "@Musurmon_dev",
     creator: "@Musurmon_dev",
   },
@@ -145,7 +165,7 @@ export default function RootLayout({
   return (
     <html lang="uz" suppressHydrationWarning className="scroll-smooth">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased relative min-h-screen transition-colors duration-300`}
+        className={`${onest.variable} ${unbounded.variable} ${jetbrainsMono.variable} font-sans antialiased relative min-h-screen transition-colors duration-300 selection:bg-emerald-500 selection:text-white`}
       >
         <JsonLd />
         <ThemeProvider
@@ -157,6 +177,13 @@ export default function RootLayout({
           <LanguageProvider>
             <ScrollProgress />
             <BackgroundCanvas />
+            {/* Ambient cyber light orbs & grid with GPU composited layer */}
+            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden gpu-layer">
+              <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[850px] h-[500px] bg-gradient-to-b from-emerald-600/12 via-teal-700/5 to-transparent rounded-full blur-[80px] dark:from-emerald-500/15 dark:via-green-900/10 dark:opacity-80 will-change-transform" />
+              <div className="absolute top-[45%] -left-48 w-[550px] h-[550px] bg-gradient-to-tr from-green-600/12 via-emerald-500/5 to-transparent rounded-full blur-[90px] dark:from-green-600/10 dark:opacity-60 will-change-transform" />
+              <div className="absolute bottom-10 -right-48 w-[600px] h-[600px] bg-gradient-to-bl from-forest/15 via-emerald-800/8 to-transparent rounded-full blur-[90px] dark:from-emerald-900/20 dark:opacity-60 will-change-transform" />
+              <div className="absolute inset-0 bg-grid-cyber opacity-70 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+            </div>
             <CursorGlow />
             <div className="relative z-10 flex min-h-screen flex-col">
               {children}

@@ -5,27 +5,43 @@ export const JsonLd: React.FC = () => {
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
-      // 1. Person Entity
+      // 1. Primary Person Entity (Google Knowledge Panel & Search Image)
       {
         "@type": "Person",
         "@id": "https://azamqulov.com/#person",
         name: "Azamqulov Musurmon",
         givenName: "Musurmon",
         familyName: "Azamqulov",
+        additionalName: "Musurmon",
         alternateName: [
           "Musurmon Azamqulov",
           "Azamqulov",
+          "Musurmon",
           "Musurmon_dev",
           "Azamqulov Musurmon Web Developer",
           "Azamqulov Musurmon Frontend Developer",
           "Musurmon Dasturchi",
+          "Azamqulov Dasturchi",
+          "Musurmon Azamqulov Toshkent",
         ],
         url: "https://azamqulov.com/",
         image: {
           "@type": "ImageObject",
           "@id": "https://azamqulov.com/#person-image",
-          url: "https://azamqulov.com/og-image.png",
-          caption: "Azamqulov Musurmon",
+          url: "https://azamqulov.com/images/musurmon-portrait.jpg",
+          contentUrl: "https://azamqulov.com/images/musurmon-portrait.jpg",
+          thumbnailUrl: "https://azamqulov.com/images/musurmon-portrait.jpg",
+          name: "Azamqulov Musurmon",
+          caption: "Azamqulov Musurmon — Web Developer & Frontend Dasturchi",
+          description:
+            "Azamqulov Musurmon shaxsiy fotosurati va professional portreti. O'zbekistonlik Web Developer va Frontend dasturchi.",
+          representativeOfPage: true,
+          width: 800,
+          height: 1067,
+          encodingFormat: "image/jpeg",
+          author: {
+            "@id": "https://azamqulov.com/#person",
+          },
         },
         jobTitle: "Web Developer & Frontend Dasturchi",
         description:
@@ -73,7 +89,40 @@ export const JsonLd: React.FC = () => {
         ],
       },
 
-      // 2. WebSite Entity
+      // 2. Standalone ImageObject Entity for Google Images Search
+      {
+        "@type": "ImageObject",
+        "@id": "https://azamqulov.com/#musurmon-portrait",
+        name: "Azamqulov Musurmon fotosurati",
+        alternateName: [
+          "Musurmon Azamqulov",
+          "Azamqulov Musurmon",
+          "Azamqulov Musurmon rasmi",
+          "Musurmon Azamqulov photo",
+          "Azamqulov Musurmon portreti",
+        ],
+        contentUrl: "https://azamqulov.com/images/musurmon-portrait.jpg",
+        thumbnailUrl: "https://azamqulov.com/images/musurmon-portrait.jpg",
+        caption: "Azamqulov Musurmon — Web Developer, Frontend Dasturchi",
+        description:
+          "Azamqulov Musurmon (Musurmon Azamqulov) professional portreti. Veb-dasturchi va frontend mutaxassisi.",
+        width: 800,
+        height: 1067,
+        encodingFormat: "image/jpeg",
+        representativeOfPage: true,
+        about: {
+          "@id": "https://azamqulov.com/#person",
+        },
+        creator: {
+          "@id": "https://azamqulov.com/#person",
+        },
+        copyrightHolder: {
+          "@id": "https://azamqulov.com/#person",
+        },
+        inLanguage: "uz-UZ",
+      },
+
+      // 3. WebSite Entity
       {
         "@type": "WebSite",
         "@id": "https://azamqulov.com/#website",
@@ -85,10 +134,13 @@ export const JsonLd: React.FC = () => {
         publisher: {
           "@id": "https://azamqulov.com/#person",
         },
+        primaryImageOfPage: {
+          "@id": "https://azamqulov.com/#person-image",
+        },
         inLanguage: ["uz-UZ", "en-US", "ru-RU"],
       },
 
-      // 3. ProfilePage Entity
+      // 4. ProfilePage Entity
       {
         "@type": "ProfilePage",
         "@id": "https://azamqulov.com/#profilepage",
@@ -103,12 +155,15 @@ export const JsonLd: React.FC = () => {
         mainEntity: {
           "@id": "https://azamqulov.com/#person",
         },
+        primaryImageOfPage: {
+          "@id": "https://azamqulov.com/#person-image",
+        },
         breadcrumb: {
           "@id": "https://azamqulov.com/#breadcrumb",
         },
       },
 
-      // 4. ProfessionalService Entity (Uzbekistan Local Business / Tech Services)
+      // 5. ProfessionalService Entity (Uzbekistan Local Business / Tech Services)
       {
         "@type": "ProfessionalService",
         "@id": "https://azamqulov.com/#service",
@@ -141,7 +196,7 @@ export const JsonLd: React.FC = () => {
         openingHours: "Mo-Sa 09:00-19:00",
       },
 
-      // 5. BreadcrumbList Entity
+      // 6. BreadcrumbList Entity
       {
         "@type": "BreadcrumbList",
         "@id": "https://azamqulov.com/#breadcrumb",
@@ -179,7 +234,7 @@ export const JsonLd: React.FC = () => {
         ],
       },
 
-      // 6. ItemList for Flagship Projects
+      // 7. ItemList for Flagship Projects
       {
         "@type": "ItemList",
         "@id": "https://azamqulov.com/#projects-list",

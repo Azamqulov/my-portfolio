@@ -22,9 +22,9 @@ export const MusurmonIcon: React.FC<MusurmonIconProps> = ({
     >
       <defs>
         <linearGradient id="musurmonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#00D9C0" />
-          <stop offset="50%" stopColor="#38BDF8" />
-          <stop offset="100%" stopColor="#6366F1" />
+          <stop offset="0%" stopColor="#52B788" />
+          <stop offset="50%" stopColor="#2D6A4F" />
+          <stop offset="100%" stopColor="#1B4332" />
         </linearGradient>
       </defs>
       <path

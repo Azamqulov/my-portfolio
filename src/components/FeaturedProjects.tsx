@@ -54,15 +54,19 @@ export const FeaturedProjects: React.FC = () => {
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* Background ambient glow */}
-      <div className="pointer-events-none absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-bl from-sky-500/10 via-blue-600/5 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
+      <div className="pointer-events-none absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-bl from-emerald-600/10 via-forest/5 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
 
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="flex flex-col items-start text-left">
             <Aos animation="fade-up" delay={0.05}>
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-                <span>{t.featuredProjects.tag}</span>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono text-xs font-bold text-emerald-500">(02)</span>
+                <span className="h-[1px] w-12 bg-emerald-500/40" />
+                <span className="text-xs uppercase tracking-widest font-mono text-slate-500 dark:text-slate-400 font-semibold">
+                  {t.featuredProjects.tag}
+                </span>
               </div>
             </Aos>
             <Aos animation="fade-up" delay={0.12}>
@@ -78,7 +82,7 @@ export const FeaturedProjects: React.FC = () => {
           <Aos animation="fade-left" delay={0.18}>
             <a
               href="#all-projects"
-              className="inline-flex items-center gap-2 text-sm font-bold text-sky-500 hover:text-sky-400 transition-colors group"
+              className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors group"
             >
               <span>{t.featuredProjects.archiveLink}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -100,7 +104,7 @@ export const FeaturedProjects: React.FC = () => {
                 <motion.article
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="group relative flex flex-col justify-between h-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0B101D]/95 p-5 shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-sky-500/50 backdrop-blur-xl overflow-hidden"
+                  className="group relative flex flex-col justify-between h-full rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0A1410]/95 p-5 shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-emerald-500/50 backdrop-blur-xl overflow-hidden"
                 >
                   <div>
                     {/* Mockup Image Container */}
@@ -126,11 +130,11 @@ export const FeaturedProjects: React.FC = () => {
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <h3
                         onClick={() => setSelectedProject(project)}
-                        className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors cursor-pointer"
+                        className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors cursor-pointer"
                       >
                         {translated.title}
                       </h3>
-                      <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-sky-500 dark:text-sky-300 font-mono">
+                      <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-300 font-mono">
                         {translated.badge}
                       </span>
                     </div>
@@ -157,7 +161,7 @@ export const FeaturedProjects: React.FC = () => {
                   <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
                     <button
                       onClick={() => setSelectedProject(project)}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-500 dark:text-sky-400 group-hover:text-sky-300 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-500 transition-colors"
                     >
                       <span>{t.featuredProjects.viewProjectBtn}</span>
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
@@ -186,19 +190,21 @@ export const FeaturedProjects: React.FC = () => {
               exit={{ opacity: 0, scale: 0.94, y: 24 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl rounded-3xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0E1322] p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto text-slate-900 dark:text-slate-100"
+              className="relative w-full max-w-2xl rounded-3xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0A1410] shadow-2xl max-h-[90vh] flex flex-col overflow-hidden text-slate-900 dark:text-slate-100"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
                 aria-label={t.featuredProjects.modalCloseBtn}
-                className="absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
 
+              <div className="overflow-y-auto p-6 sm:p-8 custom-modal-scroll flex-1">
+
               <div className="flex items-center gap-2 mb-3">
-                <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs font-mono text-sky-500 dark:text-sky-300 font-semibold">
+                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-mono text-emerald-600 dark:text-emerald-300 font-semibold">
                   {getTranslatedProject(selectedProject).badge}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
@@ -252,7 +258,7 @@ export const FeaturedProjects: React.FC = () => {
                   href="https://t.me/Musurmon_dev"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 transition-all"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 via-green-600 to-teal-700 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/25 hover:scale-105 active:scale-95 transition-all"
                 >
                   <Send className="h-3.5 w-3.5" />
                   <span>{t.featuredProjects.modalDiscussBtn}</span>
@@ -264,6 +270,7 @@ export const FeaturedProjects: React.FC = () => {
                 >
                   {t.featuredProjects.modalCloseBtn}
                 </button>
+              </div>
               </div>
             </motion.div>
           </div>

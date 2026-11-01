@@ -281,6 +281,51 @@ export const TRANSLATIONS = {
         },
       },
     },
+    process: {
+      tag: "• JARAYON",
+      heading: "G'oyadan ishga tushirishgacha aniq 5 qadam",
+      subtitle:
+        "Xaos va taxminlarsiz — har bir bosqich puxta rejalashtirilgan, xavfsizlik va yuqori unumdorlik bilan ta'minlangan jarayon.",
+      stepPrefix: "Bosqich",
+      guarantee: "Sifat Kafolati",
+      steps: [
+        {
+          step: "01",
+          title: "Talablar & Tizimli Arxitektura",
+          tagline: "G'oyadan aniq blueprintgacha",
+          description:
+            "Biznes maqsadlarni chuqur tahlil qilaman. Ma'lumotlar bazasi sxemasi (ERD), API endpoints xaritasi, xavfsizlik chegaralari va optimal texnologik stekni tanlayman.",
+        },
+        {
+          step: "02",
+          title: "Interaktiv UI/UX & Prototip",
+          tagline: "Figma va komponentlar arxitekturasi",
+          description:
+            "Oddiy ko'rinish emas, balki foydalanuvchiga zavq beruvchi, micro-interaction va qulay navigation'ga ega zamonaviy interfeys dizayni yaratiladi.",
+        },
+        {
+          step: "03",
+          title: "Yuqori Sifatli Muhandislik",
+          tagline: "Clean Code & Strict TypeScript",
+          description:
+            "Modular, qayta ishlatiluvchi komponentlar, qat'iy tip xavfsizligi, xatolarni oldindan bostirmasdan to'g'ri boshqarish va tezkor yuklanishni ta'minlayman.",
+        },
+        {
+          step: "04",
+          title: "AI & Kengaytirilgan Integratsiya",
+          tagline: "Aqlli funksiyalar va avtomatlashtirish",
+          description:
+            "Claude, Gemini yoki mahalliy Ollama modellarini mahsulot mantig'iga uzviy bog'layman. Prompt tuning va resurs samaradorligi nazorat qilinadi.",
+        },
+        {
+          step: "05",
+          title: "Testlash, Deploy & Doimiy Sifat",
+          tagline: "Production-ready barqarorlik",
+          description:
+            "Cross-device testlar, xavfsizlik tekshiruvlari va CI/CD deploy. Ishga tushirilgandan keyin ham barqaror ishlashini monitoring qilaman.",
+        },
+      ],
+    },
     testimonials: {
       tag: "• MIJOZLAR FIKRI",
       autoScroll: "⚡ Avtomatik 3 ta / 6s",
@@ -637,6 +682,51 @@ export const TRANSLATIONS = {
         },
       },
     },
+    process: {
+      tag: "• ПРОЦЕСС РАБОТЫ",
+      heading: "От идеи до запуска — 5 точных шагов",
+      subtitle:
+        "Без хаоса и догадок — каждый этап тщательно спланирован, обеспечен безопасностью и высокой производительностью.",
+      stepPrefix: "Этап",
+      guarantee: "Гарантия Качества",
+      steps: [
+        {
+          step: "01",
+          title: "Требования и Архитектура",
+          tagline: "От идеи до точного чертежа",
+          description:
+            "Глубокий анализ бизнес-целей. Проектирование схемы БД (ERD), API эндпоинтов, границ безопасности и выбор оптимального стека технологий.",
+        },
+        {
+          step: "02",
+          title: "Интерактивный UI/UX и Прототип",
+          tagline: "Figma и компонентная архитектура",
+          description:
+            "Не просто красивый вид, а удобный современный интерфейс с микро-анимациями и интуитивной навигацией.",
+        },
+        {
+          step: "03",
+          title: "Высококачественная Разработка",
+          tagline: "Clean Code & Strict TypeScript",
+          description:
+            "Модульные компоненты, строгая типизация, правильная обработка ошибок и максимальная скорость загрузки.",
+        },
+        {
+          step: "04",
+          title: "AI и Интеграция сервисов",
+          tagline: "Умные функции и автоматизация",
+          description:
+            "Интеграция Claude, Gemini или локальных моделей Ollama. Тонкая настройка промптов и оптимизация ресурсов.",
+        },
+        {
+          step: "05",
+          title: "Тестирование, Деплой и Поддержка",
+          tagline: "Стабильность уровня Production",
+          description:
+            "Кроссбраузерное тестирование, проверки безопасности и автоматизированный CI/CD деплой с непрерывным мониторингом.",
+        },
+      ],
+    },
     testimonials: {
       tag: "• ОТЗЫВЫ КЛИЕНТОВ",
       autoScroll: "⚡ Авто 3 отзыва / 6с",
@@ -992,6 +1082,51 @@ export const TRANSLATIONS = {
           description: "Continuous maintenance, optimizations, and technical support for your projects.",
         },
       },
+    },
+    process: {
+      tag: "• WORK PROCESS",
+      heading: "From Idea to Launch — 5 Precise Steps",
+      subtitle:
+        "No chaos, no guesswork — every stage is meticulously engineered, secure, and built for peak performance.",
+      stepPrefix: "Step",
+      guarantee: "Quality Guarantee",
+      steps: [
+        {
+          step: "01",
+          title: "Requirements & Architecture",
+          tagline: "From concept to precision blueprint",
+          description:
+            "Deep dive into business goals. Database ERD schema, REST/GraphQL API mappings, security boundaries, and the optimal tech stack.",
+        },
+        {
+          step: "02",
+          title: "Interactive UI/UX & Prototyping",
+          tagline: "Figma & design system architecture",
+          description:
+            "Delightful modern user experience with crisp micro-interactions, responsive ergonomics, and seamless navigation.",
+        },
+        {
+          step: "03",
+          title: "High-Caliber Engineering",
+          tagline: "Clean Code & Strict TypeScript",
+          description:
+            "Modular scalable components, strict type safety, zero-silent-failure error handling, and blazing edge performance.",
+        },
+        {
+          step: "04",
+          title: "AI & Advanced Integrations",
+          tagline: "Intelligent automation & features",
+          description:
+            "Seamless integration of Claude, Gemini, or local Ollama LLMs into core workflows with prompt tuning and token efficiency.",
+        },
+        {
+          step: "05",
+          title: "Testing, CI/CD Deploy & Support",
+          tagline: "Rock-solid production readiness",
+          description:
+            "Multi-device test suites, security scans, automated CI/CD pipeline deployment, and post-launch health monitoring.",
+        },
+      ],
     },
     testimonials: {
       tag: "• CLIENT TESTIMONIALS",

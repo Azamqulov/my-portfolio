@@ -69,17 +69,21 @@ export const Testimonials: React.FC = () => {
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       {/* Background ambient glow */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-sky-500/10 via-indigo-500/10 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-600/10 via-green-900/10 to-transparent rounded-full blur-[140px] -z-10 dark:opacity-70 opacity-30" />
 
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
           <div className="flex flex-col items-start text-left">
             <Aos animation="fade-up" delay={0.05}>
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-sky-500 uppercase mb-3">
-                <span>{t.testimonials.tag}</span>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">(07)</span>
+                <span className="h-[1px] w-12 bg-emerald-500/40" />
+                <span className="text-xs uppercase tracking-widest font-mono text-slate-500 dark:text-slate-400 font-semibold">
+                  {t.testimonials.tag}
+                </span>
                 <span className="text-slate-400 dark:text-slate-600 font-normal">|</span>
-                <span className="text-slate-500 dark:text-slate-400 font-normal">
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 font-normal">
                   {isPaused ? t.testimonials.paused : t.testimonials.autoScroll}
                 </span>
               </div>
@@ -98,21 +102,21 @@ export const Testimonials: React.FC = () => {
           <Aos animation="fade-left" delay={0.18}>
             <div className="flex items-center gap-4">
               <div className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 tracking-wider">
-                <span className="text-sky-500 dark:text-sky-400">0{page + 1}</span> / 0{totalPages}
+                <span className="text-emerald-600 dark:text-emerald-400">0{page + 1}</span> / 0{totalPages}
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrev}
                   aria-label="Previous"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0B101D]/90 text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 active:scale-95 transition-all shadow-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0A1410]/90 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 active:scale-95 transition-all shadow-sm"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
                 <button
                   onClick={handleNext}
                   aria-label="Next"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0B101D]/90 text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 active:scale-95 transition-all shadow-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0A1410]/90 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 hover:scale-105 active:scale-95 transition-all shadow-sm"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </button>
@@ -125,7 +129,7 @@ export const Testimonials: React.FC = () => {
         <div className="w-full bg-slate-200/60 dark:bg-slate-800/60 h-1 rounded-full mb-8 overflow-hidden relative">
           <div
             style={{ width: `${progress}%` }}
-            className={`h-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 transition-[width] duration-75 ease-linear rounded-full ${
+            className={`h-full bg-gradient-to-r from-emerald-500 via-green-600 to-teal-600 transition-[width] duration-75 ease-linear rounded-full ${
               isPaused ? "opacity-40" : "opacity-100"
             }`}
           />
@@ -169,15 +173,15 @@ export const Testimonials: React.FC = () => {
                       },
                     }}
                     whileHover={{ y: -6, scale: 1.01 }}
-                    className="group relative flex flex-col justify-between rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0B101D]/95 p-7 backdrop-blur-xl shadow-lg dark:shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-sky-500/50 cursor-default"
+                    className="group relative flex flex-col justify-between rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#0A1410]/95 p-7 backdrop-blur-xl shadow-lg dark:shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-emerald-500/50 cursor-default"
                   >
                     {/* Hover ambient halo */}
-                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-sky-500/5 via-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-emerald-500/5 via-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
                     <div className="relative">
                       {/* Glowing Quote Icon */}
                       <div className="flex items-center justify-between mb-4">
-                        <Quote className="h-8 w-8 text-sky-500/25 dark:text-sky-400/30 group-hover:text-sky-500 group-hover:scale-110 transition-all duration-300" />
+                        <Quote className="h-8 w-8 text-emerald-600/25 dark:text-emerald-400/30 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300" />
                         <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full">
                           ★ 5.0
                         </span>
@@ -192,7 +196,7 @@ export const Testimonials: React.FC = () => {
                     {/* Author & 5 Stars */}
                     <div className="mt-8 pt-5 border-t border-slate-200/80 dark:border-slate-800/60 flex items-center justify-between gap-3 relative z-10">
                       <div className="flex items-center gap-3">
-                        <div className="relative h-11 w-11 rounded-full overflow-hidden border-2 border-sky-400/50 shadow-sm shrink-0 group-hover:border-sky-400 transition-colors">
+                        <div className="relative h-11 w-11 rounded-full overflow-hidden border-2 border-emerald-500/50 shadow-sm shrink-0 group-hover:border-emerald-400 transition-colors">
                           <Image
                             src={item.avatar}
                             alt={translated.name}

@@ -90,7 +90,7 @@ export const Navbar: React.FC = () => {
           initial={{ y: -40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex w-full max-w-7xl items-center justify-between rounded-full border border-slate-200/90 dark:border-slate-800/80 bg-white/90 dark:bg-[#080B12]/85 px-4 py-2.5 sm:px-6 shadow-xl shadow-slate-200/40 dark:shadow-black/60 backdrop-blur-xl transition-all"
+          className="flex w-full max-w-7xl items-center justify-between rounded-full border border-slate-200/90 dark:border-slate-800/80 bg-white/90 dark:bg-[#0A1410]/90 px-4 py-2.5 sm:px-6 shadow-xl shadow-slate-200/40 dark:shadow-black/60 backdrop-blur-xl transition-all"
         >
           {/* Logo */}
           <a
@@ -111,14 +111,14 @@ export const Navbar: React.FC = () => {
                   href={item.href}
                   className={`relative px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors rounded-full ${
                     isActive
-                      ? "text-sky-600 dark:text-sky-400 font-bold"
+                      ? "text-emerald-700 dark:text-emerald-400 font-bold"
                       : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="activeNavIndicator"
-                      className="absolute inset-0 rounded-full bg-sky-500/10 dark:bg-sky-500/15 border border-sky-500/25 shadow-sm"
+                      className="absolute inset-0 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/25 shadow-sm"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -135,13 +135,13 @@ export const Navbar: React.FC = () => {
               <LanguageSelect />
             </div>
 
-            {/* CV Download Button */}
+            {/* CV Download Button with Luxury Glow */}
             <a
               href="/Musurmon-Azamqulov-Resume.pdf"
               download="Musurmon Azamqulov - Professional Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all"
+              className="btn-primary-glow hover-sheen hidden lg:inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold text-white active:scale-95 transition-all cursor-pointer"
             >
               <Download className="h-3.5 w-3.5" />
               <span>{t.nav.downloadCv}</span>
@@ -166,7 +166,7 @@ export const Navbar: React.FC = () => {
                     {isDark ? (
                       <Sun className="h-4 w-4 text-amber-400" />
                     ) : (
-                      <Moon className="h-4 w-4 text-indigo-600" />
+                      <Moon className="h-4 w-4 text-emerald-600" />
                     )}
                   </motion.div>
                 )}
@@ -193,7 +193,7 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-4 top-20 z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0B101D]/95 p-5 shadow-2xl backdrop-blur-2xl md:hidden text-slate-900 dark:text-slate-100"
+            className="fixed inset-x-4 top-20 z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0A1410]/95 p-5 shadow-2xl backdrop-blur-2xl md:hidden text-slate-900 dark:text-slate-100"
           >
             <div className="flex flex-col gap-2">
               {navItems.map((item) => (
@@ -201,7 +201,7 @@ export const Navbar: React.FC = () => {
                   key={item.id}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-500 transition-all"
+                  className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-500 transition-all"
                 >
                   <span>{item.name}</span>
                 </a>
@@ -221,7 +221,7 @@ export const Navbar: React.FC = () => {
                 href="/Musurmon-Azamqulov-Resume.pdf"
                 download="Musurmon Azamqulov - Professional Resume.pdf"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 py-3 text-sm font-bold text-white shadow-lg"
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-700 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-600/20"
               >
                 <Download className="h-4 w-4" />
                 <span>{t.nav.downloadCv}</span>
