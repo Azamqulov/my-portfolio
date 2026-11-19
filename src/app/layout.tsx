@@ -156,6 +156,9 @@ export const metadata: Metadata = {
       { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
+  verification: {
+    google: "z65V8BHa5ZpRyvXjtx7oLmfGR4G_pYUesc-yf-Dvft0",
+  },
   manifest: "/site.webmanifest",
 };
 
