@@ -7,6 +7,7 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { JsonLd } from "@/components/JsonLd";
+import { YandexMetrika } from "@/components/YandexMetrika";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -168,6 +169,7 @@ export default function RootLayout({
         className={`${onest.variable} ${unbounded.variable} ${jetbrainsMono.variable} font-sans antialiased relative min-h-screen transition-colors duration-300 selection:bg-emerald-500 selection:text-white`}
       >
         <JsonLd />
+        <YandexMetrika />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
