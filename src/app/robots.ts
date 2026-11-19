@@ -10,7 +10,20 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: "Googlebot-Image",
-        allow: ["/", "/images/", "/musurmon.jpg", "/*.jpg", "/*.png", "/*.webp", "/*.svg"],
+        allow: [
+          "/",
+          "/favicon.ico",
+          "/icon.png",
+          "/apple-icon.png",
+          "/images/",
+          "/_next/image",
+          "/*.ico",
+          "/*.png",
+          "/*.jpg",
+          "/*.jpeg",
+          "/*.webp",
+          "/*.svg",
+        ],
       },
     ],
     sitemap: [

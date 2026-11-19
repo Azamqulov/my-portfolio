@@ -114,6 +114,26 @@ export const Contact: React.FC = () => {
             delay={0.15}
             className="lg:col-span-5 flex flex-col space-y-5"
           >
+            {/* Personal Telegram Card */}
+            <a
+              href={PERSONAL_INFO.contacts.telegramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 p-4 rounded-2xl border border-emerald-500/40 dark:border-emerald-500/35 bg-white/90 dark:bg-[#0A1410]/90 backdrop-blur-md shadow-sm hover:shadow-md hover:border-emerald-500 transition-all"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                <Send className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-xs text-slate-400 block font-medium">
+                  {t.contact.telegramDirectLabel || "Shaxsiy Telegram"}
+                </span>
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors font-mono">
+                  {PERSONAL_INFO.contacts.telegram}
+                </span>
+              </div>
+            </a>
+
             {/* Email Card */}
             <a
               href={`mailto:${PERSONAL_INFO.contacts.email}`}

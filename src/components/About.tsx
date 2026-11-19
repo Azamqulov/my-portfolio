@@ -225,6 +225,30 @@ export const About: React.FC = () => {
               {t.about.paragraph}
             </motion.p>
 
+            {/* Direct Contact Handles for Visitors & AI Overview indexing */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.22 }}
+              className="mt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4 text-xs font-mono text-slate-500 dark:text-slate-400"
+            >
+              <a
+                href="https://t.me/Musurmon_dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-emerald-500 transition-colors flex items-center gap-1.5 bg-slate-100 dark:bg-emerald-950/30 px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-emerald-500/20"
+              >
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">Telegram:</span> @Musurmon_dev
+              </a>
+              <a
+                href="mailto:azamqulov0102@gmail.com"
+                className="hover:text-emerald-500 transition-colors flex items-center gap-1.5 bg-slate-100 dark:bg-emerald-950/30 px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-emerald-500/20"
+              >
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">Email:</span> azamqulov0102@gmail.com
+              </a>
+            </motion.div>
+
             {/* Tech Badges Row */}
             <div className="mt-8 flex flex-wrap items-center justify-center sm:justify-start gap-3">
               {techBadges.map((tech, idx) => (

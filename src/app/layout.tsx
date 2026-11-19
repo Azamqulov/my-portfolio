@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     template: "%s | Azamqulov Musurmon",
   },
   description:
-    "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js, yuqori tezlikdagi CRM va biznes tizimlari yaratish bo'yicha mutaxassis.",
+    "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js, yuqori tezlikdagi CRM va biznes tizimlari mutaxassisi. Bog'lanish: Telegram @Musurmon_dev, Email: azamqulov0102@gmail.com, Tel: +998 77 040 46 24.",
   keywords: [
     "Azamqulov Musurmon",
     "Musurmon Azamqulov",
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     url: "https://azamqulov.com",
     title: "Azamqulov Musurmon — Web Developer & Frontend Dasturchi | Portfolio",
     description:
-      "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js va biznes tizimlari.",
+      "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js va biznes tizimlari. Aloqa: Telegram @Musurmon_dev, Email: azamqulov0102@gmail.com, Tel: +998 77 040 46 24.",
     siteName: "Azamqulov Musurmon Portfolio",
     images: [
       {
@@ -123,7 +123,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Azamqulov Musurmon — Web Developer & Frontend Dasturchi | Portfolio",
     description:
-      "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js va biznes tizimlari.",
+      "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js va biznes tizimlari. Aloqa: Telegram @Musurmon_dev, Email: azamqulov0102@gmail.com, Tel: +998 77 040 46 24.",
     images: [
       "https://azamqulov.com/images/musurmon-portrait.jpg",
       "https://azamqulov.com/og-image.png",
@@ -146,11 +146,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
       { url: "/favicon.png", type: "image/png", sizes: "64x64" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
     ],
-    shortcut: "/favicon.svg",
+    shortcut: "/favicon.ico",
     apple: [
       { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],

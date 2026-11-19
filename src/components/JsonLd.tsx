@@ -45,9 +45,19 @@ export const JsonLd: React.FC = () => {
         },
         jobTitle: "Web Developer & Frontend Dasturchi",
         description:
-          "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js, yuqori yuklanishli tizimlar va toza arxitektura mutaxassisi.",
+          "Azamqulov Musurmon — O'zbekistonlik professional Web Developer va Frontend Dasturchi. Zamonaviy web-ilovalar, React, Next.js, Vue.js, yuqori yuklanishli biznes tizimlari mutaxassisi. Bog'lanish: Telegram @Musurmon_dev (https://t.me/Musurmon_dev), Email: azamqulov0102@gmail.com, Tel: +998 77 040 46 24.",
         email: `mailto:${PERSONAL_INFO.contacts.email}`,
         telephone: PERSONAL_INFO.phone,
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "customer service & direct inquiries",
+            email: PERSONAL_INFO.contacts.email,
+            telephone: PERSONAL_INFO.phone,
+            url: PERSONAL_INFO.contacts.telegramUrl,
+            availableLanguage: ["Uzbek", "Russian", "English"],
+          },
+        ],
         nationality: {
           "@type": "Country",
           name: "Uzbekistan",
